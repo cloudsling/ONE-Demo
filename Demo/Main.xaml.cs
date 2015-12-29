@@ -13,6 +13,7 @@ using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Core;
 using Windows.Storage;
+using System.Runtime.CompilerServices;
 
 namespace Demo
 {
@@ -44,18 +45,23 @@ namespace Demo
 
         private async void Main_BackRequested(object sender, BackRequestedEventArgs e)
         {
-            if (OneFrame.CurrentSourcePageType == typeof(OneMain))
+            if (mainViewModel.oneSettings.IsDoubleClickExit)
             {
-                e.Handled = true;
-                if (mainViewModel.NotifyUserWidth == 201)
+                if (OneFrame.CurrentSourcePageType == typeof(OneMain))
                 {
-                    Application.Current.Exit();
+                    e.Handled = true;
+                    if (mainViewModel.SomethingInMainSettings.NotifyUserWidth == 201)
+                    {
+                        Application.Current.Exit();
+                    }
+                    NotifyUserMethod("再按一次后退键退出程序", 201);
+                    await Task.Delay(2000);
+                    mainViewModel.SomethingInMainSettings.NotifyUserWidth = 180;
+                    return;
                 }
-                NotifyUserMethod("再按一次后退键退出程序", 201);
-                await Task.Delay(2000);
-                mainViewModel.NotifyUserWidth = 180;
-                return;
             }
+            //OneSettings settings = new OneSettings();
+
             if (OneFrame.CanGoBack)
             {
                 OneFrame.GoBack();
@@ -158,7 +164,7 @@ namespace Demo
         public static void NotifyUserMethod(string notifyUserText, double NotifyUserWidth)
         {
             MainCurrent.NotifyUserText.Text = notifyUserText;
-            MainCurrent.mainViewModel.NotifyUserWidth = NotifyUserWidth;
+            MainCurrent.mainViewModel.SomethingInMainSettings.NotifyUserWidth = NotifyUserWidth;
             MainCurrent.NotifyAnime.Begin();
         }
 
@@ -304,12 +310,21 @@ namespace Demo
         }
     }
 
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel
     {
         public MainViewModel()
         {
-
+            SomethingInMainSettings = new SomethingInMain();
+            oneSettings = new OneSettings();
         }
+        //private double _notifyUserWidth;
+        public SomethingInMain SomethingInMainSettings { get; set; }
+
+        public OneSettings oneSettings { get; set; }
+    }
+
+    public class SomethingInMain : INotifyPropertyChanged
+    {
         private double _notifyUserWidth;
 
         public double NotifyUserWidth
@@ -322,13 +337,16 @@ namespace Demo
             set
             {
                 _notifyUserWidth = value;
-                PropertyChangedEventHandler temp = Volatile.Read(ref PropertyChanged);
-                if (temp != null) temp(this, new PropertyChangedEventArgs("NotifyUserWidth"));
+                OnPropertyChanged();
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged([CallerMemberName]string propName = "")
+        {
+            PropertyChangedEventHandler temp = Volatile.Read(ref PropertyChanged);
+            if (temp != null) temp(this, new PropertyChangedEventArgs(propName));
+        }
     }
-
     public class MyListViewItems
     {
         private string _MyitemName;

@@ -68,15 +68,6 @@ namespace Demo
             catch (Exception)
             {
             }
-           // return;
-            //double sd = CurrentPage.border.ActualWidth;
-            //var bvb = CurrentPage.border;
-            //DispatcherTimer timer = new DispatcherTimer();
-            //timer.Interval = TimeSpan.FromMilliseconds(50);
-            //timer.Tick += (p1, p2) =>
-            //{
-
-            //};
         }
     }
 }

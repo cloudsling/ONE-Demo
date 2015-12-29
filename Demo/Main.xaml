@@ -11,12 +11,12 @@
     <Page.Resources>
         <Storyboard x:Name="NotifyAnime">
             <DoubleAnimationUsingKeyFrames SpeedRatio="1" Duration="0:0:1.5" BeginTime="0:0:0" Storyboard.TargetName="NotifyUser" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" >
-                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="{Binding NotifyUserWidth}">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="{Binding SomethingInMainSettings.NotifyUserWidth}">
                     <EasingDoubleKeyFrame.EasingFunction>
                         <BackEase Amplitude=".4" EasingMode="EaseOut"/>
                     </EasingDoubleKeyFrame.EasingFunction>
                 </EasingDoubleKeyFrame>
-                <EasingDoubleKeyFrame KeyTime="0:0:1.2" Value="{Binding NotifyUserWidth}"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.2" Value="{Binding SomethingInMainSettings.NotifyUserWidth}"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:1.5" Value="0">
                     <EasingDoubleKeyFrame.EasingFunction>
                         <BackEase Amplitude=".8"  EasingMode="EaseIn"/>

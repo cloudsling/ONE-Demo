@@ -2,16 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Streams;
-using Windows.UI.Xaml;
 
 namespace Demo
 {
@@ -618,14 +615,17 @@ namespace Demo
             {
             }
         }
-
+        /// <summary>
+        /// 保存到临时文件中
+        /// </summary>
+        /// <param name="uri"></param>
         public static async void SavePicHere(string uri)
         {
             try
             {
                 if (httpClient != null) httpClient.Dispose();
                 httpClient = new HttpClient();
-                StorageFile file = await ApplicationData.Current.LocalCacheFolder.CreateFileAsync("StartMainPage.jpg",CreationCollisionOption.OpenIfExists);
+                StorageFile file = await ApplicationData.Current.LocalCacheFolder.CreateFileAsync("StartMainPage.jpg", CreationCollisionOption.OpenIfExists);
                 byte[] bytes = await httpClient.GetByteArrayAsync(uri);
                 IBuffer buffer = GetBufferFromArrayByte(bytes);
                 await FileIO.WriteBufferAsync(file, buffer);
@@ -634,7 +634,6 @@ namespace Demo
             {
             }
         }
-        
 
         public static DayReallyObject dayReallyObject;
         /// <summary>
@@ -677,10 +676,16 @@ namespace Demo
             regex = new Regex("cosas-titulo..([\\d\\D]+?)</h2>");
             coll = regex.Matches(ResultString);
             string temp = coll[0].Groups[1].ToString().Trim();
-            regex = new Regex("<.+?>(.+?)<.+>");
+            regex = new Regex("<.+?>(.+?)<");
             coll = regex.Matches(temp);
-            if (coll.Count > 0) oneThingObject.Header = coll[0].Groups[1].ToString().Trim();
-            oneThingObject.Header = temp;
+            if (coll.Count > 0)
+            {
+                oneThingObject.Header = coll[0].Groups[1].ToString().Trim();
+            }
+            else
+            {
+                oneThingObject.Header = temp;
+            }
             //得到content
             regex = new Regex("cosas-contenido..([\\d\\D]+?)</div>");
             coll = regex.Matches(ResultString);
@@ -712,7 +717,7 @@ namespace Demo
             coll = regex.Matches(ResultString);
             oneThingObject.AskContent = coll[0].Groups[1].ToString().Trim();
             StringBuilder sb = new StringBuilder(coll[1].Groups[1].ToString().Trim());
-            sb = sb.Replace("\r\n", "").Replace("</p>", "\r\n").Replace("<br />", "").Replace("&nbsp;", "").Replace("&mdash;", "—").Replace("&hellip;", "…").Replace("&ldquo;", "“").Replace("&rdquo;", "”").Replace("&rsquo;", "'").Replace("<p>", "    ");
+            sb = sb.Replace("\r\n", "").Replace("</p>", "").Replace("<br />", "\r\n").Replace("&nbsp;", "").Replace("&mdash;", "—").Replace("&hellip;", "…").Replace("&ldquo;", "“").Replace("&rdquo;", "”").Replace("&rsquo;", "'").Replace("<p>", "    ");
             oneThingObject.AnswerContent = sb.ToString();
             dayReallyObject.OneQuestion = oneThingObject;
         }
