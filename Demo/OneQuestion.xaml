@@ -1,0 +1,126 @@
+﻿<Page
+    x:Class="Demo.OneQuestion"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Demo"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    DataContext="{Binding OneQuestionObjectBinding,RelativeSource={RelativeSource Mode=Self}}">
+    <Page.Resources>
+        <Storyboard x:Name="borderAnimeStoryBoard" AutoReverse="False">
+            <DoubleAnimation Storyboard.TargetName="borderAnime" Storyboard.TargetProperty="Height" To="0" Duration="0:0:.7" BeginTime="0:0:0" EnableDependentAnimation="True" SpeedRatio=".9">
+                <DoubleAnimation.EasingFunction>
+                    <CircleEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+    </Page.Resources>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <ScrollViewer BringIntoViewOnFocusChange="True" VerticalScrollBarVisibility="Visible" VerticalScrollMode="Auto">
+            <StackPanel>
+                <Border x:Name="borderAnime" Grid.Row="0" Height="50"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" VerticalAlignment="Bottom">
+                            <TextBlock HorizontalAlignment="Right" FontStyle="Italic" Foreground="#36C3F1" FontFamily="Consolas" Margin="0" Text="问：" FontSize="16"/>
+                            <Border HorizontalAlignment="Right" Height=".5" Width="150" Margin="0 2" Background="#36C3F1"/>
+                            <Border Background="#36C3F1" Padding="0" BorderBrush="#36C3F1" 
+                            BorderThickness="1.4" 
+                            CornerRadius="5" Margin="9 4 4 4">
+                                <TextBlock Foreground="Gray" FontFamily="Consolas" TextWrapping="Wrap" VerticalAlignment="Center" Margin="8" HorizontalAlignment="Center" Text="{Binding OneQuestionObject.AskerName}"/>
+                            </Border>
+                        </StackPanel>
+                        <Grid Grid.Column="1" VerticalAlignment="Bottom" Padding="0"  Margin="1 0">
+                            <Border Width="0.5" Height="100" VerticalAlignment="Bottom" Background="#36C3F1"/>
+                        </Grid>
+                        <Grid HorizontalAlignment="Left" Padding="2" Grid.Column="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Padding="0" Margin="0 0 0 20" HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderBrush="#36C3F1" 
+                            BorderThickness="1.4" RenderTransformOrigin="0.5,0.5" Opacity="1" >
+                                <Border.RenderTransform>
+                                    <CompositeTransform Rotation="134.573"/>
+                                </Border.RenderTransform>
+                                <Rectangle Margin="0" Width="14" Height="14" Fill="#36C3F1" />
+                            </Border>
+                            <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="1" Margin="-10 1 1 1">
+                                <Border Background="#36C3F1" Padding="1" BorderBrush="#36C3F1" 
+                            BorderThickness="1.4" 
+                            CornerRadius="5" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+                                    <TextBlock Foreground="White" FontFamily="Consolas" Margin="9" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding OneQuestionObject.AskContent}" TextWrapping="Wrap"/>
+                                </Border>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Border Height=".5" Width="400" Background="#36C3F1"/>
+                        <Border Grid.Row="0" Height="{Binding ElementName=borderAnime,Path=Height}" />
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Margin="5 2 0 0" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Margin="0">
+                                <Border Background="#36C3F1" Padding="1" BorderBrush="#36C3F1" BorderThickness="1.4" CornerRadius="5" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="2">
+                                    <TextBlock Foreground="White" FontFamily="Consolas" Margin="12" FontSize="15" LineHeight="24" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding OneQuestionObject.AnswerContent}" TextWrapping="Wrap"/>
+                                </Border>
+                            </Grid>
+                            <Border Grid.Column="1" Padding="0" Margin="-10 20 5 0" HorizontalAlignment="Right" VerticalAlignment="Top" BorderBrush="#36C3F1" 
+                            BorderThickness="1.4" RenderTransformOrigin="0.5,0.5" Opacity="1" >
+                                <Border.RenderTransform>
+                                    <CompositeTransform Rotation="134.573"/>
+                                </Border.RenderTransform>
+                                <Rectangle Margin="0" Width="14" Height="14" Fill="#36C3F1" />
+                            </Border>
+                        </Grid>
+                        <StackPanel Orientation="Horizontal" Grid.Column="1" Padding="0">
+                            <Border VerticalAlignment="Top" Width="0.5" Height="280" Background="#36C3F1"/>
+                            <StackPanel>
+                                <TextBlock FontStyle="Italic" Foreground="#36C3F1" FontFamily="Consolas" Margin="5" Text="答：" FontSize="16"/>
+                                <Border Background="#36C3F1" Padding="0" BorderBrush="#36C3F1" 
+                            BorderThickness="1.4" 
+                            CornerRadius="5" Margin="6">
+                                    <TextBlock FontSize="18" Margin="6"  Foreground="Gray" FontFamily="Consolas"  HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding OneQuestionObject.AnswerName}"/>
+                                </Border>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                    </Grid>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+    <!--<Page.BottomAppBar>
+        <AppBar LostFocus="AppBar_LostFocus" x:Name="AppBar" Visibility="Visible" VerticalAlignment="Bottom" IsSticky="True" >
+            <Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <AppBarButton Label="刷新" Click="AppBarButton_Click">
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE72C;"  FontFamily="Segoe MDL2 Assets"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </StackPanel>
+            </Grid>
+        </AppBar>
+    </Page.BottomAppBar>-->
+</Page>
