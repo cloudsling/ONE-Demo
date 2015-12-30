@@ -33,33 +33,40 @@
             </Grid.RowDefinitions>
             <Border x:Name="border" Grid.Row="0" Height="50" VerticalAlignment="Top"/>
             <Grid Grid.Row="1">
-                <Image Source="{Binding DayImagePath}"  Stretch="UniformToFill" />
-            </Grid>
-            <Border x:Name="borderaa" Grid.Row="2" Height="{Binding ElementName=border, Path=Height}" VerticalAlignment="Bottom"/>
-        </Grid>
-            <Grid Grid.Row="1">
-                <Grid Background="Black" Opacity=".5">
-                    <Grid Margin="6">
-                        <Grid.RowDefinitions>
-                            <RowDefinition  Height="*"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition  Height="Auto"/>
-                            <RowDefinition  Height="Auto"/>
-                            <RowDefinition  Height="Auto"/>
-                            <RowDefinition  Height="30"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Margin="6 6 6 0"  Grid.Row="1" TextWrapping="Wrap"  Foreground="White" Text="{Binding OneDay}" FontFamily="Consolas" FontSize="80" x:Name="OneName"/>
-                        <StackPanel Margin="5"  Grid.Row="2" Orientation="Horizontal">
-                            <TextBlock Margin="8" FontFamily="Consolas" TextWrapping="Wrap"  Foreground="White" Text="{Binding Vol}" x:Name="Vol"/>
-                            <TextBlock Margin="8" FontFamily="Consolas" TextWrapping="Wrap"  Foreground="White" Text="|" />
-                            <TextBlock Margin="8" FontFamily="Consolas" TextWrapping="Wrap"  Foreground="White" Text="{Binding OneMonthAndYear}" x:Name="MonthAndYear"/>
-                        </StackPanel>
-                        <TextBlock Margin="8" Grid.Row="3" TextWrapping="Wrap" Foreground="White" FontSize="18" Text="{Binding MainString}" x:Name="DayContent" RelativePanel.Above="MonthAndYear"/>
-                        <StackPanel Grid.Row="4" x:Name="myPanel" Orientation="Vertical">
-                            <Button Template="{StaticResource MyButtonTemplate}" Content="进入ONE-一个" Click="Button_Click" Foreground="White" VerticalAlignment="Bottom" Margin="0 0 0 6" HorizontalAlignment="Center"/>
-                        </StackPanel>
-                    </Grid>
+                <Image Source="{Binding DayImagePath}"  Stretch="UniformToFill" /><Grid Margin="6">
+                    <Grid.RowDefinitions>
+                        <RowDefinition  Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition  Height="Auto"/>
+                        <RowDefinition  Height="Auto"/>
+                        <RowDefinition  Height="Auto"/>
+                        <RowDefinition  Height="100"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="6 6 6 0"  Grid.Row="1" TextWrapping="Wrap"  Foreground="White" Text="{Binding OneDay}" FontFamily="Consolas" FontSize="80" x:Name="OneName"/>
+                    <Border Grid.Row="2" Height="{Binding ElementName=border, Path=Height}" VerticalAlignment="Bottom"/>
+                    <StackPanel Margin="5"  Grid.Row="2" Orientation="Horizontal">
+                        <TextBlock Margin="8" FontFamily="Consolas" TextWrapping="Wrap"  Foreground="White" Text="{Binding Vol}" x:Name="Vol"/>
+                        <TextBlock Margin="8" FontFamily="Consolas" TextWrapping="Wrap"  Foreground="White" Text="|" />
+                        <TextBlock Margin="8" FontFamily="Consolas" TextWrapping="Wrap"  Foreground="White" Text="{Binding OneMonthAndYear}" x:Name="MonthAndYear"/>
+                    </StackPanel>
+                    <TextBlock Margin="8" Grid.Row="3" TextWrapping="Wrap" Foreground="White" FontSize="18" Text="{Binding MainString}" x:Name="DayContent" RelativePanel.Above="MonthAndYear"/>
                 </Grid>
             </Grid>
+            <Border Grid.Row="2" Height="{Binding ElementName=border, Path=Height}" VerticalAlignment="Bottom"/>
+        </Grid>
+        <Grid Grid.Row="1" Background="Black" Opacity=".5">
+            <!--<TextBlock VerticalAlignment="Top" Text="0NE-一个" Foreground="White" HorizontalAlignment="Center" Margin="0 30" FontFamily="Consolas" FontSize="21"/>-->
+            <RichTextBlock VerticalAlignment="Top" Foreground="White" HorizontalAlignment="Right" Margin="50 94" FontFamily="Consolas" TextAlignment="Center">
+                <Paragraph FontSize="24">0</Paragraph>
+                <Paragraph FontSize="24">N</Paragraph>
+                <Paragraph FontSize="24">E</Paragraph>
+                <Paragraph></Paragraph>
+                <Paragraph FontSize="16">一</Paragraph>
+                <Paragraph FontSize="16">个</Paragraph>
+            </RichTextBlock>
+            <StackPanel VerticalAlignment="Bottom" x:Name="myPanel">
+                <Button Template="{StaticResource MyButtonTemplate}" Content="进入0NE-一个" Click="Button_Click" Foreground="White" FontFamily="Consolas" VerticalAlignment="Bottom" Margin="0 10" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

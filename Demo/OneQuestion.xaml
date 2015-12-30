@@ -99,7 +99,7 @@
                                 <Border Background="#36C3F1" Padding="0" BorderBrush="#36C3F1" 
                             BorderThickness="1.4" 
                             CornerRadius="5" Margin="6">
-                                    <TextBlock FontSize="18" Margin="6"  Foreground="Gray" FontFamily="Consolas"  HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding OneQuestionObject.AnswerName}"/>
+                                    <TextBlock TextAlignment="Center" FontSize="18" Margin="6"  Foreground="Gray" FontFamily="Consolas"  HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding OneQuestionObject.AnswerName}"/>
                                 </Border>
                             </StackPanel>
 

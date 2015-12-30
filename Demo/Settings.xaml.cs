@@ -20,7 +20,9 @@ namespace Demo
         {
             Story.Begin();
             DoubleClickExit.IsOn = Main.MainCurrent.mainViewModel.oneSettings.IsDoubleClickExit;
+            OneMainPageStyle.SelectedIndex = Main.MainCurrent.mainViewModel.oneSettings.OneMainPageStyle;
         }
+
         private async void HyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
             await Windows.System.Launcher.LaunchUriAsync(new Uri(((HyperlinkButton)sender).Tag.ToString()));
@@ -36,6 +38,11 @@ namespace Demo
             {
                 Main.MainCurrent.mainViewModel.oneSettings.IsDoubleClickExit = true;
             }
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Main.MainCurrent.mainViewModel.oneSettings.OneMainPageStyle = OneMainPageStyle.SelectedIndex;
         }
     }
 
@@ -77,13 +84,13 @@ namespace Demo
             }
         }
 
-        public bool Switch
+        public int OneMainPageStyle
         {
-            get { return ReadSettings(nameof(Switch), true); }
+            get { return ReadSettings(nameof(OneMainPageStyle), 0); }
 
             set
             {
-                SaveSettings(nameof(Switch), value);
+                SaveSettings(nameof(OneMainPageStyle), value);
                 OnPropertyChanged();
             }
         }

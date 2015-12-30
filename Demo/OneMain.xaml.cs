@@ -20,6 +20,17 @@ namespace Demo
             PageDataBinding = new DayObject();
             this.InitializeComponent();
             OneMainCurrent = this;
+            if (Main.MainCurrent.mainViewModel.oneSettings.OneMainPageStyle == 0)
+            {
+                OneMainStyle2.Visibility = Visibility.Visible;
+                OneMainStyle1.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+
+                OneMainStyle1.Visibility = Visibility.Visible;
+                OneMainStyle2.Visibility = Visibility.Collapsed;
+            }
         }
 
         public static List<string> FlipViewImageSourceList;
@@ -44,6 +55,7 @@ namespace Demo
         /// <param name="e"></param>
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            StoryStart.Begin();
             Main.CreateFileButtonClick = OneMainSavePic;
             FlipViewImageSourceList = GetOne.GetOneTodayImageSourceAsync(Main.x);
             if (this.fv.ItemsSource == null)
@@ -62,7 +74,7 @@ namespace Demo
                 Main.dayReallyObject = GetOne.GetTodayReallyObject(Main.dayReallyObjectString);
             }
         }
-      
+
         #region 圆点方法
 
         /// <summary>
@@ -122,7 +134,7 @@ namespace Demo
             PageDataBinding.OneDay = obj.OneDay;
             PageDataBinding.OneMonthAndYear = obj.OneMonthAndYear;
         }
-      
+
         #region 没什么卵用的方法
 
         private void GoLeft_Click(object sender, RoutedEventArgs e)
@@ -202,5 +214,5 @@ namespace Demo
             }
         }
     }
-    
+
 }

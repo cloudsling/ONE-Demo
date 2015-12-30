@@ -419,6 +419,12 @@ namespace Demo
             }
         }
     }
+   
+    
+    
+    
+    
+    
     /// <summary>
     /// 核心类，返回各种各样的对象
     /// </summary>
@@ -430,6 +436,9 @@ namespace Demo
         public static List<string> imageSourceAsync;
         public static Uri uri = new Uri("http://wufazhuce.com/");
         public List<string> imageSource;
+
+        static MatchCollection coll;
+
         #region 首页代码
         public static List<DayObject> dayObjectCollection;
         /// <summary>
@@ -475,8 +484,13 @@ namespace Demo
         private static void CutOneString(ref string resultString)
         {
             regex = new Regex("<div class=\"carousel-inner\">([\\d\\D]+)<a class=\"left carousel-control\" href=\"#carousel-one\" data-slide=\"prev\">", RegexOptions.Multiline);
-            var resultCollection = regex.Matches(resultString);
-            resultString = resultCollection[0].Groups[1].ToString();
+            coll = regex.Matches(resultString);
+            resultString = coll[0].Groups[1].ToString();
+        }
+        private static MatchCollection GetAccurateStringList(string regexString, string resultString)
+        {
+            regex = new Regex(regexString);
+            return regex.Matches(resultString);
         }
         /// <summary>
         /// 得到对象的ImagePath
@@ -485,8 +499,7 @@ namespace Demo
         /// <param name="list"></param>
         private static void GetObjectDayImagePath(string resultString, ref List<DayObject> list)
         {
-            regex = new Regex("<img.+src=\"(.+jpg)\".+/>");
-            MatchCollection coll = regex.Matches(resultString);
+            coll = GetAccurateStringList("<img.+src=\"(.+jpg)\".+/>", resultString);
             for (int i = 0; i < list.Count; i++)
             {
                 list[i].DayImagePath = coll[i].Groups[1].ToString();
@@ -499,8 +512,7 @@ namespace Demo
         /// <param name="list"></param>
         private static void GetObjectHeaderString(string resultString, ref List<DayObject> list)
         {
-            regex = new Regex("fp-one-imagen-footer\">([\\d\\D]+?)<br");
-            var coll = regex.Matches(resultString);
+            coll = GetAccurateStringList("fp-one-imagen-footer\">([\\d\\D]+?)<br", resultString);
             // Console.WriteLine(s);
             for (int i = 0; i < list.Count; i++)
             {
@@ -514,8 +526,7 @@ namespace Demo
         /// <param name="list"></param>
         private static void GetObjectMainString(string resultString, ref List<DayObject> list)
         {
-            regex = new Regex("img[\\d\\D]+?com/one/vol.{5}\">([\\d\\D]+?)</a>");
-            var coll = regex.Matches(resultString);
+            coll = GetAccurateStringList("img[\\d\\D]+?com/one/vol.{5}\">([\\d\\D]+?)</a>", resultString);
             // Console.WriteLine(s);
             for (int i = 0; i < list.Count; i++)
             {
@@ -529,9 +540,7 @@ namespace Demo
         /// <param name="list"></param>
         private static void GetObjectByWho(string resultString, ref List<DayObject> list)
         {
-            regex = new Regex("fp-one-imagen-footer[\\d\\D]+?<br />([\\d\\D]+?作品).+?</div>");
-            var coll = regex.Matches(resultString);
-            // Console.WriteLine(s);
+            coll = GetAccurateStringList("fp-one-imagen-footer[\\d\\D]+?<br />([\\d\\D]+?作品).+?</div>", resultString);
             for (int i = 0; i < list.Count; i++)
             {
                 list[i].ByWho = coll[i].Groups[1].ToString().Trim();
@@ -544,9 +553,7 @@ namespace Demo
         /// <param name="list"></param>
         private static void GetObjectVOL(string resultString, ref List<DayObject> list)
         {
-            regex = new Regex(">VOL.(.+?)</p>");
-            var coll = regex.Matches(resultString);
-            // Console.WriteLine(s);
+            coll = GetAccurateStringList(">VOL.(.+?)</p>", resultString);
             for (int i = 0; i < list.Count; i++)
             {
                 list[i].Vol = "VOL." + coll[i].Groups[1].ToString();
@@ -559,9 +566,7 @@ namespace Demo
         /// <param name="list"></param>
         private static void GetObjectOneDay(string resultString, ref List<DayObject> list)
         {
-            regex = new Regex("\">(..)</p>");
-            var coll = regex.Matches(resultString);
-            // Console.WriteLine(s);
+            coll = GetAccurateStringList("\">(..)</p>", resultString);
             for (int i = 0; i < list.Count; i++)
             {
                 list[i].OneDay = coll[i].Groups[1].ToString();
@@ -574,9 +579,7 @@ namespace Demo
         /// <param name="list"></param>
         private static void GetObjectOneMonthAndYear(string resultString, ref List<DayObject> list)
         {
-            regex = new Regex("y\">(.{8})</p>");
-            var coll = regex.Matches(resultString);
-            // Console.WriteLine(s);
+            coll = GetAccurateStringList("y\">(.{8})</p>", resultString);
             for (int i = 0; i < list.Count; i++)
             {
                 list[i].OneMonthAndYear = coll[i].Groups[1].ToString().Replace(' ', ',');
@@ -658,9 +661,7 @@ namespace Demo
         /// <param name="TodayMainString"></param>
         private static void FormatTodayReallyObject(ref string TodayMainString)
         {
-            regex = new Regex("(comilla-cerrar[\\d\\D]+)cosas-compartir");
-            var coll = regex.Matches(TodayMainString);
-            TodayMainString = coll[0].Groups[1].ToString();
+            TodayMainString = GetAccurateString("(comilla-cerrar[\\d\\D]+)cosas-compartir", TodayMainString);
         }
         /// <summary>
         /// 得到对象的ONE-THING对象
@@ -669,15 +670,14 @@ namespace Demo
         /// <param name="dayReallyObject"></param>
         private static void GetOneThingObject(string ResultString, ref DayReallyObject dayReallyObject)
         {
-            MatchCollection coll;
             OneThingObject oneThingObject = new OneThingObject();
-            StringBuilder sb;
+
             //得到header
-            regex = new Regex("cosas-titulo..([\\d\\D]+?)</h2>");
-            coll = regex.Matches(ResultString);
-            string temp = coll[0].Groups[1].ToString().Trim();
+            //regex = new Regex("cosas-titulo..([\\d\\D]+?)</h2>");
+            //coll = regex.Matches(ResultString);
+            string temp = GetAccurateString("cosas-titulo..([\\d\\D]+?)</h2>", ResultString);
             regex = new Regex("<.+?>(.+?)<");
-            coll = regex.Matches(temp);
+            MatchCollection coll = regex.Matches(temp);
             if (coll.Count > 0)
             {
                 oneThingObject.Header = coll[0].Groups[1].ToString().Trim();
@@ -687,14 +687,14 @@ namespace Demo
                 oneThingObject.Header = temp;
             }
             //得到content
-            regex = new Regex("cosas-contenido..([\\d\\D]+?)</div>");
-            coll = regex.Matches(ResultString);
-            sb = new StringBuilder(coll[0].Groups[1].ToString().Trim());
+            //regex = new Regex("cosas-contenido..([\\d\\D]+?)</div>");
+            //coll = regex.Matches(ResultString);
+            StringBuilder sb = new StringBuilder(GetAccurateString("cosas-contenido..([\\d\\D]+?)</div>", ResultString));
             oneThingObject.Content = sb.Replace("<br />", "").ToString();
             //得到图片路径
-            regex = new Regex("<img.+src=\"(.+jpg)\".+/>");
-            coll = regex.Matches(ResultString);
-            oneThingObject.ImagePath = coll[0].Groups[1].ToString();
+            //regex = new Regex("<img.+src=\"(.+jpg)\".+/>");
+            //coll = regex.Matches(ResultString);
+            oneThingObject.ImagePath = GetAccurateString("<img.+src=\"(.+jpg)\".+/>", ResultString);
 
             dayReallyObject.OneThing = oneThingObject;
         }
@@ -705,18 +705,11 @@ namespace Demo
         /// <param name="dayReallyObject"></param>
         private static void GetOneQuestionObject(string ResultString, ref DayReallyObject dayReallyObject)
         {
-            MatchCollection coll;
             OneQuestionObject oneThingObject = new OneQuestionObject();
-            //得到askerName和得到answerName
-            regex = new Regex("h4>([\\d\\D]+?)</h4>");
-            coll = regex.Matches(ResultString);
-            oneThingObject.AskerName = coll[0].Groups[1].ToString().Trim();
-            oneThingObject.AnswerName = coll[1].Groups[1].ToString().Trim();
-            //得到askerContent和answerCentent
-            regex = new Regex("cuestion-contenido..([\\d\\D]+?)</div>");
-            coll = regex.Matches(ResultString);
-            oneThingObject.AskContent = coll[0].Groups[1].ToString().Trim();
-            StringBuilder sb = new StringBuilder(coll[1].Groups[1].ToString().Trim());
+            oneThingObject.AskerName = GetAccurateString("h4>([\\d\\D]+?)</h4>", ResultString);
+            oneThingObject.AnswerName = GetAccurateString("h4>([\\d\\D]+?)</h4>", ResultString, 1);
+            oneThingObject.AskContent = GetAccurateString("cuestion-contenido..([\\d\\D]+?)</div>", ResultString);
+            StringBuilder sb = new StringBuilder(GetAccurateString("cuestion-contenido..([\\d\\D]+?)</div>", ResultString, 1));
             sb = sb.Replace("\r\n", "").Replace("</p>", "\r\n\r\n").Replace("<br />", "\r\n").Replace("&nbsp;", "").Replace("&mdash;", "—").Replace("&hellip;", "…").Replace("&ldquo;", "“").Replace("&rdquo;", "”").Replace("&rsquo;", "'").Replace("<p>", "     ");
             oneThingObject.AnswerContent = sb.ToString();
             dayReallyObject.OneQuestion = oneThingObject;
@@ -728,29 +721,23 @@ namespace Demo
         /// <param name="dayReallyObject"></param>
         private static void GetArticlesObject(string ResultString, ref DayReallyObject dayReallyObject)
         {
-            MatchCollection coll;
             ArticlesObject articles = new ArticlesObject();
-            //得到
-            regex = new Regex("comilla-cerrar..([\\d\\D]+?)</div>");
-            coll = regex.Matches(ResultString);
-            articles.HeadContent = coll[0].Groups[1].ToString().Trim();
-            //得到
-            regex = new Regex("articulo-titulo..([\\d\\D]+?)</h2>");
-            coll = regex.Matches(ResultString);
-            articles.Header = coll[0].Groups[1].ToString().Trim();
-            //得到
-            regex = new Regex("articulo-autor..([\\d\\D]+?)</p>");
-            coll = regex.Matches(ResultString);
-            articles.Writer = coll[0].Groups[1].ToString().Trim();
-
-            regex = new Regex("articulo-contenido..([\\d\\D]+?)</strong></p>");
-            coll = regex.Matches(ResultString);
-            StringBuilder sb = new StringBuilder(coll[0].Groups[1].ToString().Trim());
+            articles.HeadContent = GetAccurateString("comilla-cerrar..([\\d\\D]+?)</div>", ResultString);
+            articles.Header = GetAccurateString("articulo-titulo..([\\d\\D]+?)</h2>", ResultString);
+            articles.Writer = GetAccurateString("articulo-autor..([\\d\\D]+?)</p>", ResultString);
+            StringBuilder sb = new StringBuilder(GetAccurateString("articulo-contenido..([\\d\\D]+?)</strong></p>", ResultString));
             sb = sb.Replace("\r\n", "").Replace("&nbsp;", " ").Replace("&hellip;", "…").Replace("&mdash;", "—").Replace("&ldquo;", "“").Replace("&rdquo;", "”").Replace("&rsquo;", "'").Replace("</p>", "\r\n\r\n").Replace("<strong>", "     ").Replace("<p>", "     ").Replace("<br />", "\r\n");
             articles.Content = sb.ToString();
             dayReallyObject.Articles = articles;
         }
 
+        private static string GetAccurateString(string regexString, string resultString, int index = 0)
+        {
+            regex = new Regex(regexString);
+            coll = regex.Matches(resultString);
+            var res = coll[index].Groups[1];
+            return res != null ? res.ToString().Trim() : "发生了什么！(⊙ˍ⊙)？";
+        }
         #endregion
 
     }

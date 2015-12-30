@@ -32,6 +32,10 @@
                             </DataTemplate>
                         </ToggleSwitch.HeaderTemplate>
                     </ToggleSwitch>-->
+                    <ComboBox x:Name="OneMainPageStyle" Margin="10" Header="选择首页主题" SelectionChanged="ComboBox_SelectionChanged">
+                        <ComboBoxItem Content="真*霸气现代首页(ง •_•)ง" />
+                        <ComboBoxItem Content="真*古典传统首页(ง •_•)ง" />
+                    </ComboBox>
                 </StackPanel>
             </PivotItem>
            

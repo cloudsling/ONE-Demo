@@ -27,15 +27,11 @@ namespace Demo
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            // Window.Current.Content
-            //double a = articles.ActualHeight;
-            //Window.Current.Content.
             // Rect R = Window.Current.CoreWindow.Bounds;
             //ArticlesDataBinding.ScrollViewerHeight = Main.WindowHeight;
             aaa.Text = "“ ";
             bbb.Text = " ”";
-            // InitializationArticlesObject(Main.dayReallyObject.Articles);
-            InitializationSpeciallyString(500);
+            InitializationSpeciallyString(600);
             ForBorder.Begin();
         }
 
