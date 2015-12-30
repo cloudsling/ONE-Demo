@@ -1,2 +1,2 @@
-MainPackage=C:\Users\Ling\documents\visual studio 2015\Projects\Demo\Demo\bin\x64\Release\Demo_1.5.24.0_x64.appx
-SymbolPackage=C:\Users\Ling\documents\visual studio 2015\Projects\Demo\Demo\AppPackages\Demo_1.5.24.0_Test\Demo_1.5.24.0_x64.appxsym
+MainPackage=C:\Users\Ling\documents\visual studio 2015\Projects\Demo\Demo\bin\x64\Release\Demo_1.6.25.0_x64.appx
+SymbolPackage=C:\Users\Ling\documents\visual studio 2015\Projects\Demo\Demo\AppPackages\Demo_1.6.25.0_Test\Demo_1.6.25.0_x64.appxsym

@@ -178,22 +178,6 @@
                         <TextBlock x:Name="NotifyUserText" HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Center" FontFamily="Consolas"/>
                     </Border>
                 </Grid>
-                <!--<AppBar x:Name="AppBar" Visibility="Visible" Grid.Row="1" VerticalAlignment="Bottom" IsSticky="True" >
-                    <Grid>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <AppBarButton Label="刷新">
-                                <AppBarButton.Icon>
-                                    <FontIcon Glyph="&#xE72C;"  FontFamily="Segoe MDL2 Assets"/>
-                                </AppBarButton.Icon>
-                            </AppBarButton>
-                            <AppBarButton Label="保存" x:Name="CreateFileButton">
-                                <AppBarButton.Icon>
-                                    <FontIcon Glyph="&#xE74E;"  FontFamily="Segoe MDL2 Assets"/>
-                                </AppBarButton.Icon>
-                            </AppBarButton>
-                        </StackPanel>
-                    </Grid>
-                </AppBar>-->
                 <AppBar Grid.Row="1" x:Name="AppBar" LostFocus="AppBar_LostFocus" Visibility="Visible" VerticalAlignment="Bottom" IsSticky="True">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <AppBarButton Label="刷新" Click="AppBarButton_Click">

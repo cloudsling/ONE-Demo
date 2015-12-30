@@ -9,14 +9,14 @@
     DataContext="{Binding PageDataBinding,RelativeSource={RelativeSource Mode=Self}}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
-        <ListView Padding="0">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <ListView Grid.Row="0" Padding="0">
             <ListViewItem Padding="0.1">
                 <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0" MaxHeight="360">
+                    <Grid MaxHeight="360">
                         <Border Padding="0"  >
                             <Button Grid.Column="0" Grid.ColumnSpan="3" Padding="0" Width="Auto" Height="Auto" Click="Button_Click">
                                 <FlipView x:Name="fv" Width="Auto" Padding="0" SelectionChanged="fv_SelectionChanged"  MinHeight="360">
@@ -66,100 +66,99 @@
                             <Ellipse Margin="3 0 3 0" Width="5" Height="5" />
                         </StackPanel>
                     </Grid>
-
-                    <Viewbox Grid.Row="1">
-                        <Grid >
-                            <!--DataContext="{Binding PageDataBinding}"-->
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <StackPanel Grid.Row="0" Width="Auto" Height="Auto" Padding="0">
-                                <!--<Rectangle HorizontalAlignment="Center" Opacity="1" Fill="SkyBlue" Width="360" Height="1" Margin="4 5 4 2"  />-->
-                                <Border Height="Auto" Width="Auto" Padding="0">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Border Background="White" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5 0" Grid.Column="0"  >
-                                            <TextBlock Margin="6 0 0 0" FontSize="21" FontStyle="Italic"  FontFamily="Consolas" Foreground="#36C3F1" Text="{Binding Path=Vol}"/>
-                                        </Border>
-                                        <Button Padding="2" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Grid.Column="2" Margin="0 3 2 3" Template="{StaticResource MyButtonTemplate}">
-                                            <Button.Content>
-                                                <Grid>
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition />
-                                                        <RowDefinition />
-                                                    </Grid.RowDefinitions>
-                                                    <TextBlock FontFamily="CoNsolas" Margin="2 2" Foreground="#36C3F1" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="0" Text="{Binding HeaderString}" FontSize="15" TextWrapping="Wrap" />
-                                                    <TextBlock x:Name="txtByWho" FontFamily="CoNsolas" Margin="2 3" HorizontalAlignment="Right" Grid.Row="1" Text="{Binding ByWho}" TextWrapping="Wrap"  FontSize="12"/>
-                                                </Grid>
-                                            </Button.Content>
-                                        </Button>
-                                    </Grid>
-                                </Border>
-                                <Rectangle x:Name="RectangleWidth" HorizontalAlignment="Center" Opacity="0.6" Fill="#36C3F1" Width="Auto" MinWidth="340" Height="0.8" Margin="4 2" />
-                            </StackPanel>
-                            <Border Padding="0" Grid.Row="1" Width="Auto">
-                                <StackPanel Height="Auto" >
-                                    <Border Padding="0" Margin="70 3 0 -9" HorizontalAlignment="Left" BorderBrush="#36C3F1" 
-                            BorderThickness="1.4" RenderTransformOrigin="0.5,0.5" Opacity="1" >
-                                        <Border.RenderTransform>
-                                            <CompositeTransform Rotation="134.573"/>
-                                        </Border.RenderTransform>
-                                        <Rectangle Margin="0" Width="14" Height="14" Fill="#36C3F1" />
-                                    </Border>
-                                    <Border Background="#36C3F1" Padding="0" BorderBrush="#36C3F1" 
-                            BorderThickness="1.4" 
-                            CornerRadius="5" MinHeight="200" MinWidth="360" Margin="6 0">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="7*"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="3*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Grid Grid.Column="0">
-                                                <TextBlock VerticalAlignment="Center"   TextWrapping="Wrap"  FontFamily="Consolas" Foreground="White" Text="{Binding MainString}" HorizontalAlignment="Center" MaxWidth="210" />
-                                            </Grid>
-                                            <Rectangle Fill="LightGray" Grid.Column="1" Width="1.2" MinHeight="160" Height="Auto" VerticalAlignment="Center"/>
-                                            <Grid Padding="0" Margin="0" Grid.Column="2">
-                                                <Grid.RowDefinitions >
-                                                    <RowDefinition  Height="4*"/>
-                                                    <RowDefinition  Height="3*"/>
-                                                </Grid.RowDefinitions>
-                                                <Grid Grid.Row="0">
-                                                    <TextBlock Margin="0" Foreground="Gray" FontSize="60" HorizontalAlignment="Center"  VerticalAlignment="Bottom" FontFamily="Consolas" Text="{Binding OneDay}" />
-                                                    <Rectangle Fill="LightGray" Width="90" Height="1" VerticalAlignment="Bottom"/>
-                                                </Grid>
-                                                <TextBlock Grid.Row="1" Foreground="White" HorizontalAlignment="Center" Margin="0 5" VerticalAlignment="Top" FontFamily="CoNsolas" Text="{Binding OneMonthAndYear}"/>
-                                            </Grid>
-                                        </Grid>
-                                    </Border>
-                                </StackPanel>
-                            </Border>
-                        </Grid>
-                    </Viewbox>
                 </Grid>
             </ListViewItem>
         </ListView>
-    </Grid>
+        <ScrollViewer Grid.Row="1">
+            <!--<Grid  Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Width="Auto" Height="Auto" Padding="0">
+                            <Rectangle HorizontalAlignment="Center" Opacity="1" Fill="SkyBlue" Width="360" Height="1" Margin="4 5 4 2"  />
+                            <Border Height="Auto" Width="Auto" Padding="0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Grid.Column="0" Background="White" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5 0">
+                                        <TextBlock Margin="6 0 0 0" FontSize="21" FontStyle="Italic"  FontFamily="Consolas" Foreground="#36C3F1" Text="{Binding Path=Vol}"/>
+                                    </Border>
+                                    <Button Padding="2" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Grid.Column="2" Margin="0 3 2 3" Template="{StaticResource MyButtonTemplate}">
+                                        <Button.Content>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                                <TextBlock FontFamily="CoNsolas" Margin="2 2" Foreground="#36C3F1" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="0" Text="{Binding HeaderString}" FontSize="15" TextWrapping="Wrap" />
+                                                <TextBlock x:Name="txtByWho" FontFamily="CoNsolas" Margin="2 3" HorizontalAlignment="Right" Grid.Row="1" Text="{Binding ByWho}" TextWrapping="Wrap"  FontSize="12"/>
+                                            </Grid>
+                                        </Button.Content>
+                                    </Button>
+                                </Grid>
+                            </Border>
+                            <Rectangle x:Name="RectangleWidth" HorizontalAlignment="Center" Opacity="0.6" Fill="#36C3F1" Width="Auto" MinWidth="340" Height="0.8" Margin="4 2" />
+                        </StackPanel>
+                        <Border Padding="0" Grid.Row="1" Width="Auto">
+                            <StackPanel Height="Auto" >
+                                <Border Padding="0" Margin="70 3 0 -9" HorizontalAlignment="Left" BorderBrush="#36C3F1" 
+                            BorderThickness="1.4" RenderTransformOrigin="0.5,0.5" Opacity="1" >
+                                    <Border.RenderTransform>
+                                        <CompositeTransform Rotation="134.573"/>
+                                    </Border.RenderTransform>
+                                    <Rectangle Margin="0" Width="14" Height="14" Fill="#36C3F1" />
+                                </Border>
+                                <Border Background="#36C3F1" Padding="0" BorderBrush="#36C3F1" 
+                            BorderThickness="1.4" 
+                            CornerRadius="5" MinHeight="200" MinWidth="360" Margin="6 0">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="7*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="3*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Grid.Column="0">
+                                            <TextBlock VerticalAlignment="Center"   TextWrapping="Wrap"  FontFamily="Consolas" Foreground="White" Text="{Binding MainString}" HorizontalAlignment="Center" MaxWidth="210" />
+                                        </Grid>
+                                        <Rectangle Fill="LightGray" Grid.Column="1" Width="1.2" MinHeight="160" Height="Auto" VerticalAlignment="Center"/>
+                                        <Grid Padding="0" Margin="0" Grid.Column="2">
+                                            <Grid.RowDefinitions >
+                                                <RowDefinition  Height="4*"/>
+                                                <RowDefinition  Height="3*"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <TextBlock Margin="0" Foreground="Gray" FontSize="60" HorizontalAlignment="Center"  VerticalAlignment="Bottom" FontFamily="Consolas" Text="{Binding OneDay}" />
+                                                <Rectangle Fill="LightGray" Width="90" Height="1" VerticalAlignment="Bottom"/>
+                                            </Grid>
+                                            <TextBlock Grid.Row="1" Foreground="White" HorizontalAlignment="Center" Margin="0 5" VerticalAlignment="Top" FontFamily="CoNsolas" Text="{Binding OneMonthAndYear}"/>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+                    </Grid>-->
+            <StackPanel>
+                <Grid Padding="5">
+                    <TextBlock Text="{Binding Path=Vol}" HorizontalAlignment="Left" />
+                    <StackPanel HorizontalAlignment="Right">
+                        <TextBlock FontFamily="CoNsolas" Margin="2 2" Foreground="#36C3F1" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="0" Text="{Binding HeaderString}" FontSize="15" TextWrapping="Wrap" />
+                        <TextBlock x:Name="txtByWho" FontFamily="CoNsolas" Margin="2 3" HorizontalAlignment="Right" Grid.Row="1" Text="{Binding ByWho}" TextWrapping="Wrap"  FontSize="12"/>
+                    </StackPanel>
+                </Grid>
+                <StackPanel>
 
-    <!--<Page.BottomAppBar>
-        <AppBar LostFocus="AppBar_LostFocus" x:Name="AppBar" Visibility="Visible" Grid.Row="1" VerticalAlignment="Bottom" IsSticky="True" >
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <AppBarButton Label="刷新" Click="AppBarButton_Click">
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE72C;"  FontFamily="Segoe MDL2 Assets"/>
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton Label="保存图片" Click="CreateFileButton_Click" x:Name="CreateFileButton">
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE74E;"  FontFamily="Segoe MDL2 Assets"/>
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                </StackPanel>
+                <StackPanel>
+                    <Border Background="Gray" BorderBrush="Gray" Width="320" HorizontalAlignment="Center" Height="1.2" BorderThickness=".5" Margin="8"/>
+                </StackPanel>
+                <StackPanel>
+
+                </StackPanel>
             </StackPanel>
-        </AppBar>
-    </Page.BottomAppBar>-->
+        </ScrollViewer>
+    </Grid>
 </Page>

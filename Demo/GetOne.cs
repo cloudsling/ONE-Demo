@@ -717,7 +717,7 @@ namespace Demo
             coll = regex.Matches(ResultString);
             oneThingObject.AskContent = coll[0].Groups[1].ToString().Trim();
             StringBuilder sb = new StringBuilder(coll[1].Groups[1].ToString().Trim());
-            sb = sb.Replace("\r\n", "").Replace("</p>", "").Replace("<br />", "\r\n").Replace("&nbsp;", "").Replace("&mdash;", "—").Replace("&hellip;", "…").Replace("&ldquo;", "“").Replace("&rdquo;", "”").Replace("&rsquo;", "'").Replace("<p>", "    ");
+            sb = sb.Replace("\r\n", "").Replace("</p>", "\r\n\r\n").Replace("<br />", "\r\n").Replace("&nbsp;", "").Replace("&mdash;", "—").Replace("&hellip;", "…").Replace("&ldquo;", "“").Replace("&rdquo;", "”").Replace("&rsquo;", "'").Replace("<p>", "     ");
             oneThingObject.AnswerContent = sb.ToString();
             dayReallyObject.OneQuestion = oneThingObject;
         }
@@ -746,7 +746,7 @@ namespace Demo
             regex = new Regex("articulo-contenido..([\\d\\D]+?)</strong></p>");
             coll = regex.Matches(ResultString);
             StringBuilder sb = new StringBuilder(coll[0].Groups[1].ToString().Trim());
-            sb = sb.Replace("\r\n", "").Replace("&nbsp;", " ").Replace("&hellip;", "…").Replace("&mdash;", "—").Replace("&ldquo;", "“").Replace("&rdquo;", "”").Replace("&rsquo;", "'").Replace("</p>", "\r\n").Replace("<strong>", "   ").Replace("<p>", "   ").Replace("<br />", "\r\n");
+            sb = sb.Replace("\r\n", "").Replace("&nbsp;", " ").Replace("&hellip;", "…").Replace("&mdash;", "—").Replace("&ldquo;", "“").Replace("&rdquo;", "”").Replace("&rsquo;", "'").Replace("</p>", "\r\n\r\n").Replace("<strong>", "     ").Replace("<p>", "     ").Replace("<br />", "\r\n");
             articles.Content = sb.ToString();
             dayReallyObject.Articles = articles;
         }
