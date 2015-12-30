@@ -5,5 +5,12 @@
     xmlns:local="using:App1"
     RequestedTheme="Light">
     <Application.Resources>
+        <ResourceDictionary x:Name="c">
+            <SolidColorBrush x:Name="MainColor" Color="#36C3F1"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Styles.xaml" />
+                <ResourceDictionary Source="/Styles/MyBtn.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

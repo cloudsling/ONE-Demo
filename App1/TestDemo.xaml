@@ -1,0 +1,30 @@
+﻿<Page
+    x:Class="App1.TestDemo"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:App1"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid>
+            <Grid Opacity=".7" Background="Black"></Grid>
+            <Border CornerRadius="10" BorderThickness="2" BorderBrush="Green" Background="Red" Width="300" Height="180">
+                <StackPanel>
+                    <TextBlock Margin="10 10 0 0" Text="耽误您1分钟："/>
+                    <TextBlock Margin="20 2" Foreground="Green" TextWrapping="Wrap" Text="您已经用MANY-一个有一段时间了，您对Many-一个有什么评价或者看法呢？(ง •_•)ง非常希望听到您的声音^^" />
+                    <StackPanel Margin="10 0" Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Text="不再提醒：" Foreground="Black" />
+                        <CheckBox VerticalAlignment="Center" IsChecked="True" />
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                        <Button Content="现在评价" Template="{StaticResource MyButtonTemplate}" />
+                        <Button Content="可以啊0_0" FontFamily="Consolas" Template="{StaticResource MyButtonTemplate}" />
+                        <Button Content="我要好评" Template="{StaticResource MyButtonTemplate}" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</Page>

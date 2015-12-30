@@ -36,11 +36,7 @@ namespace Demo
             mainViewModel = new MainViewModel();
             this.InitializeComponent();
             MainCurrent = this;
-            try
-            {
                 SystemNavigationManager.GetForCurrentView().BackRequested += Main_BackRequested;
-            }
-            catch (Exception) { }
         }
 
         private async void Main_BackRequested(object sender, BackRequestedEventArgs e)
@@ -60,8 +56,6 @@ namespace Demo
                     return;
                 }
             }
-            //OneSettings settings = new OneSettings();
-
             if (OneFrame.CanGoBack)
             {
                 OneFrame.GoBack();
@@ -96,13 +90,13 @@ namespace Demo
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            //Int32.TryParse()
-            //string aaaa = e.Parameter as string;
             if ((e.Parameter as string) == "404")
             {
                 HEADER111.Text = "关于";
-                if (isHide.Visibility == Visibility.Visible) { isHide.Visibility = Visibility.Collapsed; }
-                // AppBar.Visibility = Visibility.Collapsed;
+                if (isHide.Visibility == Visibility.Visible)
+                {
+                    isHide.Visibility = Visibility.Collapsed;
+                }
                 OneFrame.Navigate(typeof(About));
                 await Task.Delay(2000);
                 NotifyUserMethod("程序将在5秒后退出", 220);
@@ -121,9 +115,22 @@ namespace Demo
                 bar.IsIndeterminate = false;
                 ring.IsActive = false;
                 OneFrame.Navigate(typeof(OneMain));
-
                 StorageFolder storageFolder = KnownFolders.PicturesLibrary;
                 oneFolder = await storageFolder.CreateFolderAsync("ONE-一个", CreationCollisionOption.OpenIfExists);
+            }
+            mainViewModel.oneSettings.GiveMeGood += 1;
+            if (mainViewModel.oneSettings.GiveMeGood == 10)
+            {
+                if (cb.IsChecked == false)
+                {
+                    mainViewModel.oneSettings.GiveMeGood = 0;
+                }
+                if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+                {
+                    await StatusBar.GetForCurrentView().HideAsync();
+                }
+                StarStar.Visibility = Visibility.Visible;
+                GiveMeStar.Begin();
             }
         }
         /// <summary>
@@ -306,6 +313,18 @@ namespace Demo
                     break;
                 default:
                     break;
+            }
+        }
+
+        private async void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            GiveMeStarOk.Begin();
+            await Task.Delay(650);
+            StarStar.Visibility = Visibility.Collapsed;
+            Love();
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                await StatusBar.GetForCurrentView().ShowAsync();
             }
         }
     }

@@ -43,7 +43,7 @@ namespace Demo
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            try
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
                 var bar = StatusBar.GetForCurrentView();
                 await bar.HideAsync();
@@ -52,7 +52,6 @@ namespace Demo
                 what.ProgressValue = 0;
                 what.Text = "Many-多个";
             }
-            catch (Exception) { }
             //必须要做的事情
             try
             {
@@ -63,7 +62,7 @@ namespace Demo
             catch (Exception)
             {
                 await new MessageDialog("oops！请检查您的网络连接，离线版本将在后续版本开发o((⊙﹏⊙))o.").ShowAsync();
-                this.Frame.Navigate(typeof(Main), "404");
+                Frame.Navigate(typeof(Main), "404");
                 return;
             }
             this.Frame.Navigate(typeof(StartMainPage), new MyNavigationEventArgs(x, DayObjectCollection));

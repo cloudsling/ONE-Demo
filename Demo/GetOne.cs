@@ -422,9 +422,6 @@ namespace Demo
    
     
     
-    
-    
-    
     /// <summary>
     /// 核心类，返回各种各样的对象
     /// </summary>

@@ -73,6 +73,7 @@ namespace Demo
             {
                 Main.dayReallyObject = GetOne.GetTodayReallyObject(Main.dayReallyObjectString);
             }
+           
         }
 
         #region 圆点方法

@@ -18,12 +18,9 @@ namespace Demo
         public StartMainPage()
         {
             PageDataBinding = new DayObject();
-            try
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
                 StatusBar.GetForCurrentView().HideAsync().AsTask();
-            }
-            catch (Exception)
-            {
             }
             this.InitializeComponent();
             CurrentPage = this;
@@ -54,9 +51,10 @@ namespace Demo
         }
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(Main), sth);
-            try
+            Frame.Navigate(typeof(Main), sth);
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
+
                 var bar = StatusBar.GetForCurrentView();
                 var what = bar.ProgressIndicator;
                 await what.ShowAsync();
@@ -64,9 +62,6 @@ namespace Demo
                 bar.BackgroundColor = Colors.DeepSkyBlue;
                 bar.BackgroundOpacity = 1;
                 await bar.ShowAsync();
-            }
-            catch (Exception)
-            {
             }
         }
     }

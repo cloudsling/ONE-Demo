@@ -94,6 +94,16 @@ namespace Demo
                 OnPropertyChanged();
             }
         }
+
+        public int GiveMeGood
+        {
+            get { return ReadSettings(nameof(GiveMeGood), 0); }
+            set
+            {
+                SaveSettings(nameof(GiveMeGood), value);
+                OnPropertyChanged();
+            }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged([CallerMemberName]string propertyName = "")
