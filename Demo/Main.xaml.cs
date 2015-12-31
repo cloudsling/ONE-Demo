@@ -8,7 +8,6 @@ using System.ComponentModel;
 using System.Threading;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using System.Text.RegularExpressions;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Core;
@@ -118,6 +117,7 @@ namespace Demo
                 StorageFolder storageFolder = KnownFolders.PicturesLibrary;
                 oneFolder = await storageFolder.CreateFolderAsync("ONE-一个", CreationCollisionOption.OpenIfExists);
             }
+
             mainViewModel.oneSettings.GiveMeGood += 1;
             if (mainViewModel.oneSettings.GiveMeGood == 10)
             {
@@ -133,6 +133,7 @@ namespace Demo
                 GiveMeStar.Begin();
             }
         }
+
         /// <summary>
         /// 刷新首页
         /// </summary>
@@ -326,6 +327,11 @@ namespace Demo
             {
                 await StatusBar.GetForCurrentView().ShowAsync();
             }
+        }
+
+        private void DemoDemo_ManipulationCompleted(object sender, Windows.UI.Xaml.Input.ManipulationCompletedRoutedEventArgs e)
+        {
+            SwitchSplitter();
         }
     }
 

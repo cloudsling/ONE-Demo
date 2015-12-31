@@ -100,7 +100,6 @@
     <None Include="ClassDiagram1.cd" />
     <None Include="Demo_StoreKey.pfx" />
     <None Include="Package.StoreAssociation.xml" />
-    <Content Include="Assets\About\StartMainPage.jpg" />
     <Content Include="Assets\About\StartImage.png" />
     <Content Include="Assets\Square150x150Logo.scale-100.png" />
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
