@@ -226,7 +226,7 @@
                 </StackPanel>
             </Border>
         </Grid>
-        <Rectangle x:Name="DemoDemo" Width="50" Margin="-25 0" Opacity="0" Fill="Yellow" HorizontalAlignment="Left" ManipulationMode="TranslateX"  ManipulationCompleted="DemoDemo_ManipulationCompleted">
+        <Rectangle x:Name="DemoDemo" Width="40" Margin="-20 0" Opacity="0" Fill="Yellow" HorizontalAlignment="Left" ManipulationMode="TranslateX"  ManipulationCompleted="DemoDemo_ManipulationCompleted">
             <Rectangle.RenderTransform>
                 <TranslateTransform x:Name="Demo" />
             </Rectangle.RenderTransform>

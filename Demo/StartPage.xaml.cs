@@ -66,7 +66,6 @@ namespace Demo
                 return;
             }
             this.Frame.Navigate(typeof(StartMainPage), new MyNavigationEventArgs(x, DayObjectCollection));
-
         }
     }
 
