@@ -17,7 +17,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>Demo_StoreKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>E3EF9A64361634395376F3D65CE33F65DF88B394</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>EB9B2C0D231D6CEE649D2F929CAE121EEB92032A</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
@@ -98,10 +98,11 @@
     </Content>
     <Content Include="Assets\About\about.png" />
     <None Include="ClassDiagram1.cd" />
-    <None Include="Package.StoreAssociation.xml" />
     <Content Include="Assets\About\StartImage.png" />
     <Content Include="Assets\Square150x150Logo.scale-100.png" />
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
+    <None Include="Demo_StoreKey.pfx" />
+    <None Include="Package.StoreAssociation.xml" />
     <Content Include="Resources\OneData.xml">
       <SubType>Designer</SubType>
     </Content>

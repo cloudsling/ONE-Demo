@@ -1,3 +1,3 @@
-MainPackage=C:\Users\Ling\documents\visual studio 2015\Projects\Demo\Demo\bin\ARM\Release\Demo_1.7.28.0_ARM.appx
-SymbolPackage=C:\Users\Ling\documents\visual studio 2015\Projects\Demo\Demo\AppPackages\Demo_1.7.28.0_Test\Demo_1.7.28.0_ARM.appxsym
-ResourcePack=C:\Users\Ling\documents\visual studio 2015\Projects\Demo\Demo\bin\ARM\Release\Demo_1.7.28.0_scale-100.appx
+MainPackage=C:\Users\LING\Documents\Source\Repos\ONE-Demo\Demo\bin\ARM\Release\Demo_1.8.37.0_ARM.appx
+SymbolPackage=C:\Users\LING\Documents\Source\Repos\ONE-Demo\Demo\AppPackages\Demo_1.8.37.0_Test\Demo_1.8.37.0_ARM.appxsym
+ResourcePack=C:\Users\LING\Documents\Source\Repos\ONE-Demo\Demo\bin\ARM\Release\Demo_1.8.37.0_scale-100.appx

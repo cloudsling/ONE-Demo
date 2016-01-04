@@ -419,9 +419,9 @@ namespace Demo
             }
         }
     }
-   
-    
-    
+
+
+
     /// <summary>
     /// 核心类，返回各种各样的对象
     /// </summary>
@@ -480,9 +480,15 @@ namespace Demo
         /// <param name="resultString"></param>
         private static void CutOneString(ref string resultString)
         {
-            regex = new Regex("<div class=\"carousel-inner\">([\\d\\D]+)<a class=\"left carousel-control\" href=\"#carousel-one\" data-slide=\"prev\">", RegexOptions.Multiline);
-            coll = regex.Matches(resultString);
-            resultString = coll[0].Groups[1].ToString();
+            try
+            {
+                regex = new Regex("<div class=\"carousel-inner\">([\\d\\D]+)<a class=\"left carousel-control\" href=\"#carousel-one\" data-slide=\"prev\">", RegexOptions.Multiline);
+                coll = regex.Matches(resultString);
+                resultString = coll[0].Groups[1].ToString();
+            }
+            catch (Exception)
+            {
+            }
         }
         private static MatchCollection GetAccurateStringList(string regexString, string resultString)
         {
@@ -496,10 +502,16 @@ namespace Demo
         /// <param name="list"></param>
         private static void GetObjectDayImagePath(string resultString, ref List<DayObject> list)
         {
-            coll = GetAccurateStringList("<img.+src=\"(.+jpg)\".+/>", resultString);
-            for (int i = 0; i < list.Count; i++)
+            try
             {
-                list[i].DayImagePath = coll[i].Groups[1].ToString();
+                coll = GetAccurateStringList("<img.+src=\"(.+jpg)\".+/>", resultString);
+                for (int i = 0; i < list.Count; i++)
+                {
+                    list[i].DayImagePath = coll[i].Groups[1].ToString();
+                }
+            }
+            catch (Exception)
+            {
             }
         }
         /// <summary>
@@ -509,11 +521,17 @@ namespace Demo
         /// <param name="list"></param>
         private static void GetObjectHeaderString(string resultString, ref List<DayObject> list)
         {
-            coll = GetAccurateStringList("fp-one-imagen-footer\">([\\d\\D]+?)<br", resultString);
-            // Console.WriteLine(s);
-            for (int i = 0; i < list.Count; i++)
+            try
             {
-                list[i].HeaderString = coll[i].Groups[1].ToString().Trim();
+                coll = GetAccurateStringList("fp-one-imagen-footer\">([\\d\\D]+?)<br", resultString);
+                // Console.WriteLine(s);
+                for (int i = 0; i < list.Count; i++)
+                {
+                    list[i].HeaderString = coll[i].Groups[1].ToString().Trim();
+                }
+            }
+            catch (Exception)
+            {
             }
         }
         /// <summary>
@@ -523,11 +541,17 @@ namespace Demo
         /// <param name="list"></param>
         private static void GetObjectMainString(string resultString, ref List<DayObject> list)
         {
-            coll = GetAccurateStringList("img[\\d\\D]+?com/one/vol.{5}\">([\\d\\D]+?)</a>", resultString);
-            // Console.WriteLine(s);
-            for (int i = 0; i < list.Count; i++)
+            try
             {
-                list[i].MainString = coll[i].Groups[1].ToString();
+                coll = GetAccurateStringList("img[\\d\\D]+?com/one/vol.{5}\">([\\d\\D]+?)</a>", resultString);
+                // Console.WriteLine(s);
+                for (int i = 0; i < list.Count; i++)
+                {
+                    list[i].MainString = coll[i].Groups[1].ToString();
+                }
+            }
+            catch (Exception)
+            {
             }
         }
         /// <summary>
@@ -537,10 +561,16 @@ namespace Demo
         /// <param name="list"></param>
         private static void GetObjectByWho(string resultString, ref List<DayObject> list)
         {
-            coll = GetAccurateStringList("fp-one-imagen-footer[\\d\\D]+?<br />([\\d\\D]+?作品).+?</div>", resultString);
-            for (int i = 0; i < list.Count; i++)
+            try
             {
-                list[i].ByWho = coll[i].Groups[1].ToString().Trim();
+                coll = GetAccurateStringList("fp-one-imagen-footer[\\d\\D]+?<br />([\\d\\D]+?作品).+?</div>", resultString);
+                for (int i = 0; i < list.Count; i++)
+                {
+                    list[i].ByWho = coll[i].Groups[1].ToString().Trim();
+                }
+            }
+            catch (Exception)
+            {
             }
         }
         /// <summary>
@@ -550,10 +580,16 @@ namespace Demo
         /// <param name="list"></param>
         private static void GetObjectVOL(string resultString, ref List<DayObject> list)
         {
-            coll = GetAccurateStringList(">VOL.(.+?)</p>", resultString);
-            for (int i = 0; i < list.Count; i++)
+            try
             {
-                list[i].Vol = "VOL." + coll[i].Groups[1].ToString();
+                coll = GetAccurateStringList(">VOL.(.+?)</p>", resultString);
+                for (int i = 0; i < list.Count; i++)
+                {
+                    list[i].Vol = "VOL." + coll[i].Groups[1].ToString();
+                }
+            }
+            catch (Exception)
+            {
             }
         }
         /// <summary>
@@ -563,10 +599,24 @@ namespace Demo
         /// <param name="list"></param>
         private static void GetObjectOneDay(string resultString, ref List<DayObject> list)
         {
-            coll = GetAccurateStringList("\">(..)</p>", resultString);
-            for (int i = 0; i < list.Count; i++)
+            try
             {
-                list[i].OneDay = coll[i].Groups[1].ToString();
+                coll = GetAccurateStringList("\">(.{1,2})</p>", resultString);
+                for (int i = 0; i < list.Count; i++)
+                {
+                    StringBuilder sb = new StringBuilder(coll[i].Groups[1].ToString());
+                    if (sb.Length == 2)
+                    {
+                        list[i].OneDay = coll[i].Groups[1].ToString();
+                    }
+                    else
+                    {
+                        list[i].OneDay = "0" + coll[i].Groups[1].ToString();
+                    }
+                }
+            }
+            catch (Exception)
+            {
             }
         }
         /// <summary>

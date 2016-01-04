@@ -61,7 +61,7 @@ namespace Demo
             }
             catch (Exception)
             {
-                await new MessageDialog("oops！请检查您的网络连接，离线版本将在后续版本开发o((⊙﹏⊙))o.").ShowAsync();
+                await new MessageDialog("oops！程序出了一点异常，可能是网络连接的问题......").ShowAsync();
                 Frame.Navigate(typeof(Main), "404");
                 return;
             }
