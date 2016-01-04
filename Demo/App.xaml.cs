@@ -55,8 +55,6 @@ namespace Demo
             }
             // 确保当前窗口处于活动状态
             Window.Current.Activate();
-         
-
         }
 
         private void RootFrame_Navigated(object sender, NavigationEventArgs e)
