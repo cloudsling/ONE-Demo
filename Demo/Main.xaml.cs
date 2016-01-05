@@ -118,20 +118,20 @@ namespace Demo
                 oneFolder = await storageFolder.CreateFolderAsync("ONE-一个", CreationCollisionOption.OpenIfExists);
             }
 
-            mainViewModel.oneSettings.GiveMeGood += 1;
-            if (mainViewModel.oneSettings.GiveMeGood == 10)
-            {
-                if (cb.IsChecked == false)
-                {
-                    mainViewModel.oneSettings.GiveMeGood = 0;
-                }
-                if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-                {
-                    await StatusBar.GetForCurrentView().HideAsync();
-                }
-                StarStar.Visibility = Visibility.Visible;
-                GiveMeStar.Begin();
-            }
+            //mainViewModel.oneSettings.GiveMeGood += 1;
+            //if (mainViewModel.oneSettings.GiveMeGood == 10)
+            //{
+            //    if (cb.IsChecked == false)
+            //    {
+            //        mainViewModel.oneSettings.GiveMeGood = 0;
+            //    }
+            //    if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            //    {
+            //        await StatusBar.GetForCurrentView().HideAsync();
+            //    }
+            //    StarStar.Visibility = Visibility.Visible;
+            //    GiveMeStar.Begin();
+            //}
         }
 
         /// <summary>

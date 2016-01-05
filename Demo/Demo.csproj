@@ -103,9 +103,6 @@
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <None Include="Demo_StoreKey.pfx" />
     <None Include="Package.StoreAssociation.xml" />
-    <Content Include="Resources\OneData.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -216,7 +213,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Config\" />
-    <Folder Include="Resources\Images\" />
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="WindowsMobile, Version=10.0.10586.0">

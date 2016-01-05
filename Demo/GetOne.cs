@@ -772,8 +772,8 @@ namespace Demo
             articles.HeadContent = GetAccurateString("comilla-cerrar..([\\d\\D]+?)</div>", ResultString);
             articles.Header = GetAccurateString("articulo-titulo..([\\d\\D]+?)</h2>", ResultString);
             articles.Writer = GetAccurateString("articulo-autor..([\\d\\D]+?)</p>", ResultString);
-            StringBuilder sb = new StringBuilder(GetAccurateString("articulo-contenido..([\\d\\D]+?)</strong></p>", ResultString));
-            sb = sb.Replace("\r\n", "").Replace("&nbsp;", " ").Replace("&hellip;", "…").Replace("&mdash;", "—").Replace("&ldquo;", "“").Replace("&rdquo;", "”").Replace("&rsquo;", "'").Replace("</p>", "\r\n\r\n").Replace("<strong>", "     ").Replace("<p>", "     ").Replace("<br />", "\r\n");
+            StringBuilder sb = new StringBuilder(GetAccurateString("articulo-contenido..([\\d\\D]+?)<p class=\"articulo-editor", ResultString));
+            sb = sb.Replace("\r\n", "").Replace("&nbsp;", " ").Replace("&hellip;", "…").Replace("&mdash;", "—").Replace("&ldquo;", "“").Replace("&rdquo;", "”").Replace("&rsquo;", "'").Replace("</p>", "\r\n\r\n").Replace("<strong>", "     ").Replace("<p>", "     ").Replace("<br />", "\r\n").Replace("<em>", "").Replace("</em>", "").Replace("</div>", "");
             articles.Content = sb.ToString();
             dayReallyObject.Articles = articles;
         }
@@ -781,9 +781,15 @@ namespace Demo
         private static string GetAccurateString(string regexString, string resultString, int index = 0)
         {
             regex = new Regex(regexString);
-            coll = regex.Matches(resultString);
-            var res = coll[index].Groups[1];
-            return res != null ? res.ToString().Trim() : "发生了什么！(⊙ˍ⊙)？";
+            coll = regex.Matches(resultString); try
+            {
+                var res = coll[index].Groups[1];
+                return res != null ? res.ToString().Trim() : "发生了什么！(⊙ˍ⊙)？";
+            }
+            catch (Exception)
+            {
+                return String.Empty;
+            }
         }
         #endregion
 
