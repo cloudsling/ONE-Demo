@@ -513,13 +513,6 @@ namespace Demo
                 //StorageFile file = await Main.oneFolder.GetFileAsync(list[i].Vol + ".jpg");
                 // list[i].DayImagePath = TempPath;
             }
-            try
-            {
-
-            }
-            catch (Exception)
-            {
-            }
         }
 
         public static string TempPath = "";
@@ -680,6 +673,7 @@ namespace Demo
         /// <param name="uri"></param>
         public static async void SavePicHere(string uri, string fileName, DayObject obj)
         {
+
             if (httpClient != null) httpClient.Dispose();
             StorageFile file = await ApplicationData.Current.LocalCacheFolder.CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists);
             obj.DayImagePath = file.Path;
@@ -692,9 +686,13 @@ namespace Demo
             }
             catch (Exception)
             {
-                SavePicHere(uri, fileName, obj);
+                vvvvvvv++;
+                if (vvvvvvv < 5)
+                    SavePicHere(uri, fileName, obj);
             }
+            return;
         }
+        static int vvvvvvv = 0;
 
         public static DayReallyObject dayReallyObject;
         /// <summary>

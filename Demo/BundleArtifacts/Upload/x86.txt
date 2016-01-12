@@ -1,2 +1,2 @@
-MainPackage=C:\Users\LING\Documents\Source\Repos\ONE-Demo\Demo\bin\x86\Release\Upload\Demo_1.8.48.0_x86.appx
-SymbolPackage=C:\Users\LING\Documents\Source\Repos\ONE-Demo\Demo\AppPackages\Demo_1.8.48.0\Demo_1.8.48.0_x86.appxsym
+MainPackage=C:\Users\LING\Documents\Source\Repos\ONE-Demo\Demo\bin\x86\Release\Upload\Demo_1.8.50.0_x86.appx
+SymbolPackage=C:\Users\LING\Documents\Source\Repos\ONE-Demo\Demo\AppPackages\Demo_1.8.50.0\Demo_1.8.50.0_x86.appxsym

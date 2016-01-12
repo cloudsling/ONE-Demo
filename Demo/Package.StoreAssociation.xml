@@ -363,8 +363,6 @@
       <ReservedName>Many-多个</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
-  <AccountPackageIdentityNames>
-    <MainPackageIdentityName>64853FutureLabs.1TouchtoLock</MainPackageIdentityName>
-  </AccountPackageIdentityNames>
+  <AccountPackageIdentityNames />
   <PackageInfoList LandingUrl="https://dev.windows.com/dashboard/Application?appId=9NBLGGH58VLR" />
 </StoreAssociation>
