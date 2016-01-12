@@ -40,7 +40,7 @@ namespace Demo
             int index = fv.SelectedIndex;
             try
             {
-                GetOne.SavePic(FlipViewImageSourceList[index], "ONE." + Main.DayObjectCollection[index].Vol + "首页.jpg");
+                GetOne.SavePic(Main.DayObjectCollection[index].Vol + ".jpg", "ONE." + Main.DayObjectCollection[index].Vol + "首页.jpg");
                 Main.NotifyUserMethod(@"成功保存至 Pictures\ONE-一个 文件夹", 360);
             }
             catch (Exception)
@@ -73,7 +73,7 @@ namespace Demo
             {
                 Main.dayReallyObject = GetOne.GetTodayReallyObject(Main.dayReallyObjectString);
             }
-           
+
         }
 
         #region 圆点方法

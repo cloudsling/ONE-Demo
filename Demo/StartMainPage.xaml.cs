@@ -40,7 +40,7 @@ namespace Demo
         public async void ChangeMainCurrentMsg(DayObject obj)
         {
             PageDataBinding.ByWho = obj.ByWho;
-            StorageFile file = await ApplicationData.Current.LocalCacheFolder.GetFileAsync("StartMainPage.jpg");
+            StorageFile file = await ApplicationData.Current.LocalCacheFolder.GetFileAsync(obj.Vol + ".jpg");
             string path = file.Path;
             PageDataBinding.DayImagePath = path;
             PageDataBinding.HeaderString = obj.HeaderString;

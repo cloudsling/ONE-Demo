@@ -118,20 +118,20 @@ namespace Demo
                 oneFolder = await storageFolder.CreateFolderAsync("ONE-一个", CreationCollisionOption.OpenIfExists);
             }
 
-            //mainViewModel.oneSettings.GiveMeGood += 1;
-            //if (mainViewModel.oneSettings.GiveMeGood == 10)
-            //{
-            //    if (cb.IsChecked == false)
-            //    {
-            //        mainViewModel.oneSettings.GiveMeGood = 0;
-            //    }
-            //    if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            //    {
-            //        await StatusBar.GetForCurrentView().HideAsync();
-            //    }
-            //    StarStar.Visibility = Visibility.Visible;
-            //    GiveMeStar.Begin();
-            //}
+            mainViewModel.oneSettings.GiveMeGood += 1;
+            if (mainViewModel.oneSettings.GiveMeGood == 10)
+            {
+                if (cb.IsChecked == false)
+                {
+                    mainViewModel.oneSettings.GiveMeGood = 0;
+                }
+                if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+                {
+                    await StatusBar.GetForCurrentView().HideAsync();
+                }
+                StarStar.Visibility = Visibility.Visible;
+                GiveMeStar.Begin();
+            }
         }
 
         /// <summary>
@@ -139,18 +139,20 @@ namespace Demo
         /// </summary>
         public async static void Refreshen()
         {
-            StatusBar.GetForCurrentView().ProgressIndicator.Text = "正在刷新";
-            StatusBar.GetForCurrentView().ProgressIndicator.ProgressValue = null;
-            await StatusBar.GetForCurrentView().ProgressIndicator.ShowAsync();
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                StatusBar.GetForCurrentView().ProgressIndicator.Text = "正在刷新";
+                StatusBar.GetForCurrentView().ProgressIndicator.ProgressValue = null;
+                await StatusBar.GetForCurrentView().ProgressIndicator.ShowAsync();
+            }
             //await what.ShowAsync();
             //AppBar.IsOpen = false;
             var currentFrame = MainCurrent.OneFrame.CurrentSourcePageType;
             MainCurrent.OneFrame.Navigate(typeof(BlankPage));
-
             try
             {
-                GetOneString(uri);
-                DayObjectCollection = GetOne.GetOneTodayObjectList(x);
+                //GetOneString(uri);
+                //DayObjectCollection = GetOne.GetOneTodayObjectList(x);
             }
             catch (Exception)
             {
@@ -158,9 +160,14 @@ namespace Demo
                 NotifyUserMethod("刷新失败！", 180);
             }
             MainCurrent.OneFrame.Navigate(currentFrame);
-            StatusBar.GetForCurrentView().ProgressIndicator.Text = "Many-多个";
-            StatusBar.GetForCurrentView().ProgressIndicator.ProgressValue = 0;
-            await StatusBar.GetForCurrentView().ProgressIndicator.ShowAsync();
+
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                StatusBar.GetForCurrentView().ProgressIndicator.Text = "Many-多个";
+                StatusBar.GetForCurrentView().ProgressIndicator.ProgressValue = 0;
+                await StatusBar.GetForCurrentView().ProgressIndicator.ShowAsync();
+            }
+
             await Task.Delay(800);
             NotifyUserMethod("刷新成功！", 180);
         }

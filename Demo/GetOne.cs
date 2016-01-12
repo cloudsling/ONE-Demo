@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Streams;
 
@@ -465,13 +466,13 @@ namespace Demo
             {
                 dayObjectCollection.Add(new DayObject());
             }
-            GetObjectDayImagePath(resultString, ref dayObjectCollection);
             GetObjectHeaderString(resultString, ref dayObjectCollection);
             GetObjectMainString(resultString, ref dayObjectCollection);
             GetObjectByWho(resultString, ref dayObjectCollection);
             GetObjectVOL(resultString, ref dayObjectCollection);
             GetObjectOneDay(resultString, ref dayObjectCollection);
             GetObjectOneMonthAndYear(resultString, ref dayObjectCollection);
+            GetObjectDayImagePath(resultString, ref dayObjectCollection);
             return dayObjectCollection;
         }
         /// <summary>
@@ -502,18 +503,27 @@ namespace Demo
         /// <param name="list"></param>
         private static void GetObjectDayImagePath(string resultString, ref List<DayObject> list)
         {
+            string temp;
+            coll = GetAccurateStringList("<img.+src=\"(.+?)\".+/>", resultString);
+            for (int i = 0; i < list.Count; i++)
+            {
+                temp = coll[i].Groups[1].ToString();
+                //list[i].DayImagePath
+                SavePicHere(temp, list[i].Vol + ".jpg", list[i]);
+                //StorageFile file = await Main.oneFolder.GetFileAsync(list[i].Vol + ".jpg");
+                // list[i].DayImagePath = TempPath;
+            }
             try
             {
-                coll = GetAccurateStringList("<img.+src=\"(.+jpg)\".+/>", resultString);
-                for (int i = 0; i < list.Count; i++)
-                {
-                    list[i].DayImagePath = coll[i].Groups[1].ToString();
-                }
+
             }
             catch (Exception)
             {
             }
         }
+
+        public static string TempPath = "";
+
         /// <summary>
         /// 获取对象的HeaderString
         /// </summary>
@@ -527,7 +537,8 @@ namespace Demo
                 // Console.WriteLine(s);
                 for (int i = 0; i < list.Count; i++)
                 {
-                    list[i].HeaderString = coll[i].Groups[1].ToString().Trim();
+                    StringBuilder sb = new StringBuilder(coll[i].Groups[1].ToString().Trim());
+                    list[i].HeaderString = sb.Replace("&#039;", "\"").ToString();
                 }
             }
             catch (Exception)
@@ -651,37 +662,37 @@ namespace Demo
 
         public static async void SavePic(string uri, string fileName)
         {
-            // SavePicHere("");
-            if (httpClient != null) httpClient.Dispose();
-            httpClient = new HttpClient();
-            StorageFile file = await Main.oneFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
             try
             {
-                byte[] bytes = await httpClient.GetByteArrayAsync(uri);
-                IBuffer buffer = GetBufferFromArrayByte(bytes);
+                StorageFile target = await ApplicationData.Current.LocalCacheFolder.GetFileAsync(uri);
+                StorageFile file = await Main.oneFolder.CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists);
+                IBuffer buffer = await FileIO.ReadBufferAsync(target);
                 await FileIO.WriteBufferAsync(file, buffer);
             }
             catch (Exception)
             {
             }
+
         }
         /// <summary>
         /// 保存到临时文件中
         /// </summary>
         /// <param name="uri"></param>
-        public static async void SavePicHere(string uri)
+        public static async void SavePicHere(string uri, string fileName, DayObject obj)
         {
+            if (httpClient != null) httpClient.Dispose();
+            StorageFile file = await ApplicationData.Current.LocalCacheFolder.CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists);
+            obj.DayImagePath = file.Path;
             try
             {
-                if (httpClient != null) httpClient.Dispose();
                 httpClient = new HttpClient();
-                StorageFile file = await ApplicationData.Current.LocalCacheFolder.CreateFileAsync("StartMainPage.jpg", CreationCollisionOption.OpenIfExists);
                 byte[] bytes = await httpClient.GetByteArrayAsync(uri);
                 IBuffer buffer = GetBufferFromArrayByte(bytes);
                 await FileIO.WriteBufferAsync(file, buffer);
             }
             catch (Exception)
             {
+                SavePicHere(uri, fileName, obj);
             }
         }
 

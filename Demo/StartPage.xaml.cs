@@ -57,7 +57,7 @@ namespace Demo
             {
                 await GetOneString(uri);
                 DayObjectCollection = GetOne.GetOneTodayObjectList(x);
-                GetOne.SavePicHere(DayObjectCollection[0].DayImagePath);
+                //GetOne.SavePicHere(DayObjectCollection[0].DayImagePath,"");
             }
             catch (Exception)
             {

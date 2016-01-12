@@ -34,6 +34,7 @@
                                             <FlipView.ItemTemplate>
                                                 <DataTemplate>
                                                     <Border BorderBrush="#36C3F1" BorderThickness=".4">
+
                                                         <Image Stretch="UniformToFill" Source="{Binding Source0}"/>
                                                     </Border>
                                                 </DataTemplate>
