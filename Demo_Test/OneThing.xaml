@@ -36,7 +36,7 @@
                                 <!--<Rectangle HorizontalAlignment="Center" Opacity="1" Fill="SkyBlue" Width="360" Height="1" Margin="4 5 4 2"  />-->
                                 <Border Height="Auto" Width="Auto" Padding="0">
                                     <Grid>
-                                        <Border Background="White" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5 0" Grid.Column="0"  >
+                                        <Border Padding="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5 0" Grid.Column="0"  >
                                             <TextBlock FontFamily="Consolas" Margin="2 10" Foreground="#36C3F1" VerticalAlignment="Center" HorizontalAlignment="Center" FontStretch="Condensed" FontStyle="Italic" Grid.Row="0" Text="{Binding Header}" FontSize="18"/>
                                         </Border>
                                     </Grid>

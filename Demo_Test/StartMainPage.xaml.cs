@@ -48,8 +48,10 @@ namespace Demo
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Main), sth);
-            GaoStatusBar.SetStatusBar(Colors.White, Colors.Black);
+
+            GaoStatusBar.SetStatusBar(Colors.White, ColorHelper.FromArgb(0xFF,27,27,27));
             GaoStatusBar.SetStatusBarProgressIndicator(0);
+
         }
     }
 }

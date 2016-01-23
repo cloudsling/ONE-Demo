@@ -127,10 +127,6 @@ namespace Demo
                 {
                     mainViewModel.oneSettings.GiveMeGood = 0;
                 }
-                //if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-                //{
-                //    await StatusBar.GetForCurrentView().HideAsync();
-                //}
                 GaoStatusBar.HideStatusBar();
                 StarStar.Visibility = Visibility.Visible;
                 GiveMeStar.Begin();
@@ -144,8 +140,6 @@ namespace Demo
         public async static void Refreshen()
         {
             GaoStatusBar.SetStatusBarProgressIndicator(null, "正在刷新");
-            //await what.ShowAsync();
-            //AppBar.IsOpen = false;
             await Task.Delay(50);
             var currentFrame = MainCurrent.OneFrame.CurrentSourcePageType;
             MainCurrent.OneFrame.Navigate(typeof(BlankPage));
@@ -163,7 +157,6 @@ namespace Demo
                 await new MessageDialog("opps！请检查宁德网络连接，离线版本将在后续版本开发o((⊙﹏⊙))o.").ShowAsync();
                 NotifyUserMethod("刷新失败！", 180);
             }
-            // await Task.Delay(2000);
             MainCurrent.OneFrame.Navigate(currentFrame);
             GaoStatusBar.SetStatusBarProgressIndicator(0);
             await Task.Delay(800);
@@ -349,6 +342,8 @@ namespace Demo
         public SomethingInMain SomethingInMainSettings { get; set; }
 
         public OneSettings oneSettings { get; set; }
+
+        public ThemeColorModel themeColorModelSettings { get; set; }
     }
 
     public class SomethingInMain : INotifyPropertyChanged

@@ -23,12 +23,12 @@
 
         <Border Grid.Row="0" Height="80" x:Name="border">
         </Border>
-        <Grid Grid.Row="1">
+        <Grid Opacity=".6" Grid.Row="1">
             <Image Source="ms-appx:///Assets/About/about.png" Stretch="UniformToFill" />
             <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="开发者的微博：" Foreground="White" Margin="-110 0 0 180" FontFamily="Microsoft YaHei"/>
             <TextBlock Text="特别感谢 @Smile贺0 的大力相助✊" HorizontalAlignment="Center" FontFamily="Consolas" VerticalAlignment="Bottom" Foreground="White" Margin="0 230"/>
             <HyperlinkButton Click="HyperlinkButton_Click" HorizontalAlignment="Center" VerticalAlignment="Bottom" Content="@Future Labs" Tag="http://weibo.com/u/3209962131" Margin="0 0 -100 175"/>
-            <TextBlock Text="Version:1.7" HorizontalAlignment="Center" FontFamily="Consolas" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Bottom" Foreground="White" Margin="0 90"/>
+            <TextBlock Text="Version:1.9" HorizontalAlignment="Center" FontFamily="Consolas" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Bottom" Foreground="White" Margin="0 90"/>
             <Button Template="{StaticResource MyButtonTemplate}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 0 0 115" Content="反馈" FontSize="20" FontFamily="Consolas" Foreground="#36C3F1" Click="Button_Click"/>
         </Grid>
     </Grid>

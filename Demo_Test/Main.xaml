@@ -43,16 +43,16 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <SplitView  Grid.Row="0" Grid.RowSpan="2" x:Name="Splitter" IsPaneOpen="False" DisplayMode="Overlay"  PaneBackground="LightGray" OpenPaneLength="190">
+            <SplitView  Grid.Row="0" Grid.RowSpan="2" x:Name="Splitter" IsPaneOpen="False" DisplayMode="Overlay" OpenPaneLength="190">
                     <SplitView.Pane>
-                        <Grid>
+                        <Grid Background="#707070">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <StackPanel Grid.Row="0" Orientation="Horizontal">
-                                <Border Background="LightGray" >
+                                <Border>
                                     <ToggleButton x:Name="HamBtn" HorizontalAlignment="Left"  Style="{StaticResource SymbolButton}" Click="HamBtn_Click" VerticalAlignment="Center" Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
                                         <ToggleButton.Content>
                                             <FontIcon x:Name="Hamburger"  FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;" Margin="0,7"/>
@@ -153,7 +153,7 @@
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal">
                                 <!--<Border Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" >-->
-                                <Border Background="#252526" >
+                                <Border Background="#252526" > 
                                         <ToggleButton HorizontalAlignment="Left"  Style="{StaticResource SymbolButton}" Click="HamBtn_Click" VerticalAlignment="Center" Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
                                         <ToggleButton.Content>
                                             <FontIcon FontFamily="Segoe MDL2 Assets" Foreground="#36C3F1" Glyph="&#xE700;" Margin="0,7"/>

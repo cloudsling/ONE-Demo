@@ -104,6 +104,22 @@ namespace Demo
                 OnPropertyChanged();
             }
         }
+
+        public bool RequireLightTheme
+        {
+            get { return ReadSettings(nameof(RequireLightTheme), true); }
+            set
+            {
+                SaveSettings(nameof(RequireLightTheme), value);
+                OnPropertyChanged();
+            }
+        }
+
+
+
+
+
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged([CallerMemberName]string propertyName = "")

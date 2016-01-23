@@ -25,7 +25,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <ListView Grid.Row="0" Padding="0" Opacity=".5">
+                <ListView Grid.Row="0" Padding="0" Opacity=".6">
                     <ListViewItem Padding="0.1">
                         <Grid Background="#2D2D30">
                             <Grid Padding="4" MaxHeight="360">
@@ -35,7 +35,6 @@
                                             <FlipView.ItemTemplate>
                                                 <DataTemplate>
                                                     <Border BorderBrush="#36C3F1" BorderThickness=".4">
-
                                                         <Image Stretch="UniformToFill" Source="{Binding Source0}"/>
                                                     </Border>
                                                 </DataTemplate>
@@ -52,7 +51,7 @@
                                     <Border Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Grid.Column="0" HorizontalAlignment="Left" Opacity="0.6">
                                         <Button x:Name="GoLeft" Height="360" Width="Auto" Click="GoLeft_Click" Padding="0" VerticalAlignment="Center" >
                                             <Button.Content>
-                                                <Border Margin="2" Opacity="0.4" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Padding="0">
+                                                <Border Margin="2" Opacity="0.8" Padding="0">
                                                     <FontIcon FontFamily="segoe MDL2 Assets" Glyph="&#xE00E;" />
                                                 </Border>
                                             </Button.Content>
@@ -176,7 +175,7 @@
                             </StackPanel>
                             <Border Height="{Binding ElementName=border,Path=Height}"/>
                             <StackPanel>
-                                <Border Background="LightGray" BorderBrush="LightGray" Width="320" HorizontalAlignment="Center" Height="1.2" BorderThickness=".5" Margin="12"/>
+                                <Border Background="#252526" Width="320" HorizontalAlignment="Center" Height="1.2" BorderThickness=".5" Margin="12"/>
                             </StackPanel>
                             <StackPanel>
                                 <TextBlock Margin="10" VerticalAlignment="Center"   TextWrapping="Wrap"  FontFamily="Consolas" Foreground="Black" Text="{Binding MainString}" HorizontalAlignment="Left" />
