@@ -79,6 +79,7 @@ namespace Demo
             if (httpClient != null) httpClient.Dispose();
             httpClient = new HttpClient();
             x = await httpClient.GetStringAsync(new Uri(uri));
+            httpClient.Dispose();
             return x;
         }
 
@@ -88,7 +89,6 @@ namespace Demo
             httpClient = new HttpClient();
             return await httpClient.GetStringAsync(new Uri(uriOneObject + vol));
         }
-
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             if ((e.Parameter as string) == "404")
@@ -140,24 +140,30 @@ namespace Demo
         /// <summary>
         /// 刷新首页
         /// </summary>
+        /// 
         public async static void Refreshen()
         {
-
             GaoStatusBar.SetStatusBarProgressIndicator(null, "正在刷新");
             //await what.ShowAsync();
             //AppBar.IsOpen = false;
+            await Task.Delay(50);
             var currentFrame = MainCurrent.OneFrame.CurrentSourcePageType;
             MainCurrent.OneFrame.Navigate(typeof(BlankPage));
             try
             {
-                await GetOneString(uri);
-                DayObjectCollection = GetOne.GetOneTodayObjectList(x);
+                Task task = await Task.Factory.StartNew(async () =>
+                {
+                    await GetOneString(uri);
+                    DayObjectCollection = GetOne.GetOneTodayObjectList(x);
+                }, TaskCreationOptions.DenyChildAttach);
+                Task.WaitAll(task);
             }
             catch (Exception)
             {
                 await new MessageDialog("opps！请检查宁德网络连接，离线版本将在后续版本开发o((⊙﹏⊙))o.").ShowAsync();
                 NotifyUserMethod("刷新失败！", 180);
             }
+            // await Task.Delay(2000);
             MainCurrent.OneFrame.Navigate(currentFrame);
             GaoStatusBar.SetStatusBarProgressIndicator(0);
             await Task.Delay(800);

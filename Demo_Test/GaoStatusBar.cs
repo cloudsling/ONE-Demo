@@ -10,13 +10,13 @@ namespace Demo
 {
     static class GaoStatusBar
     {
-        static StatusBar statusBar = StatusBar.GetForCurrentView();
-        static StatusBarProgressIndicator progressIndicator = StatusBar.GetForCurrentView().ProgressIndicator;
         /// <summary>
         /// if we can modify StatusBar
         /// </summary>
         /// <returns></returns>
         static readonly bool IfCanModifyStatusBar = Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar");
+        static StatusBar statusBar = IfCanModifyStatusBar ? StatusBar.GetForCurrentView() : null;
+        static StatusBarProgressIndicator progressIndicator = IfCanModifyStatusBar ? StatusBar.GetForCurrentView().ProgressIndicator : null;
         /// <summary>
         /// Hide StatusBar if can do
         /// </summary>
@@ -39,6 +39,7 @@ namespace Demo
         /// <param name="backgroundOpacity"></param>
         public static void SetStatusBar(Color foregroundColor, Color backgroundColor, double backgroundOpacity = 1)
         {
+            if (!IfCanModifyStatusBar) return;
             statusBar.ForegroundColor = foregroundColor;
             statusBar.BackgroundColor = backgroundColor;
             statusBar.BackgroundOpacity = backgroundOpacity;

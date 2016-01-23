@@ -48,7 +48,7 @@ namespace Demo
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Main), sth);
-            GaoStatusBar.SetStatusBar(Colors.White, Colors.DeepSkyBlue);
+            GaoStatusBar.SetStatusBar(Colors.White, Colors.Black);
             GaoStatusBar.SetStatusBarProgressIndicator(0);
         }
     }

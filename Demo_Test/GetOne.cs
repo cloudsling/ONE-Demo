@@ -496,6 +496,7 @@ namespace Demo
             regex = new Regex(regexString);
             return regex.Matches(resultString);
         }
+
         /// <summary>
         /// 得到对象的ImagePath
         /// </summary>
@@ -505,15 +506,16 @@ namespace Demo
         {
             string temp;
             coll = GetAccurateStringList("<img.+src=\"(.+?)\".+/>", resultString);
+            //List<Task> TaskColl = new List<Task>();
+
             for (int i = 0; i < list.Count; i++)
             {
                 temp = coll[i].Groups[1].ToString();
-                //list[i].DayImagePath
-                var it = list[i];
                 SavePicHere(temp, list[i].Vol + ".jpg", list[i]);
                 //StorageFile file = await Main.oneFolder.GetFileAsync(list[i].Vol + ".jpg");
                 // list[i].DayImagePath = TempPath;
             }
+            // Task.WaitAll(TaskColl.ToArray());
         }
 
         public static string TempPath = "";
@@ -674,25 +676,33 @@ namespace Demo
         /// <param name="uri"></param>
         public static async void SavePicHere(string uri, string fileName, DayObject obj)
         {
-            if (httpClient != null) httpClient.Dispose();
+           // if (httpClient != null) httpClient.Dispose();
+
+            // CreationCollisionOption.OpenIfExists
+            //IStorageItem fds = await ApplicationData.Current.LocalCacheFolder.TryGetItemAsync(fileName);
+            //if (await ApplicationData.Current.LocalCacheFolder.TryGetItemAsync(fileName) != null)
+            //{
+            //    var item = await ApplicationData.Current.LocalCacheFolder.GetFileAsync(fileName);
+            //    await item.DeleteAsync();
+            //}
             StorageFile file = await ApplicationData.Current.LocalCacheFolder.CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists);
             obj.DayImagePath = file.Path;
             try
             {
-                httpClient = new HttpClient();
-                byte[] bytes = await httpClient.GetByteArrayAsync(uri);
-                IBuffer buffer = GetBufferFromArrayByte(bytes);
-                await FileIO.WriteBufferAsync(file, buffer);
+                byte[] bytes;
+                using (httpClient = new HttpClient())
+                {
+                    bytes = await httpClient.GetByteArrayAsync(uri);
+                    IBuffer buffer = GetBufferFromArrayByte(bytes);
+                    await FileIO.WriteBufferAsync(file, buffer);
+                }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                vvvvvvv++;
-                if (vvvvvvv < 5)
-                    SavePicHere(uri, fileName, obj);
+                System.Diagnostics.Debug.WriteLine(e.Message + "|" + e.Data.ToString());
             }
             return;
         }
-        static int vvvvvvv = 0;
 
         public static DayReallyObject dayReallyObject;
         /// <summary>

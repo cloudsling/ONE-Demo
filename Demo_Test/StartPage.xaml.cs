@@ -58,9 +58,12 @@ namespace Demo
             StartAnimation.Begin();
             try
             {
-                await GetOneString(uri);
-                DayObjectCollection = GetOne.GetOneTodayObjectList(x);
-                //GetOne.SavePicHere(DayObjectCollection[0].DayImagePath,"");
+                Task task = await Task.Factory.StartNew(async () =>
+                {
+                    await GetOneString(uri);
+                    DayObjectCollection = GetOne.GetOneTodayObjectList(x);
+                },TaskCreationOptions.DenyChildAttach);
+                Task.WaitAll(task);
             }
             catch (Exception)
             {
