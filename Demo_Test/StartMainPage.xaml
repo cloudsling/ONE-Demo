@@ -1,0 +1,73 @@
+﻿<Page
+    x:Class="Demo.StartMainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Demo"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    DataContext="{Binding PageDataBinding,RelativeSource={RelativeSource Mode=Self}}">
+    <Page.Resources>
+        <Storyboard x:Name="BigBig">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="border" Storyboard.TargetProperty="Height" BeginTime="0:0:0" Duration="0:0:9.5" EnableDependentAnimation="True" SpeedRatio="1.3" RepeatBehavior="Forever">
+                <EasingDoubleKeyFrame KeyTime="0:0:4.5" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:5" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:9.5" Value="50">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseIn" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Page.Resources>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid Margin="0 -50" Height="Auto" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition  Height="*"/>
+                <RowDefinition  Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Border x:Name="border" Grid.Row="0" Height="50" VerticalAlignment="Top"/>
+            <Grid Grid.Row="1">
+                <Image Source="{Binding DayImagePath}" Stretch="UniformToFill" />
+                <Grid Margin="6">
+                    <Grid.RowDefinitions>
+                        <RowDefinition  Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition  Height="Auto"/>
+                        <RowDefinition  Height="Auto"/>
+                        <RowDefinition  Height="Auto"/>
+                        <RowDefinition  Height="100"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="6 6 6 0"  Grid.Row="1" TextWrapping="Wrap"  Foreground="White" Text="{Binding OneDay}" FontFamily="Consolas" FontSize="80" x:Name="OneName"/>
+                    <Border Grid.Row="2" Height="{Binding ElementName=border, Path=Height}" VerticalAlignment="Bottom"/>
+                    <StackPanel Margin="5"  Grid.Row="2" Orientation="Horizontal">
+                        <TextBlock Margin="8" FontFamily="Consolas" TextWrapping="Wrap"  Foreground="White" Text="{Binding Vol}" x:Name="Vol"/>
+                        <TextBlock Margin="8" FontFamily="Consolas" TextWrapping="Wrap"  Foreground="White" Text="|" />
+                        <TextBlock Margin="8" FontFamily="Consolas" TextWrapping="Wrap"  Foreground="White" Text="{Binding OneMonthAndYear}" x:Name="MonthAndYear"/>
+                    </StackPanel>
+                    <TextBlock Margin="8" Grid.Row="3" TextWrapping="Wrap" Foreground="White" FontSize="18" Text="{Binding MainString}" x:Name="DayContent" RelativePanel.Above="MonthAndYear"/>
+                </Grid>
+            </Grid>
+            <Border Grid.Row="2" Height="{Binding ElementName=border, Path=Height}" VerticalAlignment="Bottom"/>
+        </Grid>
+        <Grid Background="Black" Opacity=".5">
+            <!--<TextBlock VerticalAlignment="Top" Text="0NE-一个" Foreground="White" HorizontalAlignment="Center" Margin="0 30" FontFamily="Consolas" FontSize="21"/>-->
+            <RichTextBlock VerticalAlignment="Top" Foreground="White" HorizontalAlignment="Right" Margin="50 94" FontFamily="Consolas" TextAlignment="Center">
+                <Paragraph FontSize="24">0</Paragraph>
+                <Paragraph FontSize="24">N</Paragraph>
+                <Paragraph FontSize="24">E</Paragraph>
+                <Paragraph></Paragraph>
+                <Paragraph FontSize="16">一</Paragraph>
+                <Paragraph FontSize="16">个</Paragraph>
+            </RichTextBlock>
+            <StackPanel VerticalAlignment="Bottom" x:Name="myPanel">
+                <Button Template="{StaticResource MyButtonTemplate}" Content="进入0NE-一个" Click="Button_Click" Foreground="White" FontFamily="Consolas" VerticalAlignment="Bottom" Margin="0 10" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

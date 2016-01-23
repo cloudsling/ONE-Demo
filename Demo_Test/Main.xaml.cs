@@ -35,7 +35,7 @@ namespace Demo
             mainViewModel = new MainViewModel();
             this.InitializeComponent();
             MainCurrent = this;
-                SystemNavigationManager.GetForCurrentView().BackRequested += Main_BackRequested;
+            SystemNavigationManager.GetForCurrentView().BackRequested += Main_BackRequested;
         }
 
         private async void Main_BackRequested(object sender, BackRequestedEventArgs e)
@@ -74,10 +74,12 @@ namespace Demo
         public static string uriOneObject = "http://wufazhuce.com/one/";
         public static string dayReallyObjectString;
 
-        private async static void GetOneString(string uri)
+        private async static Task<string> GetOneString(string uri)
         {
+            if (httpClient != null) httpClient.Dispose();
             httpClient = new HttpClient();
             x = await httpClient.GetStringAsync(new Uri(uri));
+            return x;
         }
 
         public async static Task<string> GetDayReallyObjectString(string vol)
@@ -125,10 +127,11 @@ namespace Demo
                 {
                     mainViewModel.oneSettings.GiveMeGood = 0;
                 }
-                if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-                {
-                    await StatusBar.GetForCurrentView().HideAsync();
-                }
+                //if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+                //{
+                //    await StatusBar.GetForCurrentView().HideAsync();
+                //}
+                GaoStatusBar.HideStatusBar();
                 StarStar.Visibility = Visibility.Visible;
                 GiveMeStar.Begin();
             }
@@ -139,20 +142,16 @@ namespace Demo
         /// </summary>
         public async static void Refreshen()
         {
-            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            {
-                StatusBar.GetForCurrentView().ProgressIndicator.Text = "正在刷新";
-                StatusBar.GetForCurrentView().ProgressIndicator.ProgressValue = null;
-                await StatusBar.GetForCurrentView().ProgressIndicator.ShowAsync();
-            }
+
+            GaoStatusBar.SetStatusBarProgressIndicator(null, "正在刷新");
             //await what.ShowAsync();
             //AppBar.IsOpen = false;
             var currentFrame = MainCurrent.OneFrame.CurrentSourcePageType;
             MainCurrent.OneFrame.Navigate(typeof(BlankPage));
             try
             {
-                //GetOneString(uri);
-                //DayObjectCollection = GetOne.GetOneTodayObjectList(x);
+                await GetOneString(uri);
+                DayObjectCollection = GetOne.GetOneTodayObjectList(x);
             }
             catch (Exception)
             {
@@ -160,14 +159,7 @@ namespace Demo
                 NotifyUserMethod("刷新失败！", 180);
             }
             MainCurrent.OneFrame.Navigate(currentFrame);
-
-            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            {
-                StatusBar.GetForCurrentView().ProgressIndicator.Text = "Many-多个";
-                StatusBar.GetForCurrentView().ProgressIndicator.ProgressValue = 0;
-                await StatusBar.GetForCurrentView().ProgressIndicator.ShowAsync();
-            }
-
+            GaoStatusBar.SetStatusBarProgressIndicator(0);
             await Task.Delay(800);
             NotifyUserMethod("刷新成功！", 180);
         }
@@ -274,7 +266,7 @@ namespace Demo
                             }
                             oneListView.SelectedItem = null;
                             Splitter.IsPaneOpen = false;
-                        };
+                        }
                     }
                     break;
                 case "Settings":
@@ -318,8 +310,6 @@ namespace Demo
                         }
                         oneListView.SelectedItem = null;
                     }
-                    break;
-                default:
                     break;
             }
         }
@@ -430,7 +420,7 @@ namespace Demo
             {
                 MyItemName = "   问题",
                 ClassType = typeof(OneQuestion),
-                MyGlyph = "\uE7C5",
+                MyGlyph = "\uE7C5"
             });
             this.Add(new MyListViewItems
             {

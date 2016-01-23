@@ -37,7 +37,8 @@
         </Storyboard>
     </Page.Resources>
     <Grid>
-        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <!--<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">-->
+        <Grid Background="#2D2D30">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
@@ -134,9 +135,6 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-
-
-                        <!--      FRAME IS HERE!!!!!!!!!!!      -->
                         <Grid Grid.Row="1">
                             <ProgressBar x:Name="bar" Foreground="#36C3F1" IsIndeterminate="True" VerticalAlignment="Top" />
                             <Viewbox Height="40" Width="80">
@@ -144,17 +142,19 @@
                             </Viewbox>
                         </Grid>
                         <ScrollViewer Grid.Row="1">
+                            <!--      FRAME IS HERE!!!!!!!!!!!      -->
                             <Frame MaxWidth="1080" x:Name="OneFrame" Margin="0 0 0 0" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True"/>
                         </ScrollViewer>
-
-                        <Grid x:Name="balabala" Grid.Row="0" Width="Auto" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+                        <!--<Grid x:Name="balabala" Grid.Row="0" Width="Auto" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}"-->
+                        <Grid x:Name="balabala" Grid.Row="0" Width="Auto" Background="#252526">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal">
-                                <Border Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" >
-                                    <ToggleButton HorizontalAlignment="Left"  Style="{StaticResource SymbolButton}" Click="HamBtn_Click" VerticalAlignment="Center" Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
+                                <!--<Border Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" >-->
+                                <Border Background="#252526" >
+                                        <ToggleButton HorizontalAlignment="Left"  Style="{StaticResource SymbolButton}" Click="HamBtn_Click" VerticalAlignment="Center" Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
                                         <ToggleButton.Content>
                                             <FontIcon FontFamily="Segoe MDL2 Assets" Foreground="#36C3F1" Glyph="&#xE700;" Margin="0,7"/>
                                         </ToggleButton.Content>
@@ -176,7 +176,7 @@
                                     </Border>
                                 </Grid>
                                 <StackPanel  x:Name="isHide" HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="1">
-                                    <Border Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" HorizontalAlignment="Right">
+                                    <Border Background="#252526" HorizontalAlignment="Right">
                                         <ToggleButton Style="{StaticResource SymbolButton}" Click="ToggleButton_Click" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
                                             <ToggleButton.Content>
                                                 <FontIcon x:Name="search" Foreground="#36C3F1"  FontFamily="Segoe MDL2 Assets" Glyph="&#xE721;"/>
@@ -191,7 +191,7 @@
                                 <TextBlock x:Name="NotifyUserText" HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Center" FontFamily="Consolas"/>
                             </Border>
                         </Grid>
-                        <AppBar Grid.Row="1" x:Name="AppBar" LostFocus="AppBar_LostFocus" Visibility="Visible" VerticalAlignment="Bottom" IsSticky="True">
+                        <AppBar Background="#252526" Grid.Row="1" x:Name="AppBar" LostFocus="AppBar_LostFocus" Visibility="Visible" VerticalAlignment="Bottom" IsSticky="True">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <AppBarButton Label="刷新" Click="AppBarButton_Click">
                                     <AppBarButton.Icon>
