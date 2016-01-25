@@ -13,6 +13,10 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Core;
 using Windows.Storage;
 using System.Runtime.CompilerServices;
+using Windows.UI;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace Demo
 {
@@ -33,12 +37,11 @@ namespace Demo
         public Main()
         {
             mainViewModel = new MainViewModel();
-            this.InitializeComponent();
+            InitializeComponent();
             MainCurrent = this;
-            SystemNavigationManager.GetForCurrentView().BackRequested += Main_BackRequested;
         }
 
-        private async void Main_BackRequested(object sender, BackRequestedEventArgs e)
+        async void Main_BackRequested(object sender, BackRequestedEventArgs e)
         {
             if (mainViewModel.oneSettings.IsDoubleClickExit)
             {
@@ -52,6 +55,13 @@ namespace Demo
                     NotifyUserMethod("再按一次后退键退出程序", 201);
                     await Task.Delay(2000);
                     mainViewModel.SomethingInMainSettings.NotifyUserWidth = 180;
+                    return;
+                }
+            }
+            else
+            {
+                if (OneFrame.CurrentSourcePageType == typeof(OneMain))
+                {
                     return;
                 }
             }
@@ -74,7 +84,7 @@ namespace Demo
         public static string uriOneObject = "http://wufazhuce.com/one/";
         public static string dayReallyObjectString;
 
-        private async static Task<string> GetOneString(string uri)
+        async static Task<string> GetOneString(string uri)
         {
             if (httpClient != null) httpClient.Dispose();
             httpClient = new HttpClient();
@@ -89,8 +99,28 @@ namespace Demo
             httpClient = new HttpClient();
             return await httpClient.GetStringAsync(new Uri(uriOneObject + vol));
         }
+        
+       public void ChangeSunOrNightMode(bool RequireLightTheme)
+        {
+            if (!RequireLightTheme)
+            {
+                NightMode.Visibility = Visibility.Visible;
+                SunMode.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                SunMode.Visibility = Visibility.Visible;
+                NightMode.Visibility = Visibility.Collapsed;
+            }
+        }
+
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            SystemNavigationManager.GetForCurrentView().BackRequested += Main_BackRequested;
+            mainViewModel.themeColorModelSettings = ThemeColorModel.GetTheme(mainViewModel.oneSettings.RequireLightTheme);
+            ChangeSunOrNightMode(mainViewModel.oneSettings.RequireLightTheme);
+            GaoStatusBar.SetStatusBar(Colors.White, mainViewModel.themeColorModelSettings.StatusBarBackGroundColor.Color);
+            GaoStatusBar.SetStatusBarProgressIndicator(0);
             if ((e.Parameter as string) == "404")
             {
                 HEADER111.Text = "关于";
@@ -174,12 +204,12 @@ namespace Demo
             MainCurrent.NotifyAnime.Begin();
         }
 
-        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        void AppBarButton_Click(object sender, RoutedEventArgs e)
         {
             Refreshen();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        void Button_Click(object sender, RoutedEventArgs e)
         {
             txtSearch.Visibility = Visibility.Collapsed;
             isHide.Visibility = Visibility.Visible;
@@ -313,21 +343,37 @@ namespace Demo
             }
         }
 
-        private async void Button_Click_1(object sender, RoutedEventArgs e)
+        async void Button_Click_1(object sender, RoutedEventArgs e)
         {
             GiveMeStarOk.Begin();
             await Task.Delay(650);
             StarStar.Visibility = Visibility.Collapsed;
             Love();
-            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            {
-                await StatusBar.GetForCurrentView().ShowAsync();
-            }
+            GaoStatusBar.ShowStatusBar();
         }
 
-        private void DemoDemo_ManipulationCompleted(object sender, Windows.UI.Xaml.Input.ManipulationCompletedRoutedEventArgs e)
+        void DemoDemo_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
         {
             SwitchSplitter();
+        }
+
+        private void SunOrNightMode_Click(object sender, RoutedEventArgs e)
+        {
+            var vis = SunMode.Visibility;
+            SunMode.Visibility = NightMode.Visibility;
+            NightMode.Visibility = vis;
+            if (SunMode.Visibility == Visibility.Collapsed)
+            {
+                mainViewModel.oneSettings.RequireLightTheme = false;
+                ThemeColorModel.InitialByOtherObject(mainViewModel.themeColorModelSettings, new ThemeColorModel(false));
+                GaoStatusBar.SetStatusBar(Colors.White, ThemeColorModel.NightModeTheme.StatusBarBackGroundColor.Color);
+            }
+            else
+            {
+                mainViewModel.oneSettings.RequireLightTheme = true;
+                ThemeColorModel.InitialByOtherObject(mainViewModel.themeColorModelSettings, new ThemeColorModel(true));
+                GaoStatusBar.SetStatusBar(Colors.White, ThemeColorModel.SunModeTheme.StatusBarBackGroundColor.Color);
+            }
         }
     }
 
@@ -372,7 +418,7 @@ namespace Demo
     }
     public class MyListViewItems
     {
-        private string _MyitemName;
+        string _MyitemName;
         public string MyItemName
         {
             get
@@ -385,7 +431,7 @@ namespace Demo
                 _MyitemName = value;
             }
         }
-        private string _MyGlyph;
+        string _MyGlyph;
         public string MyGlyph
         {
             get
@@ -396,6 +442,19 @@ namespace Demo
             set
             {
                 _MyGlyph = value;
+            }
+        }
+        SolidColorBrush _BgColor;
+        public SolidColorBrush BgColor
+        {
+            get
+            {
+                return _BgColor;
+            }
+
+            set
+            {
+                _BgColor = value;
             }
         }
         public Type ClassType { get; set; }
@@ -409,25 +468,30 @@ namespace Demo
             {
                 MyItemName = "   首页",
                 ClassType = typeof(OneMain),
-                MyGlyph = "\uE80F"
+                MyGlyph = "\uE80F",
+                BgColor = ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme).FontColor
+
             });
             this.Add(new MyListViewItems
             {
                 MyItemName = "   文章",
                 ClassType = typeof(Articles),
-                MyGlyph = "\uE8C8"
+                MyGlyph = "\uE8C8",
+                BgColor = ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme).FontColor
             });
             this.Add(new MyListViewItems
             {
                 MyItemName = "   问题",
                 ClassType = typeof(OneQuestion),
-                MyGlyph = "\uE7C5"
+                MyGlyph = "\uE7C5",
+                BgColor = ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme).FontColor
             });
             this.Add(new MyListViewItems
             {
                 MyItemName = "   东西",
                 ClassType = typeof(OneThing),
-                MyGlyph = "\uE8A4"
+                MyGlyph = "\uE8A4",
+                BgColor = ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme).FontColor
             });
         }
     }

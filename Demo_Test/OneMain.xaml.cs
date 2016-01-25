@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -12,12 +13,14 @@ namespace Demo
 {
     public sealed partial class OneMain : Page
     {
-        public DayObject PageDataBinding { get; set; }
+        //public DayObject PageDataBinding { get; set; }
 
+        public OneMainViewModel oneMainViewModel { get; set; }
         public static OneMain OneMainCurrent;
         public OneMain()
         {
-            PageDataBinding = new DayObject();
+            //PageDataBinding = new DayObject();
+            oneMainViewModel = new OneMainViewModel();
             this.InitializeComponent();
             OneMainCurrent = this;
             if (Main.MainCurrent.mainViewModel.oneSettings.OneMainPageStyle == 0)
@@ -127,13 +130,13 @@ namespace Demo
         /// <param name="obj"></param>
         public void ChangeMainCurrentMsg(DayObject obj)
         {
-            PageDataBinding.ByWho = obj.ByWho;
-            PageDataBinding.DayImagePath = obj.DayImagePath;
-            PageDataBinding.HeaderString = obj.HeaderString;
-            PageDataBinding.MainString = obj.MainString;
-            PageDataBinding.Vol = obj.Vol;
-            PageDataBinding.OneDay = obj.OneDay;
-            PageDataBinding.OneMonthAndYear = obj.OneMonthAndYear;
+            oneMainViewModel.PageDataBinding.ByWho = obj.ByWho;
+            oneMainViewModel.PageDataBinding.DayImagePath = obj.DayImagePath;
+            oneMainViewModel.PageDataBinding.HeaderString = obj.HeaderString;
+            oneMainViewModel.PageDataBinding.MainString = obj.MainString;
+            oneMainViewModel.PageDataBinding.Vol = obj.Vol;
+            oneMainViewModel.PageDataBinding.OneDay = obj.OneDay;
+            oneMainViewModel.PageDataBinding.OneMonthAndYear = obj.OneMonthAndYear;
         }
 
         #region 没什么卵用的方法
@@ -180,6 +183,47 @@ namespace Demo
             }
         }
     }
+
+    public class OneMainViewModel : INotifyPropertyChanged_OnPropertyChanged
+    {
+        public OneMainViewModel()
+        {
+            PageDataBinding = new DayObject();
+        }
+
+        DayObject _pageDataBinding;
+
+        public DayObject PageDataBinding
+        {
+            get
+            {
+                return _pageDataBinding;
+            }
+
+            set
+            {
+                _pageDataBinding = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ThemeColorModel ThemeColorModel
+        {
+            get
+            {
+                return themeColorModel;
+            }
+
+            set
+            {
+                themeColorModel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        ThemeColorModel themeColorModel;
+    }
+
 
     public class ImageSource
     {

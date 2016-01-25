@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 
@@ -16,7 +12,7 @@ namespace Demo
         /// <returns></returns>
         static readonly bool IfCanModifyStatusBar = Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar");
         static StatusBar statusBar = IfCanModifyStatusBar ? StatusBar.GetForCurrentView() : null;
-        static StatusBarProgressIndicator progressIndicator = IfCanModifyStatusBar ? StatusBar.GetForCurrentView().ProgressIndicator : null;
+        static readonly StatusBarProgressIndicator progressIndicator = IfCanModifyStatusBar ? StatusBar.GetForCurrentView().ProgressIndicator : null;
         /// <summary>
         /// Hide StatusBar if can do
         /// </summary>

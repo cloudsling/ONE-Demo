@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Windows.Storage;
-using Windows.UI;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -45,13 +43,11 @@ namespace Demo
             PageDataBinding.OneDay = obj.OneDay;
             PageDataBinding.OneMonthAndYear = obj.OneMonthAndYear;
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+        void Button_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Main), sth);
-
-            GaoStatusBar.SetStatusBar(Colors.White, ColorHelper.FromArgb(0xFF,27,27,27));
-            GaoStatusBar.SetStatusBarProgressIndicator(0);
-
         }
+
+     
     }
 }

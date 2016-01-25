@@ -21,6 +21,7 @@ namespace Demo
             Story.Begin();
             DoubleClickExit.IsOn = Main.MainCurrent.mainViewModel.oneSettings.IsDoubleClickExit;
             OneMainPageStyle.SelectedIndex = Main.MainCurrent.mainViewModel.oneSettings.OneMainPageStyle;
+            SunOrNightMode.IsOn = !Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme;
         }
 
         private async void HyperlinkButton_Click(object sender, RoutedEventArgs e)
@@ -30,7 +31,7 @@ namespace Demo
 
         private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
-            if (DoubleClickExit.IsOn == false)
+            if (!DoubleClickExit.IsOn)
             {
                 Main.MainCurrent.mainViewModel.oneSettings.IsDoubleClickExit = false;
             }
@@ -43,6 +44,22 @@ namespace Demo
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Main.MainCurrent.mainViewModel.oneSettings.OneMainPageStyle = OneMainPageStyle.SelectedIndex;
+        }
+
+        private void SunOrNightMode_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (SunOrNightMode.IsOn)
+            {
+                Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme = false;
+                ThemeColorModel.InitialByOtherObject(Main.MainCurrent.mainViewModel.themeColorModelSettings, ThemeColorModel.NightModeTheme);
+                Main.MainCurrent.ChangeSunOrNightMode(false);
+            }
+            else
+            {
+                Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme = true;
+                ThemeColorModel.InitialByOtherObject(Main.MainCurrent.mainViewModel.themeColorModelSettings, ThemeColorModel.SunModeTheme);
+                Main.MainCurrent.ChangeSunOrNightMode(true);
+            }
         }
     }
 
@@ -66,7 +83,7 @@ namespace Demo
             {
                 return (T)LocalSettings.Values[key];
             }
-            if (null != defaultValue)
+            if (defaultValue != null)
             {
                 return defaultValue;
             }
@@ -114,10 +131,6 @@ namespace Demo
                 OnPropertyChanged();
             }
         }
-
-
-
-
 
 
         public event PropertyChangedEventHandler PropertyChanged;

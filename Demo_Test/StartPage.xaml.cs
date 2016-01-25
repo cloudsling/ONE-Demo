@@ -71,7 +71,7 @@ namespace Demo
                 Frame.Navigate(typeof(Main), "404");
                 return;
             }
-            this.Frame.Navigate(typeof(StartMainPage), new MyNavigationEventArgs(x, DayObjectCollection));
+            Frame.Navigate(typeof(StartMainPage), new MyNavigationEventArgs(x, DayObjectCollection));
         }
     }
 

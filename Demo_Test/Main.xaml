@@ -38,14 +38,14 @@
     </Page.Resources>
     <Grid>
         <!--<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">-->
-        <Grid Background="#2D2D30">
+        <Grid Background="{Binding themeColorModelSettings.MainBodyBackgroundColor}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <SplitView  Grid.Row="0" Grid.RowSpan="2" x:Name="Splitter" IsPaneOpen="False" DisplayMode="Overlay" OpenPaneLength="190">
                     <SplitView.Pane>
-                        <Grid Background="#707070">
+                    <Grid Background="{Binding themeColorModelSettings.SplitViewPanelBackGroundColor}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
@@ -55,7 +55,7 @@
                                 <Border>
                                     <ToggleButton x:Name="HamBtn" HorizontalAlignment="Left"  Style="{StaticResource SymbolButton}" Click="HamBtn_Click" VerticalAlignment="Center" Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
                                         <ToggleButton.Content>
-                                            <FontIcon x:Name="Hamburger"  FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;" Margin="0,7"/>
+                                        <FontIcon x:Name="Hamburger" Foreground="{Binding themeColorModelSettings.FontColor}" FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;" Margin="0,7"/>
                                         </ToggleButton.Content>
                                     </ToggleButton>
                                 </Border>
@@ -81,7 +81,7 @@
                             </StackPanel>
                             <Border Grid.Row="2" Padding="0.5">
                                 <RelativePanel Margin="0 0 0 0" Grid.Row="0">
-                                    <ListView x:Name="HamListBox" SelectionChanged="HamListBox_SelectionChanged">
+                                <ListView  Foreground="{Binding themeColorModelSettings.FontColor}" x:Name="HamListBox" SelectionChanged="HamListBox_SelectionChanged">
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid Padding="0">
@@ -94,8 +94,8 @@
                                                             <ColumnDefinition Width="Auto" />
                                                             <ColumnDefinition />
                                                         </Grid.ColumnDefinitions>
-                                                        <FontIcon Grid.Column="0" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Glyph="{Binding MyGlyph}"/>
-                                                        <TextBlock Width="190" Grid.Column="1" Text="{Binding MyItemName}" VerticalAlignment="Center" Margin="15,0,0,0"/>
+                                                    <FontIcon Grid.Column="0" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets"  Foreground="{Binding BgColor}" Glyph="{Binding MyGlyph}"/>
+                                                    <TextBlock Width="190"  Foreground="{Binding BgColor}" Grid.Column="1" Text="{Binding MyItemName}" VerticalAlignment="Center" Margin="15,0,0,0"/>
                                                     </Grid>
                                                     <Grid Grid.Row="1" Margin="0 5 0 0">
                                                         <Border VerticalAlignment="Bottom">
@@ -109,19 +109,19 @@
                                     <StackPanel RelativePanel.AlignBottomWithPanel="True">
                                         <ListView x:Name="Settings" SelectionChanged="HamListBox_SelectionChanged"  CanDrag="False" >
                                             <StackPanel Orientation="Horizontal">
-                                                <FontIcon FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Glyph="&#xE713;"/>
-                                                <TextBlock Width="130" Grid.Column="1" Text="  设置" VerticalAlignment="Center" Margin="15,0,0,0"/>
+                                            <FontIcon  Foreground="{Binding themeColorModelSettings.FontColor}" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Glyph="&#xE713;"/>
+                                            <TextBlock  Foreground="{Binding themeColorModelSettings.FontColor}" Width="130" Grid.Column="1" Text="  设置" VerticalAlignment="Center" Margin="15,0,0,0"/>
                                             </StackPanel>
                                         </ListView>
                                         <Rectangle HorizontalAlignment="Center" Opacity="1" Fill="Black" Width="164" Height="0.5" Margin="4 0 4 0"  />
                                         <ListView x:Name="Others"  SelectionChanged="HamListBox_SelectionChanged" CanDrag="False">
                                             <StackPanel Orientation="Horizontal">
-                                                <FontIcon FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Glyph="&#xE19F;"/>
-                                                <TextBlock  Width="130" Grid.Column="1" Text="  好评我^^" VerticalAlignment="Center" Margin="15,0,0,0"/>
+                                            <FontIcon  Foreground="{Binding themeColorModelSettings.FontColor}" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Glyph="&#xE19F;"/>
+                                            <TextBlock  Foreground="{Binding themeColorModelSettings.FontColor}" Width="130" Grid.Column="1" Text="  好评我^^" VerticalAlignment="Center" Margin="15,0,0,0"/>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal">
-                                                <FontIcon FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Glyph="&#xE8A1;"/>
-                                                <TextBlock Width="130" Grid.Column="1" Text="  关于" VerticalAlignment="Center" Margin="15,0,0,0"/>
+                                            <FontIcon  Foreground="{Binding themeColorModelSettings.FontColor}" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Glyph="&#xE8A1;"/>
+                                            <TextBlock Width="130"  Foreground="{Binding themeColorModelSettings.FontColor}" Grid.Column="1" Text="  关于" VerticalAlignment="Center" Margin="15,0,0,0"/>
                                             </StackPanel>
                                         </ListView>
                                     </StackPanel>
@@ -146,14 +146,14 @@
                             <Frame MaxWidth="1080" x:Name="OneFrame" Margin="0 0 0 0" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True"/>
                         </ScrollViewer>
                         <!--<Grid x:Name="balabala" Grid.Row="0" Width="Auto" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}"-->
-                        <Grid x:Name="balabala" Grid.Row="0" Width="Auto" Background="#252526">
+                        <Grid x:Name="balabala" Grid.Row="0" Width="Auto" Background="{Binding themeColorModelSettings.TitleBarBackgroundColor}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal">
                                 <!--<Border Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" >-->
-                                <Border Background="#252526" > 
+                                <Border > 
                                         <ToggleButton HorizontalAlignment="Left"  Style="{StaticResource SymbolButton}" Click="HamBtn_Click" VerticalAlignment="Center" Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
                                         <ToggleButton.Content>
                                             <FontIcon FontFamily="Segoe MDL2 Assets" Foreground="#36C3F1" Glyph="&#xE700;" Margin="0,7"/>
@@ -173,13 +173,27 @@
                                                 </AutoSuggestBox.QueryIcon>
                                             </AutoSuggestBox>
                                         </Viewbox>
-                                    </Border>
+                                    </Border>                  
                                 </Grid>
-                                <StackPanel  x:Name="isHide" HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="1">
-                                    <Border Background="#252526" HorizontalAlignment="Right">
+                                <StackPanel x:Name="isHide" HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="1">
+                                    <Border HorizontalAlignment="Right">
                                         <ToggleButton Style="{StaticResource SymbolButton}" Click="ToggleButton_Click" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
                                             <ToggleButton.Content>
                                                 <FontIcon x:Name="search" Foreground="#36C3F1"  FontFamily="Segoe MDL2 Assets" Glyph="&#xE721;"/>
+                                            </ToggleButton.Content>
+                                        </ToggleButton>
+                                    </Border>
+                                    <Border HorizontalAlignment="Right">
+                                        <ToggleButton Visibility="Visible" x:Name="SunMode" Click="SunOrNightMode_Click" Style="{StaticResource SymbolButton}" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
+                                            <ToggleButton.Content>
+                                                <Image x:Name="DayModeImage" Width="21" Source="ms-appx:///Assets/SunOrNightMode/sun1.png" />
+                                            </ToggleButton.Content>
+                                        </ToggleButton>
+                                    </Border>
+                                    <Border HorizontalAlignment="Right">
+                                        <ToggleButton Visibility="Collapsed" x:Name="NightMode" Click="SunOrNightMode_Click" Style="{StaticResource SymbolButton}" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
+                                            <ToggleButton.Content>
+                                                <Image x:Name="NightModeImage" Width="21" Source="ms-appx:///Assets/SunOrNightMode/night1.png" />
                                             </ToggleButton.Content>
                                         </ToggleButton>
                                     </Border>
@@ -191,16 +205,16 @@
                                 <TextBlock x:Name="NotifyUserText" HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Center" FontFamily="Consolas"/>
                             </Border>
                         </Grid>
-                        <AppBar Background="#252526" Grid.Row="1" x:Name="AppBar" LostFocus="AppBar_LostFocus" Visibility="Visible" VerticalAlignment="Bottom" IsSticky="True">
+                        <AppBar Background="{Binding themeColorModelSettings.AppBarBackGroundColor}" Grid.Row="1" x:Name="AppBar"  Foreground="{Binding themeColorModelSettings.FontColor}" LostFocus="AppBar_LostFocus" Visibility="Visible" VerticalAlignment="Bottom" IsSticky="True">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                <AppBarButton Label="刷新" Click="AppBarButton_Click">
+                                <AppBarButton  Foreground="{Binding themeColorModelSettings.FontColor}" Label="刷新" Click="AppBarButton_Click">
                                     <AppBarButton.Icon>
-                                        <FontIcon Glyph="&#xE72C;"  FontFamily="Segoe MDL2 Assets"/>
+                                        <FontIcon Glyph="&#xE72C;" Foreground="{Binding themeColorModelSettings.FontColor}" FontFamily="Segoe MDL2 Assets"/>
                                     </AppBarButton.Icon>
                                 </AppBarButton>
-                                <AppBarButton Label="保存" Click="CreateFileButton_Click" x:Name="CreateFileButton">
+                                <AppBarButton  Foreground="{Binding themeColorModelSettings.FontColor}" Label="保存" Click="CreateFileButton_Click" x:Name="CreateFileButton">
                                     <AppBarButton.Icon>
-                                        <FontIcon Glyph="&#xE74E;"  FontFamily="Segoe MDL2 Assets"/>
+                                        <FontIcon Glyph="&#xE74E;" FontFamily="Segoe MDL2 Assets"/>
                                     </AppBarButton.Icon>
                                 </AppBarButton>
                             </StackPanel>
