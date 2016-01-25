@@ -1,22 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.UI;
+using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Web.Http;
-using System.ComponentModel;
-using System.Threading;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using Windows.UI.Popups;
-using Windows.UI.ViewManagement;
-using Windows.UI.Core;
-using Windows.Storage;
-using System.Runtime.CompilerServices;
-using Windows.UI;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media.Imaging;
 
 namespace Demo
 {
@@ -48,30 +46,19 @@ namespace Demo
                 if (OneFrame.CurrentSourcePageType == typeof(OneMain))
                 {
                     e.Handled = true;
-                    if (Math.Abs(mainViewModel.SomethingInMainSettings.NotifyUserWidth - 201) <= 1.0)
-                    {
-                        Application.Current.Exit();
-                    }
+                    if (Math.Abs(mainViewModel.SomethingInMainSettings.NotifyUserWidth - 201) <= 1.0) Application.Current.Exit();
                     NotifyUserMethod("再按一次后退键退出程序", 201);
                     await Task.Delay(2000);
                     mainViewModel.SomethingInMainSettings.NotifyUserWidth = 180;
                     return;
                 }
             }
-            else
-            {
-                if (OneFrame.CurrentSourcePageType == typeof(OneMain))
-                {
-                    return;
-                }
-            }
+            else if (OneFrame.CurrentSourcePageType == typeof(OneMain)) return;
             if (OneFrame.CanGoBack)
             {
                 OneFrame.GoBack();
                 if (OneFrame.CurrentSourcePageType == typeof(BlankPage))
-                {
                     OneFrame.GoBack();
-                }
                 e.Handled = true;
             }
         }
@@ -87,20 +74,19 @@ namespace Demo
         async static Task<string> GetOneString(string uri)
         {
             if (httpClient != null) httpClient.Dispose();
-            httpClient = new HttpClient();
-            x = await httpClient.GetStringAsync(new Uri(uri));
-            httpClient.Dispose();
+            using (httpClient = new HttpClient())
+                x = await httpClient.GetStringAsync(new Uri(uri));
             return x;
         }
 
         public async static Task<string> GetDayReallyObjectString(string vol)
         {
             if (httpClient != null) httpClient.Dispose();
-            httpClient = new HttpClient();
-            return await httpClient.GetStringAsync(new Uri(uriOneObject + vol));
+            using (httpClient = new HttpClient())
+                return await httpClient.GetStringAsync(new Uri(uriOneObject + vol));
         }
-        
-       public void ChangeSunOrNightMode(bool RequireLightTheme)
+
+        public void ChangeSunOrNightMode(bool RequireLightTheme)
         {
             if (!RequireLightTheme)
             {
@@ -125,9 +111,7 @@ namespace Demo
             {
                 HEADER111.Text = "关于";
                 if (isHide.Visibility == Visibility.Visible)
-                {
                     isHide.Visibility = Visibility.Collapsed;
-                }
                 OneFrame.Navigate(typeof(About));
                 await Task.Delay(2000);
                 NotifyUserMethod("程序将在5秒后退出", 220);
@@ -153,10 +137,7 @@ namespace Demo
             mainViewModel.oneSettings.GiveMeGood += 1;
             if (mainViewModel.oneSettings.GiveMeGood == 10)
             {
-                if (cb.IsChecked == false)
-                {
-                    mainViewModel.oneSettings.GiveMeGood = 0;
-                }
+                if (cb.IsChecked == false) mainViewModel.oneSettings.GiveMeGood = 0;
                 GaoStatusBar.HideStatusBar();
                 StarStar.Visibility = Visibility.Visible;
                 GiveMeStar.Begin();
@@ -204,10 +185,7 @@ namespace Demo
             MainCurrent.NotifyAnime.Begin();
         }
 
-        void AppBarButton_Click(object sender, RoutedEventArgs e)
-        {
-            Refreshen();
-        }
+        void AppBarButton_Click(object sender, RoutedEventArgs e) => Refreshen();
 
         void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -222,10 +200,7 @@ namespace Demo
             txt_Search.Focus(FocusState.Keyboard);
         }
 
-        private void AppBar_LostFocus(object sender, RoutedEventArgs e)
-        {
-            this.AppBar.IsOpen = false;
-        }
+        private void AppBar_LostFocus(object sender, RoutedEventArgs e) => AppBar.IsOpen = false;
 
         private void CreateFileButton_Click(object sender, RoutedEventArgs e)
         {
@@ -233,34 +208,23 @@ namespace Demo
             this.AppBar.IsOpen = false;
         }
 
-        private void HamBtn_Click(object sender, RoutedEventArgs e)
-        {
-            SwitchSplitter();
-        }
+        private void HamBtn_Click(object sender, RoutedEventArgs e) => SwitchSplitter();
+
         /// <summary>
         /// 关闭或者呼出汉堡菜单
         /// </summary>
-        private void SwitchSplitter()
-        {
-            Splitter.IsPaneOpen = !Splitter.IsPaneOpen;
-        }
+        private void SwitchSplitter() => Splitter.IsPaneOpen = !Splitter.IsPaneOpen;
 
         public void ChangeIsHide()
         {
-            if (isHide.Visibility != Visibility.Collapsed)
-            {
-                isHide.Visibility = Visibility.Visible;
-            }
-            else
-            {
+            if (isHide.Visibility != Visibility.Collapsed) isHide.Visibility = Visibility.Visible;
+            else {
                 isHide.Visibility = Visibility.Collapsed;
             }
         }
 
-        private async void Love()
-        {
-            await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-windows-store://pdp/?ProductId=9NBLGGH58VLR"));
-        }
+        async void Love() => await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-windows-store://pdp/?ProductId=9NBLGGH58VLR"));
+
         /// <summary>
         /// 算是导航了
         /// </summary>
@@ -281,18 +245,12 @@ namespace Demo
                             if (AppBar.Visibility == Visibility.Collapsed) AppBar.Visibility = Visibility.Visible;
                             OneFrame.Navigate(m.ClassType);
                             if (OneFrame.CurrentSourcePageType == typeof(Articles) || OneFrame.CurrentSourcePageType == typeof(OneQuestion))
-                            {
                                 CreateFileButton.Visibility = Visibility.Collapsed;
-                            }
-                            else
-                            {
+                            else {
                                 CreateFileButton.Visibility = Visibility.Visible;
                             }
                             NotifyUserMethod("ONE-" + m.MyItemName, 180);
-                            if (oneListView.SelectedItem == null)
-                            {
-                                return;
-                            }
+                            if (oneListView.SelectedItem == null) return;
                             oneListView.SelectedItem = null;
                             Splitter.IsPaneOpen = false;
                         }
@@ -300,27 +258,18 @@ namespace Demo
                     break;
                 case "Settings":
                     {
-                        if (oneListView.SelectedItem == null)
-                        {
-                            return;
-                        }
+                        if (oneListView.SelectedItem == null) return;
                         oneListView.SelectedItem = null;
                         SwitchSplitter();
                         AppBar.Visibility = Visibility.Collapsed;
                         HEADER111.Text = "设置";
-                        if (isHide.Visibility == Visibility.Visible)
-                        {
-                            isHide.Visibility = Visibility.Collapsed;
-                        }
+                        if (isHide.Visibility == Visibility.Visible) isHide.Visibility = Visibility.Collapsed;
                         OneFrame.Navigate(typeof(Settings));
                     }
                     break;
                 case "Others":
                     {
-                        if (oneListView.SelectedItem == null)
-                        {
-                            return;
-                        }
+                        if (oneListView.SelectedItem == null) return;
                         SwitchSplitter();
                         int id = Others.SelectedIndex;
                         switch (id)
@@ -352,10 +301,7 @@ namespace Demo
             GaoStatusBar.ShowStatusBar();
         }
 
-        void DemoDemo_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
-        {
-            SwitchSplitter();
-        }
+        void DemoDemo_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e) => SwitchSplitter();
 
         private void SunOrNightMode_Click(object sender, RoutedEventArgs e)
         {
@@ -368,8 +314,7 @@ namespace Demo
                 ThemeColorModel.InitialByOtherObject(mainViewModel.themeColorModelSettings, new ThemeColorModel(false));
                 GaoStatusBar.SetStatusBar(Colors.White, ThemeColorModel.NightModeTheme.StatusBarBackGroundColor.Color);
             }
-            else
-            {
+            else {
                 mainViewModel.oneSettings.RequireLightTheme = true;
                 ThemeColorModel.InitialByOtherObject(mainViewModel.themeColorModelSettings, new ThemeColorModel(true));
                 GaoStatusBar.SetStatusBar(Colors.White, ThemeColorModel.SunModeTheme.StatusBarBackGroundColor.Color);
