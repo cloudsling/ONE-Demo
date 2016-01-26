@@ -21,31 +21,39 @@ namespace Demo
             initialThisObject.SplitViewPanelBackGroundColor = byThisObject.SplitViewPanelBackGroundColor;
             initialThisObject.StatusBarBackGroundColor = byThisObject.StatusBarBackGroundColor;
             initialThisObject.TitleBarBackgroundColor = byThisObject.TitleBarBackgroundColor;
+            initialThisObject.ArticleFontBodyBackGroundColor = byThisObject.ArticleFontBodyBackGroundColor;
         }
         public ThemeColorModel(bool isLightTheme)
         {
+            //Sun
             if (isLightTheme)
             {
                 Opacity = 1.0;
                 StatusBarBackGroundColor = new SolidColorBrush(ColorHelper.FromArgb(0xFF, 54, 195, 241));
                 TitleBarBackgroundColor = new SolidColorBrush(Color.FromArgb(0xFF, 230, 230, 230));
                 MainBodyBackgroundColor = new SolidColorBrush(Color.FromArgb(0xFF, 255, 255, 255));
-                OneMainBodyBackgroundColor = new SolidColorBrush(Color.FromArgb(0xFF, 255, 255, 255));
+                OneMainBodyBackgroundColor = new SolidColorBrush(Color.FromArgb(0xFF, 204, 204, 204));
                 AppBarBackGroundColor = new SolidColorBrush(Color.FromArgb(0xFF, 230, 230, 230));
                 SplitViewPanelBackGroundColor = new SolidColorBrush(Color.FromArgb(0xFF, 211, 211, 211));
-                FontColor = new SolidColorBrush(Color.FromArgb(0xFF, 0, 0, 0));
+                ArticleFontBodyBackGroundColor = new SolidColorBrush(Color.FromArgb(0xFF, 54, 195, 241));
+                FontColor = new SolidColorBrush(Colors.Black);
             }
-            else
+            else//Night
             {
-                Opacity = 0.2;
-                FontColor = new SolidColorBrush(Color.FromArgb(0xFF, 255, 255, 255));
+                Opacity = 0.4;
+                FontColor = new SolidColorBrush(Colors.LightGray);
                 StatusBarBackGroundColor = new SolidColorBrush(ColorHelper.FromArgb(0xFF, 27, 27, 27));
                 TitleBarBackgroundColor = new SolidColorBrush(Color.FromArgb(0xFF, 37, 37, 38));
                 MainBodyBackgroundColor = new SolidColorBrush(Color.FromArgb(0xFF, 45, 45, 48));
                 OneMainBodyBackgroundColor = new SolidColorBrush(Color.FromArgb(0xFF, 63, 63, 70));
                 AppBarBackGroundColor = new SolidColorBrush(Color.FromArgb(0xFF, 37, 37, 38));
                 SplitViewPanelBackGroundColor = new SolidColorBrush(Color.FromArgb(0xFF, 112, 112, 112));
+                ArticleFontBodyBackGroundColor = new SolidColorBrush(Color.FromArgb(0xFF, 63, 63, 70));
             }
+        }
+
+        public ThemeColorModel()
+        {
         }
         public static ThemeColorModel GetTheme(bool isLightTheme)
         {
@@ -70,6 +78,16 @@ namespace Demo
             set
             {
                 _fontColor = value;
+                OnPropertyChanged();
+            }
+        }
+        SolidColorBrush _articleFontColor;
+        public SolidColorBrush ArticleFontColor
+        {
+            get { return _articleFontColor; }
+            set
+            {
+                _articleFontColor = value;
                 OnPropertyChanged();
             }
         }
@@ -137,6 +155,20 @@ namespace Demo
             }
         }
 
+        public SolidColorBrush ArticleFontBodyBackGroundColor
+        {
+            get
+            {
+                return _articleFontBodyBackGroundColor;
+            }
+
+            set
+            {
+                _articleFontBodyBackGroundColor = value;
+                OnPropertyChanged();
+            }
+        }
+        SolidColorBrush _articleFontBodyBackGroundColor;
 
         public event PropertyChangedEventHandler PropertyChanged;
         void OnPropertyChanged([CallerMemberName]string propName = "")

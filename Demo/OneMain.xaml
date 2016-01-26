@@ -28,7 +28,7 @@
                     <ListViewItem Padding="0.1">
                         <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                             <Grid Padding="4" MaxHeight="360">
-                                <Border >
+                                <Border>
                                     <Button Grid.Column="0" Grid.ColumnSpan="3" Padding="0" Width="Auto" Height="Auto" Click="Button_Click">
                                         <FlipView x:Name="fv" Width="Auto" Padding="0" SelectionChanged="fv_SelectionChanged"  MinHeight="360">
                                             <FlipView.ItemTemplate>

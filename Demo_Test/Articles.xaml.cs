@@ -4,22 +4,15 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-// “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
-
 namespace Demo
 {
-    /// <summary>
-    /// 可用于自身或导航至 Frame 内部的空白页。
-    /// </summary>
     public sealed partial class Articles : Page
     {
-        public Articles articles { get; set; }
-
         public Articles()
         {
             ArticlesDataBinding = new AritcalBinding();
-            articles = this;
-            this.InitializeComponent();
+            InitializeComponent();
+            Main.OtherPageDoWhenThemeChanged = () => ThemeColorModel.InitialByOtherObject(ArticlesDataBinding.ArticalThemeColorModel, ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme));
         }
         public ArticlesObject DayArticlesObject { get; set; }
 
@@ -29,28 +22,25 @@ namespace Demo
         {
             // Rect R = Window.Current.CoreWindow.Bounds;
             //ArticlesDataBinding.ScrollViewerHeight = Main.WindowHeight;
+            ArticlesDataBinding.ArticalThemeColorModel = ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme);
             aaa.Text = "“ ";
             bbb.Text = " ”";
             InitializationSpeciallyString(600);
             ForBorder.Begin();
         }
 
-        private void InitializationSpeciallyString(int length)
+        void InitializationSpeciallyString(int length)
         {
-            if (length == 0)
-            {
-                ArticlesDataBinding.FullContentBinding.FullContent = Main.dayReallyObject.Articles.Content;
-            }
-            else
-            {
-                ArticlesDataBinding.FullContentBinding.FullContent = Main.dayReallyObject.Articles.Content.Substring(0, length)+"......";
+            if (length == 0) ArticlesDataBinding.FullContentBinding.FullContent = Main.dayReallyObject.Articles.Content;
+            else {
+                ArticlesDataBinding.FullContentBinding.FullContent = Main.dayReallyObject.Articles.Content.Substring(0, length) + "......";
             }
         }
         /// <summary>
         /// 初始化文章对象
         /// </summary>
         /// <param name="articlesObject"></param>
-        private void InitializationArticlesObject(ArticlesObject articlesObject)
+        void InitializationArticlesObject(ArticlesObject articlesObject)
         {
             DayArticlesObject.HeadContent = articlesObject.HeadContent;
             DayArticlesObject.Content = articlesObject.Content;
@@ -58,7 +48,7 @@ namespace Demo
             DayArticlesObject.Writer = articlesObject.Writer;
         }
 
-        private void LookMore_Click(object sender, RoutedEventArgs e)
+        void LookMore_Click(object sender, RoutedEventArgs e)
         {
             LookMore.Visibility = Visibility.Collapsed;
             InitializationSpeciallyString(0);
@@ -74,10 +64,27 @@ namespace Demo
             InitializationArticlesObject(Main.dayReallyObject.Articles);
         }
         public SpeciallyString FullContentBinding { get; set; }
-        
+
         public ArticlesObject DayArticlesObject { get; set; }
 
-        private void InitializationArticlesObject(ArticlesObject articlesObject)
+       // public ThemeColorModel articalThemeColorModel { get; set; }
+
+        public ThemeColorModel ArticalThemeColorModel
+        {
+            get
+            {
+                return _articalThemeColorModel;
+            }
+
+            set
+            {
+                _articalThemeColorModel = value;
+            }
+        }
+
+        ThemeColorModel _articalThemeColorModel;
+
+        void InitializationArticlesObject(ArticlesObject articlesObject)
         {
             DayArticlesObject.HeadContent = articlesObject.HeadContent;
             DayArticlesObject.Content = articlesObject.Content;

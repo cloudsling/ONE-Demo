@@ -56,7 +56,6 @@
             <Border Grid.Row="2" Height="{Binding ElementName=border, Path=Height}" VerticalAlignment="Bottom"/>
         </Grid>
         <Grid Background="Black" Opacity=".5">
-            <!--<TextBlock VerticalAlignment="Top" Text="0NE-一个" Foreground="White" HorizontalAlignment="Center" Margin="0 30" FontFamily="Consolas" FontSize="21"/>-->
             <RichTextBlock VerticalAlignment="Top" Foreground="White" HorizontalAlignment="Right" Margin="50 94" FontFamily="Consolas" TextAlignment="Center">
                 <Paragraph FontSize="24">0</Paragraph>
                 <Paragraph FontSize="24">N</Paragraph>

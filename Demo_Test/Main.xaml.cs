@@ -21,17 +21,22 @@ namespace Demo
     public sealed partial class Main : Page
     {
         public static Main MainCurrent;
-
         public MainViewModel mainViewModel { get; set; }
-
         public static List<DayObject> DayObjectCollection;
-
         public static DayReallyObject dayReallyObject;
-
         public static Action CreateFileButtonClick;
-
         public static StorageFolder oneFolder;
-
+        public static string itemPath;
+        public static HttpClient httpClient;
+        public static string x;
+        public static List<string> imageSourceAsync;
+        public static string uri = "http://wufazhuce.com/";
+        public static string uriOneObject = "http://wufazhuce.com/one/";
+        public static string dayReallyObjectString;
+        public static Action OtherPageDoWhenThemeChanged;
+    }
+    public sealed partial class Main : Page
+    {
         public Main()
         {
             mainViewModel = new MainViewModel();
@@ -62,14 +67,6 @@ namespace Demo
                 e.Handled = true;
             }
         }
-
-        public static string itemPath;
-        public static HttpClient httpClient;
-        public static string x;
-        public static List<string> imageSourceAsync;
-        public static string uri = "http://wufazhuce.com/";
-        public static string uriOneObject = "http://wufazhuce.com/one/";
-        public static string dayReallyObjectString;
 
         async static Task<string> GetOneString(string uri)
         {
@@ -303,7 +300,7 @@ namespace Demo
 
         void DemoDemo_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e) => SwitchSplitter();
 
-        private void SunOrNightMode_Click(object sender, RoutedEventArgs e)
+        void SunOrNightMode_Click(object sender, RoutedEventArgs e)
         {
             var vis = SunMode.Visibility;
             SunMode.Visibility = NightMode.Visibility;
@@ -319,6 +316,8 @@ namespace Demo
                 ThemeColorModel.InitialByOtherObject(mainViewModel.themeColorModelSettings, new ThemeColorModel(true));
                 GaoStatusBar.SetStatusBar(Colors.White, ThemeColorModel.SunModeTheme.StatusBarBackGroundColor.Color);
             }
+            OtherPageDoWhenThemeChanged();
+
         }
     }
 

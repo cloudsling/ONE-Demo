@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -13,27 +14,14 @@ namespace Demo
 {
     public sealed partial class OneMain : Page
     {
-        //public DayObject PageDataBinding { get; set; }
-
         public OneMainViewModel oneMainViewModel { get; set; }
         public static OneMain OneMainCurrent;
         public OneMain()
         {
-            //PageDataBinding = new DayObject();
             oneMainViewModel = new OneMainViewModel();
-            this.InitializeComponent();
+            InitializeComponent();
             OneMainCurrent = this;
-            if (Main.MainCurrent.mainViewModel.oneSettings.OneMainPageStyle == 0)
-            {
-                OneMainStyle2.Visibility = Visibility.Visible;
-                OneMainStyle1.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-
-                OneMainStyle1.Visibility = Visibility.Visible;
-                OneMainStyle2.Visibility = Visibility.Collapsed;
-            }
+            Main.OtherPageDoWhenThemeChanged = () => ThemeColorModel.InitialByOtherObject(oneMainViewModel.ThemeColorModel, ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme));
         }
 
         public static List<string> FlipViewImageSourceList;
@@ -58,6 +46,17 @@ namespace Demo
         /// <param name="e"></param>
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            if (Main.MainCurrent.mainViewModel.oneSettings.OneMainPageStyle == 0)
+            {
+                OneMainStyle2.Visibility = Visibility.Visible;
+                OneMainStyle1.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                OneMainStyle1.Visibility = Visibility.Visible;
+                OneMainStyle2.Visibility = Visibility.Collapsed;
+            }
+            oneMainViewModel.ThemeColorModel = ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme);
             StoryStart.Begin();
             Main.CreateFileButtonClick = OneMainSavePic;
             FlipViewImageSourceList = GetOne.GetOneTodayImageSourceAsync(Main.x);
@@ -116,6 +115,7 @@ namespace Demo
 
         private void fv_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            System.Threading.Tasks.Task.Delay(1000);
             var flipview = sender as FlipView;
             int index = flipview.SelectedIndex;
 
@@ -184,8 +184,9 @@ namespace Demo
         }
     }
 
-    public class OneMainViewModel : INotifyPropertyChanged_OnPropertyChanged
+    public class OneMainViewModel
     {
+
         public OneMainViewModel()
         {
             PageDataBinding = new DayObject();
@@ -203,7 +204,6 @@ namespace Demo
             set
             {
                 _pageDataBinding = value;
-                OnPropertyChanged();
             }
         }
 
@@ -217,7 +217,6 @@ namespace Demo
             set
             {
                 themeColorModel = value;
-                OnPropertyChanged();
             }
         }
 

@@ -274,8 +274,7 @@ namespace Demo
                             }
                             oneListView.SelectedItem = null;
                             Splitter.IsPaneOpen = false;
-                        };
-                    }
+                        }                    }
                     break;
                 case "Settings":
                     {
@@ -318,8 +317,6 @@ namespace Demo
                         }
                         oneListView.SelectedItem = null;
                     }
-                    break;
-                default:
                     break;
             }
         }
@@ -430,7 +427,7 @@ namespace Demo
             {
                 MyItemName = "   问题",
                 ClassType = typeof(OneQuestion),
-                MyGlyph = "\uE7C5",
+                MyGlyph = "\uE7C5"
             });
             this.Add(new MyListViewItems
             {

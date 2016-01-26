@@ -17,67 +17,62 @@
         </Storyboard>
     </Page.Resources>
     <Grid>
-        <StackPanel Background="{Binding ThemeColorModel.MainBodyBackgroundColor}" >
+        <StackPanel Background="{Binding ThemeColorModel.MainBodyBackgroundColor}">
             <Border x:Name="border" Height="100" />
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <!--{Binding ThemeColorModel.Opacity}-->
-                <ListView Grid.Row="0" Padding="0" Opacity="{Binding ThemeColorModel.Opacity}">
-                    <ListViewItem Padding="0.1">
-                        <Grid Background="{Binding ThemeColorModel.OneMainBodyBackgroundColor}">
-                            <Grid Padding="4" MaxHeight="360">
-                                <Border>
-                                    <Button Grid.Column="0" Grid.ColumnSpan="3" Padding="0" Width="Auto" Height="Auto" Click="Button_Click">
-                                        <FlipView x:Name="fv" Width="Auto" Padding="0" SelectionChanged="fv_SelectionChanged"  MinHeight="360">
-                                            <FlipView.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Border BorderBrush="#36C3F1" BorderThickness=".4">
-                                                        <Image Stretch="UniformToFill" Source="{Binding Source0}"/>
-                                                    </Border>
-                                                </DataTemplate>
-                                            </FlipView.ItemTemplate>
-                                        </FlipView>
+                <ListView Grid.Row="0" Padding="0" Background="{Binding ThemeColorModel.OneMainBodyBackgroundColor}" Opacity="{Binding ThemeColorModel.Opacity}">
+                    <ListViewItem Padding=".1">
+                        <Grid MaxHeight="360" Padding="2.4">
+                            <Button Grid.Column="0"  Grid.ColumnSpan="3" Padding="0" Width="Auto" Height="Auto" Click="Button_Click">
+                                <FlipView x:Name="fv" Width="Auto" Padding="0" SelectionChanged="fv_SelectionChanged" MinHeight="360">
+                                    <FlipView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border BorderBrush="#36C3F1" BorderThickness=".4">
+                                                <Image Stretch="UniformToFill" Source="{Binding Source0}"/>
+                                            </Border>
+                                        </DataTemplate>
+                                    </FlipView.ItemTemplate>
+                                </FlipView>
+                            </Button>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="11*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Background="LightGray" Grid.Column="0" HorizontalAlignment="Left" Opacity="0.6">
+                                    <Button x:Name="GoLeft" Height="360" Width="Auto" Click="GoLeft_Click" Padding="0" VerticalAlignment="Center" >
+                                        <Button.Content>
+                                            <Border Margin="2" Opacity="0.8" Padding="0">
+                                                <FontIcon FontFamily="segoe MDL2 Assets" Glyph="&#xE00E;" />
+                                            </Border>
+                                        </Button.Content>
                                     </Button>
                                 </Border>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1*"/>
-                                        <ColumnDefinition Width="11*"/>
-                                        <ColumnDefinition Width="1*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Border Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Grid.Column="0" HorizontalAlignment="Left" Opacity="0.6">
-                                        <Button x:Name="GoLeft" Height="360" Width="Auto" Click="GoLeft_Click" Padding="0" VerticalAlignment="Center" >
-                                            <Button.Content>
-                                                <Border Margin="2" Opacity="0.8" Padding="0">
-                                                    <FontIcon FontFamily="segoe MDL2 Assets" Glyph="&#xE00E;" />
-                                                </Border>
-                                            </Button.Content>
-                                        </Button>
-                                    </Border>
 
-                                    <Border Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Grid.Column="2" HorizontalAlignment="Right" Opacity="0.5">
-                                        <Button x:Name="GoRight" Height="360" Width="Auto" Click="GoRight_Click"  VerticalAlignment="Center" Padding="0">
-                                            <Button.Content>
-                                                <Border Margin="2" Opacity="0.8" Padding="0">
-                                                    <FontIcon FontFamily="segoe MDL2 Assets" Glyph="&#xE00F;" />
-                                                </Border>
-                                            </Button.Content>
-                                        </Button>
-                                    </Border>
-                                </Grid>
-                                <StackPanel x:Name="ManyEllipse" Height="6" Width="75" Margin="0 300 0 0"  Orientation="Horizontal" >
-                                    <Ellipse Margin="3 0 3 0" Width="5" Height="5"/>
-                                    <Ellipse Margin="3 0 3 0" Width="5" Height="5" />
-                                    <Ellipse Margin="3 0 3 0" Width="5" Height="5" />
-                                    <Ellipse Margin="3 0 3 0" Width="5" Height="5" />
-                                    <Ellipse Margin="3 0 3 0" Width="5" Height="5" />
-                                    <Ellipse Margin="3 0 3 0" Width="5" Height="5" />
-                                    <Ellipse Margin="3 0 3 0" Width="5" Height="5" />
-                                </StackPanel>
+                                <Border Background="LightGray" Grid.Column="2" HorizontalAlignment="Right" Opacity="0.5">
+                                    <Button x:Name="GoRight" Height="360" Width="Auto" Click="GoRight_Click"  VerticalAlignment="Center" Padding="0">
+                                        <Button.Content>
+                                            <Border Margin="2" Opacity="0.8" Padding="0">
+                                                <FontIcon FontFamily="segoe MDL2 Assets" Glyph="&#xE00F;" />
+                                            </Border>
+                                        </Button.Content>
+                                    </Button>
+                                </Border>
                             </Grid>
+                            <StackPanel x:Name="ManyEllipse" Height="6" Width="75" Margin="0 300 0 0"  Orientation="Horizontal" >
+                                <Ellipse Margin="3 0 3 0" Width="5" Height="5"/>
+                                <Ellipse Margin="3 0 3 0" Width="5" Height="5" />
+                                <Ellipse Margin="3 0 3 0" Width="5" Height="5" />
+                                <Ellipse Margin="3 0 3 0" Width="5" Height="5" />
+                                <Ellipse Margin="3 0 3 0" Width="5" Height="5" />
+                                <Ellipse Margin="3 0 3 0" Width="5" Height="5" />
+                                <Ellipse Margin="3 0 3 0" Width="5" Height="5" />
+                            </StackPanel>
                         </Grid>
                     </ListViewItem>
                 </ListView>
@@ -100,7 +95,7 @@
                                                 <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
                                             <Border Grid.Column="0" Background="White" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5 0">
-                                                <TextBlock Margin="6 0 0 0" FontSize="21" FontStyle="Italic"  FontFamily="Consolas" Foreground="#36C3F1" Text="{Binding Path=PageDataBinding.Vol}"/>
+                                                <TextBlock Margin="6 0 0 0" FontSize="21" FontStyle="Italic" FontFamily="Consolas" Foreground="{Binding ThemeColorModel.FontColor}" Text="{Binding Path=PageDataBinding.Vol}"/>
                                             </Border>
                                             <Button Padding="2" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Grid.Column="2" Margin="0 3 2 3" Template="{StaticResource MyButtonTemplate}">
                                                 <Button.Content>
@@ -110,7 +105,7 @@
                                                             <RowDefinition />
                                                         </Grid.RowDefinitions>
                                                         <TextBlock FontFamily="CoNsolas" Margin="2 2" Foreground="#36C3F1" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="0" Text="{Binding PageDataBinding.HeaderString}" FontSize="15" TextWrapping="Wrap" />
-                                                        <TextBlock FontFamily="CoNsolas" Margin="2 3" HorizontalAlignment="Right" Grid.Row="1" Text="{Binding PageDataBinding.ByWho}" TextWrapping="Wrap"  FontSize="12"/>
+                                                        <TextBlock FontFamily="CoNsolas" Margin="2 3" HorizontalAlignment="Right" Grid.Row="1"  Foreground="{Binding ThemeColorModel.FontColor}" Text="{Binding PageDataBinding.ByWho}" TextWrapping="Wrap"  FontSize="12"/>
                                                     </Grid>
                                                 </Button.Content>
                                             </Button>
@@ -137,7 +132,7 @@
                                                     <ColumnDefinition Width="3*"/>
                                                 </Grid.ColumnDefinitions>
                                                 <Grid Grid.Column="0">
-                                                    <TextBlock VerticalAlignment="Center"   TextWrapping="Wrap"  FontFamily="Consolas" Foreground="White" Text="{Binding PageDataBinding.MainString}" HorizontalAlignment="Center" MaxWidth="210" />
+                                                    <TextBlock VerticalAlignment="Center"   TextWrapping="Wrap"  FontFamily="Consolas"  Foreground="{Binding ThemeColorModel.FontColor}" Text="{Binding PageDataBinding.MainString}" HorizontalAlignment="Center" MaxWidth="210" />
                                                 </Grid>
                                                 <Rectangle Fill="LightGray" Grid.Column="1" Width="1.2" MinHeight="160" Height="Auto" VerticalAlignment="Center"/>
                                                 <Grid Padding="0" Margin="0" Grid.Column="2">
@@ -149,7 +144,7 @@
                                                         <TextBlock Margin="0" Foreground="Gray" FontSize="60" HorizontalAlignment="Center"  VerticalAlignment="Bottom" FontFamily="Consolas" Text="{Binding PageDataBinding.OneDay}" />
                                                         <Rectangle Fill="LightGray" Width="90" Height="1" VerticalAlignment="Bottom"/>
                                                     </Grid>
-                                                    <TextBlock Grid.Row="1" Foreground="White" HorizontalAlignment="Center" Margin="0 5" VerticalAlignment="Top" FontFamily="CoNsolas" Text="{Binding PageDataBinding.OneMonthAndYear}"/>
+                                                    <TextBlock Grid.Row="1" Foreground="White" HorizontalAlignment="Center" Margin="0 5" VerticalAlignment="Top" FontFamily="Consolas" Text="{Binding PageDataBinding.OneMonthAndYear}"/>
                                                 </Grid>
                                             </Grid>
                                         </Border>
@@ -162,10 +157,10 @@
                         <StackPanel x:Name="OneMainStyle2" Visibility="Collapsed">
                             <Grid>
                                 <Grid Margin="10 1">
-                                    <TextBlock Text="{Binding Path=PageDataBinding.Vol}" HorizontalAlignment="Left" />
+                                    <TextBlock Text="{Binding Path=PageDataBinding.Vol}" HorizontalAlignment="Left"  Foreground="{Binding ThemeColorModel.FontColor}" />
                                     <StackPanel HorizontalAlignment="Right">
                                         <TextBlock FontFamily="CoNsolas" Margin="2 2" Foreground="#36C3F1" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="0" Text="{Binding PageDataBinding.HeaderString}" FontSize="15" TextWrapping="Wrap" />
-                                        <TextBlock x:Name="txtByWho" FontFamily="CoNsolas" Margin="2 3" HorizontalAlignment="Right" Grid.Row="1" Text="{Binding PageDataBinding.ByWho}" TextWrapping="Wrap"  FontSize="12"/>
+                                        <TextBlock  Foreground="{Binding ThemeColorModel.FontColor}"  x:Name="txtByWho" FontFamily="CoNsolas" Margin="2 3" HorizontalAlignment="Right" Grid.Row="1" Text="{Binding PageDataBinding.ByWho}" TextWrapping="Wrap"  FontSize="12"/>
                                     </StackPanel>
                                 </Grid>
                             </Grid>

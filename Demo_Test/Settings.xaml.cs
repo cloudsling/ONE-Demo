@@ -13,7 +13,7 @@ namespace Demo
     {
         public Settings()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -24,10 +24,9 @@ namespace Demo
             SunOrNightMode.IsOn = !Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme;
         }
 
-        private async void HyperlinkButton_Click(object sender, RoutedEventArgs e)
-        {
+        async void HyperlinkButton_Click(object sender, RoutedEventArgs e) =>
             await Windows.System.Launcher.LaunchUriAsync(new Uri(((HyperlinkButton)sender).Tag.ToString()));
-        }
+
 
         private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
@@ -41,12 +40,11 @@ namespace Demo
             }
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) =>
             Main.MainCurrent.mainViewModel.oneSettings.OneMainPageStyle = OneMainPageStyle.SelectedIndex;
-        }
 
-        private void SunOrNightMode_Toggled(object sender, RoutedEventArgs e)
+
+        void SunOrNightMode_Toggled(object sender, RoutedEventArgs e)
         {
             if (SunOrNightMode.IsOn)
             {
@@ -77,7 +75,7 @@ namespace Demo
             LocalSettings.Values[key] = value;
         }
 
-        public T ReadSettings<T>(string key, T defaultValue)
+        T ReadSettings<T>(string key, T defaultValue)
         {
             if (LocalSettings.Values.ContainsKey(key))
             {
@@ -135,7 +133,7 @@ namespace Demo
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged([CallerMemberName]string propertyName = "")
+        void OnPropertyChanged([CallerMemberName]string propertyName = "")
         {
             var temp = Volatile.Read(ref PropertyChanged);
             if (temp != null) temp(this, new PropertyChangedEventArgs(propertyName));
