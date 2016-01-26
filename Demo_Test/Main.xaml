@@ -200,7 +200,7 @@
                             </StackPanel>
                         </Grid>
                         <Grid Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Right">
-                            <Border x:Name="NotifyUser" BorderThickness="1.5" BorderBrush="#36C3F1" CornerRadius="18 0 0 18" HorizontalAlignment="Right" Margin="0 30" Background="SkyBlue" Height="42" Width="0" >
+                            <Border x:Name="NotifyUser" BorderThickness="1.5" BorderBrush="SkyBlue" CornerRadius="18 0 0 18" HorizontalAlignment="Right" Margin="0 30"  Background="{Binding themeColorModelSettings.ArticleFontBodyBackGroundColor}" Height="42" Width="0" >
                                 <TextBlock x:Name="NotifyUserText" HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Center" FontFamily="Consolas"/>
                             </Border>
                         </Grid>

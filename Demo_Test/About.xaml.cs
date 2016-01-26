@@ -8,22 +8,24 @@ namespace Demo
 {
     public sealed partial class About : Page
     {
+        public AboutViewModel aboutViewModel { get; set; }
+
         public About()
         {
-            this.InitializeComponent();
+            aboutViewModel = new AboutViewModel();
+            InitializeComponent();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            aboutViewModel.AboutThemeColorModel = ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme);
             Story.Begin();
         }
 
-        private async void HyperlinkButton_Click(object sender, RoutedEventArgs e)
-        {
+        async void HyperlinkButton_Click(object sender, RoutedEventArgs e) =>
             await Windows.System.Launcher.LaunchUriAsync(new Uri(((HyperlinkButton)sender).Tag.ToString()));
-        }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        async void Button_Click(object sender, RoutedEventArgs e)
         {
             var emailMessage = new EmailMessage();
             emailMessage.Subject = "反馈";
@@ -32,5 +34,9 @@ namespace Demo
             await EmailManager.ShowComposeNewEmailAsync(emailMessage);
         }
     }
-    
+
+    public class AboutViewModel
+    {
+        public ThemeColorModel AboutThemeColorModel { get; set; }
+    }
 }
