@@ -35,6 +35,7 @@ namespace Demo
         public static string dayReallyObjectString;
         public static Action OtherPageDoWhenThemeChanged;
     }
+
     public sealed partial class Main : Page
     {
         public Main()
@@ -317,7 +318,22 @@ namespace Demo
                 GaoStatusBar.SetStatusBar(Colors.White, ThemeColorModel.SunModeTheme.StatusBarBackGroundColor.Color);
             }
             OtherPageDoWhenThemeChanged();
+        }
 
+        public void ThisPageDoWhenThemeChanged()
+        {
+            ChangeSunOrNightMode(mainViewModel.oneSettings.RequireLightTheme);
+            if (SunMode.Visibility == Visibility.Collapsed)
+            {
+                mainViewModel.oneSettings.RequireLightTheme = false;
+                ThemeColorModel.InitialByOtherObject(mainViewModel.themeColorModelSettings, new ThemeColorModel(false));
+                GaoStatusBar.SetStatusBar(Colors.White, ThemeColorModel.NightModeTheme.StatusBarBackGroundColor.Color);
+            }
+            else {
+                mainViewModel.oneSettings.RequireLightTheme = true;
+                ThemeColorModel.InitialByOtherObject(mainViewModel.themeColorModelSettings, new ThemeColorModel(true));
+                GaoStatusBar.SetStatusBar(Colors.White, ThemeColorModel.SunModeTheme.StatusBarBackGroundColor.Color);
+            }
         }
     }
 

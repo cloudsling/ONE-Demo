@@ -81,7 +81,7 @@
                             </StackPanel>
                             <Border Grid.Row="2" Padding="0.5">
                                 <RelativePanel Margin="0 0 0 0" Grid.Row="0">
-                                <ListView  Foreground="{Binding themeColorModelSettings.FontColor}" x:Name="HamListBox" SelectionChanged="HamListBox_SelectionChanged">
+                                <ListView Foreground="{Binding themeColorModelSettings.FontColor}" x:Name="HamListBox" SelectionChanged="HamListBox_SelectionChanged">
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid Padding="0">
@@ -145,7 +145,6 @@
                             <!--      FRAME IS HERE!!!!!!!!!!!      -->
                             <Frame MaxWidth="1080" x:Name="OneFrame" Margin="0 0 0 0" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True"/>
                         </ScrollViewer>
-                        <!--<Grid x:Name="balabala" Grid.Row="0" Width="Auto" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}"-->
                         <Grid x:Name="balabala" Grid.Row="0" Width="Auto" Background="{Binding themeColorModelSettings.TitleBarBackgroundColor}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>

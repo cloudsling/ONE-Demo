@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -115,7 +113,6 @@ namespace Demo
 
         private void fv_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            System.Threading.Tasks.Task.Delay(1000);
             var flipview = sender as FlipView;
             int index = flipview.SelectedIndex;
 

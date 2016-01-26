@@ -366,13 +366,13 @@ namespace Demo
     /// </summary>
     public class OneThingObject : INotifyPropertyChanged
     {
-        private string _imagePath;
-        private string _header;
-        private string _content;
+        string _imagePath;
+        string _header;
+        string _content;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged([CallerMemberName]string proptyName = "")
+        void OnPropertyChanged([CallerMemberName]string proptyName = "")
         {
             var temp = Volatile.Read(ref PropertyChanged);
             if (temp != null) temp(this, new PropertyChangedEventArgs(proptyName));

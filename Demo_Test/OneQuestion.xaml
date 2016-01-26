@@ -16,7 +16,7 @@
             </DoubleAnimation>
         </Storyboard>
     </Page.Resources>
-    <Grid  Background="{Binding OneQuestionThemeColorModel.MainBodyBackgroundColor}">
+    <Grid Background="{Binding OneQuestionThemeColorModel.MainBodyBackgroundColor}">
         <ScrollViewer BringIntoViewOnFocusChange="True" VerticalScrollBarVisibility="Visible" VerticalScrollMode="Auto">
             <StackPanel>
                 <Border x:Name="borderAnime" Grid.Row="0" Height="50"/>

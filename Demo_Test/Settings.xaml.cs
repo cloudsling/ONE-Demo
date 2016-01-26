@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using Windows.Storage;
@@ -11,55 +10,70 @@ namespace Demo
 {
     public sealed partial class Settings : Page
     {
+        public SettingsViewModel settingsViewModel { get; set; }
+
         public Settings()
         {
+            settingsViewModel = new SettingsViewModel();
             InitializeComponent();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            settingsViewModel.SettingsThemeColorModel = ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme);
             Story.Begin();
             DoubleClickExit.IsOn = Main.MainCurrent.mainViewModel.oneSettings.IsDoubleClickExit;
             OneMainPageStyle.SelectedIndex = Main.MainCurrent.mainViewModel.oneSettings.OneMainPageStyle;
             SunOrNightMode.IsOn = !Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme;
         }
 
-        async void HyperlinkButton_Click(object sender, RoutedEventArgs e) =>
-            await Windows.System.Launcher.LaunchUriAsync(new Uri(((HyperlinkButton)sender).Tag.ToString()));
-
-
-        private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
-            if (!DoubleClickExit.IsOn)
-            {
-                Main.MainCurrent.mainViewModel.oneSettings.IsDoubleClickExit = false;
-            }
-            else
-            {
+            if (!DoubleClickExit.IsOn) Main.MainCurrent.mainViewModel.oneSettings.IsDoubleClickExit = false;
+            else {
                 Main.MainCurrent.mainViewModel.oneSettings.IsDoubleClickExit = true;
             }
         }
 
         void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) =>
             Main.MainCurrent.mainViewModel.oneSettings.OneMainPageStyle = OneMainPageStyle.SelectedIndex;
-
-
+        
         void SunOrNightMode_Toggled(object sender, RoutedEventArgs e)
         {
             if (SunOrNightMode.IsOn)
             {
                 Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme = false;
-                ThemeColorModel.InitialByOtherObject(Main.MainCurrent.mainViewModel.themeColorModelSettings, ThemeColorModel.NightModeTheme);
-                Main.MainCurrent.ChangeSunOrNightMode(false);
+                //Main.MainCurrent.ChangeSunOrNightMode(false);
             }
             else
             {
                 Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme = true;
-                ThemeColorModel.InitialByOtherObject(Main.MainCurrent.mainViewModel.themeColorModelSettings, ThemeColorModel.SunModeTheme);
-                Main.MainCurrent.ChangeSunOrNightMode(true);
+                //Main.MainCurrent.ChangeSunOrNightMode(true);
+            }
+            ThemeColorModel.InitialByOtherObject(settingsViewModel.SettingsThemeColorModel, ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme));
+            Main.MainCurrent.ThisPageDoWhenThemeChanged();
+        }
+    }
+
+    public class SettingsViewModel
+    {
+        ThemeColorModel _settingsThemeColorModel;
+
+        public ThemeColorModel SettingsThemeColorModel
+        {
+            get
+            {
+                return _settingsThemeColorModel;
+            }
+
+            set
+            {
+                _settingsThemeColorModel = value;
             }
         }
     }
+
+
 
     public class OneSettings : INotifyPropertyChanged
     {
@@ -129,7 +143,6 @@ namespace Demo
                 OnPropertyChanged();
             }
         }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 

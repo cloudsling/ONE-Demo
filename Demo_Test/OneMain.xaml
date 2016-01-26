@@ -24,58 +24,64 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <ListView Grid.Row="0" Padding="0" Background="{Binding ThemeColorModel.OneMainBodyBackgroundColor}" Opacity="{Binding ThemeColorModel.Opacity}">
-                    <ListViewItem Padding=".1">
-                        <Grid MaxHeight="360" Padding="2.4">
-                            <Button Grid.Column="0"  Grid.ColumnSpan="3" Padding="0" Width="Auto" Height="Auto" Click="Button_Click">
-                                <FlipView x:Name="fv" Width="Auto" Padding="0" SelectionChanged="fv_SelectionChanged" MinHeight="360">
-                                    <FlipView.ItemTemplate>
-                                        <DataTemplate>
-                                            <Border BorderBrush="#36C3F1" BorderThickness=".4">
-                                                <Image Stretch="UniformToFill" Source="{Binding Source0}"/>
-                                            </Border>
-                                        </DataTemplate>
-                                    </FlipView.ItemTemplate>
-                                </FlipView>
-                            </Button>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="11*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                </Grid.ColumnDefinitions>
-                                <Border Background="LightGray" Grid.Column="0" HorizontalAlignment="Left" Opacity="0.6">
-                                    <Button x:Name="GoLeft" Height="360" Width="Auto" Click="GoLeft_Click" Padding="0" VerticalAlignment="Center" >
-                                        <Button.Content>
-                                            <Border Margin="2" Opacity="0.8" Padding="0">
-                                                <FontIcon FontFamily="segoe MDL2 Assets" Glyph="&#xE00E;" />
-                                            </Border>
-                                        </Button.Content>
-                                    </Button>
-                                </Border>
+                <ListView Grid.Row="0" Padding="0"  Background="{Binding ThemeColorModel.OneMainBodyBackgroundColor}" Opacity="{Binding ThemeColorModel.Opacity}">
+                    <ListViewItem Padding="0.1">
+                        <Grid Background="{Binding ThemeColorModel.OneMainBodyBackgroundColor}">
+                            <Grid Padding="4" MaxHeight="360">
+                                <Border>
+                                    <Button Grid.Column="0" Grid.ColumnSpan="3" Padding="0" Width="Auto" Height="Auto" Click="Button_Click">
+                                        <FlipView x:Name="fv" Width="Auto" Padding="0" SelectionChanged="fv_SelectionChanged"  MinHeight="360">
+                                            <FlipView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border BorderBrush="#36C3F1" BorderThickness=".4">
 
-                                <Border Background="LightGray" Grid.Column="2" HorizontalAlignment="Right" Opacity="0.5">
-                                    <Button x:Name="GoRight" Height="360" Width="Auto" Click="GoRight_Click"  VerticalAlignment="Center" Padding="0">
-                                        <Button.Content>
-                                            <Border Margin="2" Opacity="0.8" Padding="0">
-                                                <FontIcon FontFamily="segoe MDL2 Assets" Glyph="&#xE00F;" />
-                                            </Border>
-                                        </Button.Content>
+                                                        <Image Stretch="UniformToFill" Source="{Binding Source0}"/>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </FlipView.ItemTemplate>
+                                        </FlipView>
                                     </Button>
                                 </Border>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="11*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Background="LightGray" Grid.Column="0" HorizontalAlignment="Left" Opacity="0.6">
+                                        <Button x:Name="GoLeft" Height="360" Width="Auto" Click="GoLeft_Click" Padding="0" VerticalAlignment="Center" >
+                                            <Button.Content>
+                                                <Border Margin="2" Opacity="0.8" Padding="0">
+                                                    <FontIcon FontFamily="segoe MDL2 Assets" Glyph="&#xE00E;" />
+                                                </Border>
+                                            </Button.Content>
+                                        </Button>
+                                    </Border>
+
+                                    <Border Background="LightGray" Grid.Column="2" HorizontalAlignment="Right" Opacity="0.5">
+                                        <Button x:Name="GoRight" Height="360" Width="Auto" Click="GoRight_Click"  VerticalAlignment="Center" Padding="0">
+                                            <Button.Content>
+                                                <Border Margin="2" Opacity="0.8" Padding="0">
+                                                    <FontIcon FontFamily="segoe MDL2 Assets" Glyph="&#xE00F;" />
+                                                </Border>
+                                            </Button.Content>
+                                        </Button>
+                                    </Border>
+                                </Grid>
+                                <StackPanel x:Name="ManyEllipse" Height="6" Width="75" Margin="0 300 0 0" Orientation="Horizontal" >
+                                    <Ellipse Margin="3 0 3 0" Width="5" Height="5"/>
+                                    <Ellipse Margin="3 0 3 0" Width="5" Height="5" />
+                                    <Ellipse Margin="3 0 3 0" Width="5" Height="5" />
+                                    <Ellipse Margin="3 0 3 0" Width="5" Height="5" />
+                                    <Ellipse Margin="3 0 3 0" Width="5" Height="5" />
+                                    <Ellipse Margin="3 0 3 0" Width="5" Height="5" />
+                                    <Ellipse Margin="3 0 3 0" Width="5" Height="5" />
+                                </StackPanel>
                             </Grid>
-                            <StackPanel x:Name="ManyEllipse" Height="6" Width="75" Margin="0 300 0 0"  Orientation="Horizontal" >
-                                <Ellipse Margin="3 0 3 0" Width="5" Height="5"/>
-                                <Ellipse Margin="3 0 3 0" Width="5" Height="5" />
-                                <Ellipse Margin="3 0 3 0" Width="5" Height="5" />
-                                <Ellipse Margin="3 0 3 0" Width="5" Height="5" />
-                                <Ellipse Margin="3 0 3 0" Width="5" Height="5" />
-                                <Ellipse Margin="3 0 3 0" Width="5" Height="5" />
-                                <Ellipse Margin="3 0 3 0" Width="5" Height="5" />
-                            </StackPanel>
                         </Grid>
                     </ListViewItem>
                 </ListView>
+
                 <ScrollViewer Grid.Row="1">
                     <StackPanel>
                         <Border Height="{Binding ElementName=border,Path=Height}"/>
@@ -86,7 +92,6 @@
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <StackPanel Grid.Row="0" Width="Auto" Height="Auto" Padding="0">
-                                    <Rectangle HorizontalAlignment="Center" Opacity="1" Fill="SkyBlue" Width="360" Height="1" Margin="4 5 4 2"  />
                                     <Border Height="Auto" Width="Auto" Padding="0">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
