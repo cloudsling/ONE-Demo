@@ -44,16 +44,6 @@ namespace Demo
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            //if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            //{
-            //    var bar = StatusBar.GetForCurrentView();
-            //    await bar.HideAsync();
-            //    StartAnimation.Begin();
-            //    var what = bar.ProgressIndicator;
-            //    what.ProgressValue = 0;
-            //    what.Text = "Many-多个";
-            //}
-            //必须要做的事情
             GaoStatusBar.HideStatusBar();
             StartAnimation.Begin();
             try
@@ -62,7 +52,7 @@ namespace Demo
                 {
                     await GetOneString(uri);
                     DayObjectCollection = GetOne.GetOneTodayObjectList(x);
-                },TaskCreationOptions.DenyChildAttach);
+                }, TaskCreationOptions.DenyChildAttach);
                 Task.WaitAll(task);
             }
             catch (Exception)
@@ -71,7 +61,12 @@ namespace Demo
                 Frame.Navigate(typeof(Main), "404");
                 return;
             }
-            Frame.Navigate(typeof(StartMainPage), new MyNavigationEventArgs(x, DayObjectCollection));
+            if (!new OneSettings().SkipStartMainPage)
+                Frame.Navigate(typeof(StartMainPage), new MyNavigationEventArgs(x, DayObjectCollection));
+            else
+            {
+                Frame.Navigate(typeof(Main), new MyNavigationEventArgs(x, DayObjectCollection));
+            }
         }
     }
 

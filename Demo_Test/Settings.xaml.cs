@@ -22,9 +22,15 @@ namespace Demo
         {
             settingsViewModel.SettingsThemeColorModel = ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme);
             Story.Begin();
-            DoubleClickExit.IsOn = Main.MainCurrent.mainViewModel.oneSettings.IsDoubleClickExit;
+            ReadSettingsToShow();
+        }
+
+        void ReadSettingsToShow()
+        {
             OneMainPageStyle.SelectedIndex = Main.MainCurrent.mainViewModel.oneSettings.OneMainPageStyle;
+            DoubleClickExit.IsOn = Main.MainCurrent.mainViewModel.oneSettings.IsDoubleClickExit;
             SunOrNightMode.IsOn = !Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme;
+            SkipStartMainPage.IsOn = Main.MainCurrent.mainViewModel.oneSettings.SkipStartMainPage;
         }
 
         void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
@@ -37,21 +43,24 @@ namespace Demo
 
         void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) =>
             Main.MainCurrent.mainViewModel.oneSettings.OneMainPageStyle = OneMainPageStyle.SelectedIndex;
-        
+
         void SunOrNightMode_Toggled(object sender, RoutedEventArgs e)
         {
-            if (SunOrNightMode.IsOn)
-            {
-                Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme = false;
-                //Main.MainCurrent.ChangeSunOrNightMode(false);
-            }
-            else
-            {
+            if (SunOrNightMode.IsOn) Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme = false;
+            else {
                 Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme = true;
-                //Main.MainCurrent.ChangeSunOrNightMode(true);
             }
             ThemeColorModel.InitialByOtherObject(settingsViewModel.SettingsThemeColorModel, ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme));
             Main.MainCurrent.ThisPageDoWhenThemeChanged();
+        }
+
+        void SkipStartMainPage_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (SkipStartMainPage.IsOn)
+                Main.MainCurrent.mainViewModel.oneSettings.SkipStartMainPage = true;
+            else {
+                Main.MainCurrent.mainViewModel.oneSettings.SkipStartMainPage = false;
+            }
         }
     }
 
@@ -140,6 +149,16 @@ namespace Demo
             set
             {
                 SaveSettings(nameof(RequireLightTheme), value);
+                OnPropertyChanged();
+            }
+        }
+
+        public bool SkipStartMainPage
+        {
+            get { return ReadSettings(nameof(SkipStartMainPage), false); }
+            set
+            {
+                SaveSettings(nameof(SkipStartMainPage), value);
                 OnPropertyChanged();
             }
         }

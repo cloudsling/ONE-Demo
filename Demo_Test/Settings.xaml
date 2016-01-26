@@ -23,7 +23,9 @@
                     <Border Grid.Row="0" Height="80" x:Name="border">
                     </Border>
                     <ToggleSwitch  x:Name="DoubleClickExit" Margin="10" Header="是否双击退出程序" Toggled="ToggleSwitch_Toggled" OffContent="否" OnContent="是"/>
+                    <ToggleSwitch  x:Name="SkipStartMainPage" Margin="10" Header="跳过首页动画" Toggled="SkipStartMainPage_Toggled" OffContent="否" OnContent="是"/>
                     <ToggleSwitch  x:Name="SunOrNightMode" Margin="10" Header="夜间模式" Toggled="SunOrNightMode_Toggled" OffContent="关" OnContent="开"/>
+
                     <ComboBox x:Name="OneMainPageStyle" Margin="10" Header="选择首页主题" SelectionChanged="ComboBox_SelectionChanged">
                         <ComboBoxItem Content="真*霸气现代首页(ง •_•)ง" />
                         <ComboBoxItem Content="真*古典传统首页(ง •_•)ง" />
