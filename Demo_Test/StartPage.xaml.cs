@@ -35,12 +35,12 @@ namespace Demo
             return x;
         }
 
-        public async static Task<string> GetDayReallyObjectString(string vol)
-        {
-            if (httpClient != null) httpClient.Dispose();
-            httpClient = new HttpClient();
-            return await httpClient.GetStringAsync(new Uri(uriOneObject + vol));
-        }
+        //public async static Task<string> GetDayReallyObjectString(string vol)
+        //{
+        //    if (httpClient != null) httpClient.Dispose();
+        //    httpClient = new HttpClient();
+        //    return await httpClient.GetStringAsync(new Uri(uriOneObject + vol));
+        //}
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {

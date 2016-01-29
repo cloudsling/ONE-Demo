@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -20,19 +21,20 @@ namespace Demo
 {
     public sealed partial class Main : Page
     {
-        public static Main MainCurrent;
         public MainViewModel mainViewModel { get; set; }
+        public static Main MainCurrent;
         public static List<DayObject> DayObjectCollection;
         public static DayReallyObject dayReallyObject;
-        public static Action CreateFileButtonClick;
         public static StorageFolder oneFolder;
-        public static string itemPath;
         public static HttpClient httpClient;
-        public static string x;
         public static List<string> imageSourceAsync;
+        public static string itemPath;
+        public static string x;
         public static string uri = "http://wufazhuce.com/";
-        public static string uriOneObject = "http://wufazhuce.com/one/";
+        public static string uriOneArticle = "http://wufazhuce.com/article/";
+        public static string uriOneQuestion = "http://wufazhuce.com/question/";
         public static string dayReallyObjectString;
+        public static Action CreateFileButtonClick;
         public static Action OtherPageDoWhenThemeChanged;
     }
 
@@ -79,9 +81,14 @@ namespace Demo
 
         public async static Task<string> GetDayReallyObjectString(string vol)
         {
+            StringBuilder sb = new StringBuilder();
             if (httpClient != null) httpClient.Dispose();
             using (httpClient = new HttpClient())
-                return await httpClient.GetStringAsync(new Uri(uriOneObject + vol));
+                sb.Append(await httpClient.GetStringAsync(new Uri(uriOneArticle + vol)));
+            if (httpClient != null) httpClient.Dispose();
+            using (httpClient = new HttpClient())
+                sb.Append(await httpClient.GetStringAsync(new Uri(uriOneQuestion + vol)));
+            return sb.ToString();
         }
 
         public void ChangeSunOrNightMode(bool RequireLightTheme)
@@ -228,7 +235,7 @@ namespace Demo
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void HamListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void HamListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ListView oneListView = sender as ListView;
             switch (oneListView.Name)
@@ -446,13 +453,13 @@ namespace Demo
                 MyGlyph = "\uE7C5",
                 BgColor = ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme).FontColor
             });
-            this.Add(new MyListViewItems
-            {
-                MyItemName = "   东西",
-                ClassType = typeof(OneThing),
-                MyGlyph = "\uE8A4",
-                BgColor = ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme).FontColor
-            });
+            //this.Add(new MyListViewItems
+            //{
+            //    MyItemName = "   东西",
+            //    ClassType = typeof(OneThing),
+            //    MyGlyph = "\uE8A4",
+            //    BgColor = ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme).FontColor
+            //});
         }
     }
 

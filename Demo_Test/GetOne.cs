@@ -479,7 +479,7 @@ namespace Demo
         /// 处理获取的字符串，获得对象集合的字符串
         /// </summary>
         /// <param name="resultString"></param>
-        private static void CutOneString(ref string resultString)
+        static void CutOneString(ref string resultString)
         {
             try
             {
@@ -491,7 +491,7 @@ namespace Demo
             {
             }
         }
-        private static MatchCollection GetAccurateStringList(string regexString, string resultString)
+        static MatchCollection GetAccurateStringList(string regexString, string resultString)
         {
             regex = new Regex(regexString);
             return regex.Matches(resultString);
@@ -502,20 +502,15 @@ namespace Demo
         /// </summary>
         /// <param name="resultString"></param>
         /// <param name="list"></param>
-        private static void GetObjectDayImagePath(string resultString, ref List<DayObject> list)
+        static void GetObjectDayImagePath(string resultString, ref List<DayObject> list)
         {
             string temp;
             coll = GetAccurateStringList("<img.+src=\"(.+?)\".+/>", resultString);
-            //List<Task> TaskColl = new List<Task>();
-
             for (int i = 0; i < list.Count; i++)
             {
                 temp = coll[i].Groups[1].ToString();
                 SavePicHere(temp, list[i].Vol + ".jpg", list[i]);
-                //StorageFile file = await Main.oneFolder.GetFileAsync(list[i].Vol + ".jpg");
-                // list[i].DayImagePath = TempPath;
             }
-            // Task.WaitAll(TaskColl.ToArray());
         }
 
         public static string TempPath = "";
@@ -525,16 +520,17 @@ namespace Demo
         /// </summary>
         /// <param name="resultString"></param>
         /// <param name="list"></param>
-        private static void GetObjectHeaderString(string resultString, ref List<DayObject> list)
+        static void GetObjectHeaderString(string resultString, ref List<DayObject> list)
         {
             try
             {
-                coll = GetAccurateStringList("fp-one-imagen-footer\">([\\d\\D]+?)<br", resultString);
+                //coll = GetAccurateStringList("fp-one-imagen-footer\">([\\d\\D]+?)</div", resultString);
                 // Console.WriteLine(s);
                 for (int i = 0; i < list.Count; i++)
                 {
-                    StringBuilder sb = new StringBuilder(coll[i].Groups[1].ToString().Trim());
-                    list[i].HeaderString = sb.Replace("&#039;", "\"").ToString();
+                    //StringBuilder sb = new StringBuilder(coll[i].Groups[1].ToString().Trim());
+                    //list[i].HeaderString = sb.Replace("&#039;", "\"").Replace("&amp;", "&").ToString();
+                    list[i].HeaderString = "无题";
                 }
             }
             catch (Exception)
@@ -546,15 +542,17 @@ namespace Demo
         /// </summary>
         /// <param name="resultString"></param>
         /// <param name="list"></param>
-        private static void GetObjectMainString(string resultString, ref List<DayObject> list)
+        static void GetObjectMainString(string resultString, ref List<DayObject> list)
         {
             try
             {
-                coll = GetAccurateStringList("img[\\d\\D]+?com/one/vol.{5}\">([\\d\\D]+?)</a>", resultString);
+                //coll = GetAccurateStringList("<img[\\d\\D]+?com/one/vol.{5}\">([\\d\\D]+?)</a>", resultString);
+                coll = GetAccurateStringList("com/one/.{4}\">([\\d\\D]+?)</a>", resultString);
                 // Console.WriteLine(s);
                 for (int i = 0; i < list.Count; i++)
                 {
-                    list[i].MainString = coll[i].Groups[1].ToString();
+                    StringBuilder sb = new StringBuilder(coll[2 * i + 1].Groups[1].ToString().Trim());
+                    list[i].MainString = sb.Replace("&#039;", "\"").Replace("&amp;", "&").ToString();
                 }
             }
             catch (Exception)
@@ -566,14 +564,16 @@ namespace Demo
         /// </summary>
         /// <param name="resultString"></param>
         /// <param name="list"></param>
-        private static void GetObjectByWho(string resultString, ref List<DayObject> list)
+        static void GetObjectByWho(string resultString, ref List<DayObject> list)
         {
             try
             {
-                coll = GetAccurateStringList("fp-one-imagen-footer[\\d\\D]+?<br />([\\d\\D]+?作品).+?</div>", resultString);
+                //coll = GetAccurateStringList("fp-one-imagen-footer[\\d\\D]+?<br />([\\d\\D]+?作品).+?</div>", resultString);
+                coll = GetAccurateStringList("fp-one-imagen-footer\">([\\d\\D]+?作品).+?</div>", resultString);
                 for (int i = 0; i < list.Count; i++)
                 {
-                    list[i].ByWho = coll[i].Groups[1].ToString().Trim();
+                    StringBuilder sb = new StringBuilder(coll[i].Groups[1].ToString().Trim());
+                    list[i].ByWho = sb.Replace("&#039;", "\"").Replace("&amp;", "&").ToString();
                 }
             }
             catch (Exception)
@@ -585,7 +585,7 @@ namespace Demo
         /// </summary>
         /// <param name="resultString"></param>
         /// <param name="list"></param>
-        private static void GetObjectVOL(string resultString, ref List<DayObject> list)
+        static void GetObjectVOL(string resultString, ref List<DayObject> list)
         {
             try
             {
@@ -604,7 +604,7 @@ namespace Demo
         /// </summary>
         /// <param name="resultString"></param>
         /// <param name="list"></param>
-        private static void GetObjectOneDay(string resultString, ref List<DayObject> list)
+        static void GetObjectOneDay(string resultString, ref List<DayObject> list)
         {
             try
             {
@@ -631,7 +631,7 @@ namespace Demo
         /// </summary>
         /// <param name="resultString"></param>
         /// <param name="list"></param>
-        private static void GetObjectOneMonthAndYear(string resultString, ref List<DayObject> list)
+        static void GetObjectOneMonthAndYear(string resultString, ref List<DayObject> list)
         {
             coll = GetAccurateStringList("y\">(.{8})</p>", resultString);
             for (int i = 0; i < list.Count; i++)
@@ -644,7 +644,7 @@ namespace Demo
 
         #region 每天的对象
 
-        private static IBuffer GetBufferFromArrayByte(byte[] buffer)
+        static IBuffer GetBufferFromArrayByte(byte[] buffer)
         {
             using (InMemoryRandomAccessStream memoryStream = new InMemoryRandomAccessStream())
             {
@@ -656,7 +656,7 @@ namespace Demo
             }
         }
 
-        public static async void SavePic(string uri, string fileName)
+        public static async Task SavePic(string uri, string fileName)
         {
             try
             {
@@ -668,15 +668,14 @@ namespace Demo
             catch (Exception)
             {
             }
-
         }
         /// <summary>
         /// 保存到临时文件中
         /// </summary>
         /// <param name="uri"></param>
-        public static async void SavePicHere(string uri, string fileName, DayObject obj)
+        public static async Task SavePicHere(string uri, string fileName, DayObject obj)
         {
-           // if (httpClient != null) httpClient.Dispose();
+            // if (httpClient != null) httpClient.Dispose();
 
             // CreationCollisionOption.OpenIfExists
             //IStorageItem fds = await ApplicationData.Current.LocalCacheFolder.TryGetItemAsync(fileName);
@@ -713,7 +712,7 @@ namespace Demo
         public static DayReallyObject GetTodayReallyObject(string TodayMainString)
         {
             //dayReallyObject = new DayReallyObject();
-            FormatTodayReallyObject(ref TodayMainString);
+           // FormatTodayReallyObject(ref TodayMainString);
             dayReallyObject = new DayReallyObject();
             GetOneQuestionObject(TodayMainString, ref dayReallyObject);
             GetArticlesObject(TodayMainString, ref dayReallyObject);
@@ -725,7 +724,7 @@ namespace Demo
         /// 处理字符串便于构造对象
         /// </summary>
         /// <param name="TodayMainString"></param>
-        private static void FormatTodayReallyObject(ref string TodayMainString)
+        static void FormatTodayReallyObject(ref string TodayMainString)
         {
             TodayMainString = GetAccurateString("(comilla-cerrar[\\d\\D]+)cosas-compartir", TodayMainString);
         }
@@ -734,33 +733,33 @@ namespace Demo
         /// </summary>
         /// <param name="ResultString"></param>
         /// <param name="dayReallyObject"></param>
-        private static void GetOneThingObject(string ResultString, ref DayReallyObject dayReallyObject)
+        static void GetOneThingObject(string ResultString, ref DayReallyObject dayReallyObject)
         {
             OneThingObject oneThingObject = new OneThingObject();
 
-            //得到header
-            //regex = new Regex("cosas-titulo..([\\d\\D]+?)</h2>");
-            //coll = regex.Matches(ResultString);
-            string temp = GetAccurateString("cosas-titulo..([\\d\\D]+?)</h2>", ResultString);
-            regex = new Regex("<.+?>(.+?)<");
-            MatchCollection coll = regex.Matches(temp);
-            if (coll.Count > 0)
-            {
-                oneThingObject.Header = coll[0].Groups[1].ToString().Trim();
-            }
-            else
-            {
-                oneThingObject.Header = temp;
-            }
-            //得到content
-            //regex = new Regex("cosas-contenido..([\\d\\D]+?)</div>");
-            //coll = regex.Matches(ResultString);
-            StringBuilder sb = new StringBuilder(GetAccurateString("cosas-contenido..([\\d\\D]+?)</div>", ResultString));
-            oneThingObject.Content = sb.Replace("<br />", "").ToString();
-            //得到图片路径
-            //regex = new Regex("<img.+src=\"(.+jpg)\".+/>");
-            //coll = regex.Matches(ResultString);
-            oneThingObject.ImagePath = GetAccurateString("<img.+src=\"(.+jpg)\".+/>", ResultString);
+            ////得到header
+            ////regex = new Regex("cosas-titulo..([\\d\\D]+?)</h2>");
+            ////coll = regex.Matches(ResultString);
+            //string temp = GetAccurateString("cosas-titulo..([\\d\\D]+?)</h2>", ResultString);
+            //regex = new Regex("<.+?>(.+?)<");
+            //MatchCollection coll = regex.Matches(temp);
+            //if (coll.Count > 0)
+            //{
+            //    oneThingObject.Header = coll[0].Groups[1].ToString().Trim();
+            //}
+            //else
+            //{
+            //    oneThingObject.Header = temp;
+            //}
+            ////得到content
+            ////regex = new Regex("cosas-contenido..([\\d\\D]+?)</div>");
+            ////coll = regex.Matches(ResultString);
+            //StringBuilder sb = new StringBuilder(GetAccurateString("cosas-contenido..([\\d\\D]+?)</div>", ResultString));
+            //oneThingObject.Content = sb.Replace("<br />", "").ToString();
+            ////得到图片路径
+            ////regex = new Regex("<img.+src=\"(.+jpg)\".+/>");
+            ////coll = regex.Matches(ResultString);
+            //oneThingObject.ImagePath = GetAccurateString("<img.+src=\"(.+jpg)\".+/>", ResultString);
 
             dayReallyObject.OneThing = oneThingObject;
         }
@@ -776,7 +775,7 @@ namespace Demo
             oneThingObject.AnswerName = GetAccurateString("h4>([\\d\\D]+?)</h4>", ResultString, 1);
             oneThingObject.AskContent = GetAccurateString("cuestion-contenido..([\\d\\D]+?)</div>", ResultString);
             StringBuilder sb = new StringBuilder(GetAccurateString("cuestion-contenido..([\\d\\D]+?)</div>", ResultString, 1));
-            sb = sb.Replace("\r\n", "").Replace("</p>", "\r\n\r\n").Replace("<br />", "\r\n").Replace("&nbsp;", "").Replace("&mdash;", "—").Replace("&hellip;", "…").Replace("&ldquo;", "“").Replace("&rdquo;", "”").Replace("&rsquo;", "'").Replace("<p>", "     ");
+            sb = sb.Replace("\r\n", "").Replace("</p>", "\r\n\r\n").Replace("<br />", "\r\n").Replace("<br>", "\r\n").Replace("&nbsp;", "").Replace("&mdash;", "—").Replace("&hellip;", "…").Replace("&ldquo;", "“").Replace("&rdquo;", "”").Replace("&rsquo;", "'").Replace("<p>", "     ");
             oneThingObject.AnswerContent = sb.ToString();
             dayReallyObject.OneQuestion = oneThingObject;
         }
@@ -792,7 +791,7 @@ namespace Demo
             articles.Header = GetAccurateString("articulo-titulo..([\\d\\D]+?)</h2>", ResultString);
             articles.Writer = GetAccurateString("articulo-autor..([\\d\\D]+?)</p>", ResultString);
             StringBuilder sb = new StringBuilder(GetAccurateString("articulo-contenido..([\\d\\D]+?)<p class=\"articulo-editor", ResultString));
-            sb = sb.Replace("\r\n", "").Replace("&nbsp;", " ").Replace("&hellip;", "…").Replace("&mdash;", "—").Replace("&ldquo;", "“").Replace("&rdquo;", "”").Replace("&rsquo;", "'").Replace("</p>", "\r\n\r\n").Replace("<strong>", "     ").Replace("<p>", "     ").Replace("<br />", "\r\n").Replace("<em>", "").Replace("</em>", "").Replace("</div>", "");
+            sb = sb.Replace("\r\n", "").Replace("&nbsp;", " ").Replace("&hellip;", "…").Replace("&mdash;", "—").Replace("&ldquo;", "“").Replace("&rdquo;", "”").Replace("&rsquo;", "'").Replace("</p>", "\r\n\r\n").Replace("<strong>", "     ").Replace("<p>", "     ").Replace("<br />", "\r\n").Replace("<br>", "\r\n").Replace("<em>", "").Replace("</em>", "").Replace("</div>", "");
             articles.Content = sb.ToString();
             dayReallyObject.Articles = articles;
         }

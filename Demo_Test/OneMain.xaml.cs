@@ -24,12 +24,12 @@ namespace Demo
 
         public static List<string> FlipViewImageSourceList;
 
-        public void OneMainSavePic()
+        public async void OneMainSavePic()
         {
             int index = fv.SelectedIndex;
             try
             {
-                GetOne.SavePic(Main.DayObjectCollection[index].Vol + ".jpg", "ONE." + Main.DayObjectCollection[index].Vol + "首页.jpg");
+                await GetOne.SavePic(Main.DayObjectCollection[index].Vol + ".jpg", "ONE." + Main.DayObjectCollection[index].Vol + "首页.jpg");
                 Main.NotifyUserMethod(@"成功保存至 Pictures\ONE-一个 文件夹", 360);
             }
             catch (Exception)
@@ -67,11 +67,25 @@ namespace Demo
 
             if (Main.dayReallyObjectString == null)
             {
-                Main.dayReallyObjectString = await Main.GetDayReallyObjectString(Main.DayObjectCollection[0].Vol);
+                try
+                {
+                    Main.dayReallyObjectString = await Main.GetDayReallyObjectString(Main.DayObjectCollection[0].Vol.Split('.')[1]);
+                }
+                catch (Exception)
+                {
+                    // Main.dayReallyObjectString = null;
+                }
             }
             if (Main.dayReallyObject == null)
             {
-                Main.dayReallyObject = GetOne.GetTodayReallyObject(Main.dayReallyObjectString);
+                try
+                {
+                    Main.dayReallyObject = GetOne.GetTodayReallyObject(Main.dayReallyObjectString);
+                }
+                catch (Exception)
+                {
+                    // Main.dayReallyObject = null;
+                }
             }
 
         }
