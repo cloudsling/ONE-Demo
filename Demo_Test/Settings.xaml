@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Demo"
+    xmlns:adduplex="using:AdDuplex"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -32,7 +33,26 @@
                     </ComboBox>
                 </StackPanel>
             </PivotItem>
-
+            <PivotItem Header="Ad">
+                <Grid>
+                    <Border VerticalAlignment="Top">
+                        <RichTextBlock Foreground="{Binding SettingsThemeColorModel.FontColor}" Margin="30">
+                            <Paragraph>
+                                <InlineUIContainer>
+                                    <TextBlock TextWrapping="Wrap">
+                                        <TextBlock.Text>
+                                            <x:String>
+                                                如果愿意支持我请点击下面的广告(๑•̀ㅂ•́)و✧
+                                            </x:String>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </InlineUIContainer>
+                            </Paragraph>
+                        </RichTextBlock>
+                    </Border>
+                    <adduplex:AdControl Margin="0 20" VerticalAlignment="Bottom" AdUnitId="183935" AppKey="aaa53830-3488-4201-8d47-c9a9395dab99" />
+                </Grid>
+            </PivotItem>
         </Pivot>
     </Grid>
 </Page>

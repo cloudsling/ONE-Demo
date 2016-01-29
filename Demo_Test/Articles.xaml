@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Demo"
+    xmlns:adduplex="using:AdDuplex"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -108,6 +109,10 @@
                             </Border>
 
                         </Grid>
+
+                        <Border Margin="10" Padding="5">
+                            <adduplex:AdControl  AdUnitId="183943" AppKey="aaa53830-3488-4201-8d47-c9a9395dab99" />
+                        </Border>
                     </StackPanel>
                 </Grid>
             </Grid>

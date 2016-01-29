@@ -223,6 +223,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <SDKReference Include="AdDuplex.Windows10, Version=10.0.1.3">
+      <Name>AdDuplex SDK for Windows 10 %28XAML%29</Name>
+    </SDKReference>
     <SDKReference Include="WindowsMobile, Version=10.0.10586.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>

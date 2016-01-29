@@ -29,7 +29,7 @@ namespace Demo
         {
             oneThingViewModel.OneThingColorModel = ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme);
             Main.CreateFileButtonClick = OneThingSavePic;
-            InitializationOneThingObject(Main.dayReallyObject.OneThing);
+            //InitializationOneThingObject(Main.dayReallyObject.OneThing);
         }
         /// <summary>
         /// 初始化OneThing
@@ -41,11 +41,11 @@ namespace Demo
             oneThingViewModel.oneThing.Content = oneThing.Content;
             oneThingViewModel.oneThing.Header = oneThing.Header;
         }
-        public void OneThingSavePic()
+        public async void OneThingSavePic()
         {
             try
             {
-                GetOne.SavePic(oneThingViewModel.oneThing.ImagePath, Main.DayObjectCollection[0].Vol + "ONE-东西.jpg");
+                await GetOne.SavePic(oneThingViewModel.oneThing.ImagePath, Main.DayObjectCollection[0].Vol + "ONE-东西.jpg");
                 Main.NotifyUserMethod(@"成功保存至Pictures\ONE-一个文件夹", 360);
             }
             catch (Exception)

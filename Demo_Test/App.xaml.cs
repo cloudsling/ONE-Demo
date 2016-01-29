@@ -51,6 +51,7 @@ namespace Demo
 
             if (rootFrame.Content == null)
             {
+                AdDuplex.AdDuplexClient.Initialize("aaa53830-3488-4201-8d47-c9a9395dab99");
                 rootFrame.Navigate(typeof(StartPage), e.Arguments);
             }
             // 确保当前窗口处于活动状态

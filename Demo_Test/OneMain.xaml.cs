@@ -180,12 +180,12 @@ namespace Demo
             Main.Refreshen();
         }
 
-        private void CreateFileButton_Click(object sender, RoutedEventArgs e)
+        private async void CreateFileButton_Click(object sender, RoutedEventArgs e)
         {
             int index = fv.SelectedIndex;
             try
             {
-                GetOne.SavePic(FlipViewImageSourceList[index], "ONE." + Main.DayObjectCollection[index].Vol + "首页.jpg");
+                await GetOne.SavePic(FlipViewImageSourceList[index], "ONE." + Main.DayObjectCollection[index].Vol + "首页.jpg");
                 Main.NotifyUserMethod(@"成功保存至Pictures\ONE-一个文件夹", 360);
             }
             catch (Exception)
