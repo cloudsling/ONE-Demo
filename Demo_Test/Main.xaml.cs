@@ -30,7 +30,8 @@ namespace Demo
         public static List<string> imageSourceAsync;
         public static string itemPath;
         public static string x;
-        public static string uri = "http://wufazhuce.com/";
+        public static string uri = "http://139.129.116.86:8000/api/hp/more/0?";
+       // public static string uriOld = "http://wufazhuce.com/";
         public static string uriOneArticle = "http://wufazhuce.com/article/";
         public static string uriOneQuestion = "http://wufazhuce.com/question/";
         public static string dayReallyObjectString;
@@ -79,7 +80,7 @@ namespace Demo
             return x;
         }
 
-        public async static Task<string> GetDayReallyObjectString(string vol)
+        public async static Task<string> GetDayReallyObjectString()
         {
             StringBuilder sb = new StringBuilder();
             //if (httpClient != null) httpClient.Dispose();
@@ -87,13 +88,13 @@ namespace Demo
             //string sd = uriOneQuestion + vol;
             using (httpClient = new HttpClient())
             {
-                sb.Append(await httpClient.GetStringAsync(new Uri(GetOne.GetOneQestionUri(x))));
+                sb.Append(await httpClient.GetStringAsync(new Uri(GetOne.GetOneQestionUri())));
             }
-            if (httpClient != null) httpClient.Dispose();
-            using (httpClient = new HttpClient())
-            {
-                sb.Append(await httpClient.GetStringAsync(new Uri(GetOne.GetArticleUri(x))));
-            }
+            //if (httpClient != null) httpClient.Dispose();
+            //using (httpClient = new HttpClient())
+            //{
+            //    sb.Append(await httpClient.GetStringAsync(new Uri(GetOne.GetArticleUri(x))));
+            //}
             return sb.ToString();
         }
 
@@ -255,7 +256,7 @@ namespace Demo
                             if (isHide.Visibility == Visibility.Collapsed) isHide.Visibility = Visibility.Visible;
                             if (AppBar.Visibility == Visibility.Collapsed) AppBar.Visibility = Visibility.Visible;
                             OneFrame.Navigate(m.ClassType);
-                            if (OneFrame.CurrentSourcePageType == typeof(Articles) || OneFrame.CurrentSourcePageType == typeof(OneQuestion))
+                            if (OneFrame.CurrentSourcePageType == typeof(Articles) || OneFrame.CurrentSourcePageType == typeof(OneQuestion)|| OneFrame.CurrentSourcePageType == typeof(Serial))
                                 CreateFileButton.Visibility = Visibility.Collapsed;
                             else {
                                 CreateFileButton.Visibility = Visibility.Visible;
@@ -459,13 +460,13 @@ namespace Demo
                 MyGlyph = "\uE7C5",
                 BgColor = ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme).FontColor
             });
-            //this.Add(new MyListViewItems
-            //{
-            //    MyItemName = "   东西",
-            //    ClassType = typeof(OneThing),
-            //    MyGlyph = "\uE8A4",
-            //    BgColor = ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme).FontColor
-            //});
+            this.Add(new MyListViewItems
+            {
+                MyItemName = "   连载",
+                ClassType = typeof(Serial),
+                MyGlyph = "\uE8F7",
+                BgColor = new SolidColorBrush(Colors.Pink)
+            });
         }
     }
 

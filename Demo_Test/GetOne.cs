@@ -8,8 +8,10 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Data.Json;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using Demo.http;
 
 namespace Demo
 {
@@ -201,6 +203,7 @@ namespace Demo
             }
         }
 
+   //     public string SerialAddress { get; set; }
         //public OneThingObject OneThing
         //{
         //    get
@@ -460,19 +463,41 @@ namespace Demo
         /// <returns></returns>
         public static List<DayObject> GetOneTodayObjectList(string resultString)
         {
-            CutOneString(ref resultString);
+            //CutOneString(ref resultString);
             dayObjectCollection = new List<DayObject>();
-            for (int i = 0; i < 7; i++)
+            JsonObject json;
+            if (JsonObject.TryParse(resultString, out json))
             {
-                dayObjectCollection.Add(new DayObject());
+                JsonArray oneMainContentCollection = json.GetNamedArray("data");
+                for (int i = 0; i < oneMainContentCollection.Count; i++)
+                {
+                    JsonObject item = oneMainContentCollection[i].GetObject();
+                    DayObject dayObject = new DayObject();
+                    dayObject.DayImagePath = item.GetNamedString("hp_img_original_url") ?? "可能服务器出现故障-_-";
+                    dayObject.MainString = item.GetNamedString("hp_content") ?? "可能服务器出现故障-_-";
+                    dayObject.ByWho = item.GetNamedString("hp_author") ?? "可能服务器出现故障-_-";
+                    dayObject.Vol = item.GetNamedString("hp_title") ?? "可能服务器出现故障-_-";
+                    dayObject.HeaderString = "无题";
+                    string[] temp = item.GetNamedString("hp_makettime")?.Split(' ');
+                    if (temp.Length == 0)
+                    {
+                        dayObject.OneMonthAndYear = "可能服务器出现故障-_-";
+                        dayObject.OneDay = "可能服务器出现故障-_-";
+                    }
+                    dayObject.OneMonthAndYear = temp[0].Substring(0, temp[0].LastIndexOf('-'));
+                    dayObject.OneDay = temp[0].Substring(temp[0].LastIndexOf('-') + 1);
+                    dayObjectCollection.Add(dayObject);
+                    SavePicHere(dayObject.DayImagePath, dayObject.Vol + ".jpg", dayObject);
+                }
             }
-            GetObjectHeaderString(resultString, ref dayObjectCollection);
-            GetObjectMainString(resultString, ref dayObjectCollection);
-            GetObjectByWho(resultString, ref dayObjectCollection);
-            GetObjectVOL(resultString, ref dayObjectCollection);
-            GetObjectOneDay(resultString, ref dayObjectCollection);
-            GetObjectOneMonthAndYear(resultString, ref dayObjectCollection);
-            GetObjectDayImagePath(resultString, ref dayObjectCollection);
+
+            //GetObjectHeaderString(resultString, ref dayObjectCollection);
+            //GetObjectMainString(resultString, ref dayObjectCollection);
+            //GetObjectByWho(resultString, ref dayObjectCollection);
+            //GetObjectVOL(resultString, ref dayObjectCollection);
+            //GetObjectOneDay(resultString, ref dayObjectCollection);
+            //GetObjectOneMonthAndYear(resultString, ref dayObjectCollection);
+            //GetObjectDayImagePath(resultString, ref dayObjectCollection);
             return dayObjectCollection;
         }
         /// <summary>
@@ -711,15 +736,67 @@ namespace Demo
         /// <returns></returns>
         public static DayReallyObject GetTodayReallyObject(string TodayMainString)
         {
-            //dayReallyObject = new DayReallyObject();
-            // FormatTodayReallyObject(ref TodayMainString);
+            JsonObject json;
             dayReallyObject = new DayReallyObject();
-            GetOneQuestionObject(TodayMainString, ref dayReallyObject);
-            GetArticlesObject(TodayMainString, ref dayReallyObject);
+            if (JsonObject.TryParse(TodayMainString, out json))
+            {
+                JsonObject temp = json.GetNamedObject("data");
+
+
+                //得到文章
+                GetArticle(temp.GetNamedArray("essay"), ref dayReallyObject);
+                //得到问答
+                GetQuestion(temp.GetNamedArray("question"), ref dayReallyObject);
+                //得到连载
+                GetSerial(temp.GetNamedArray("serial"));
+            }
+            // FormatTodayReallyObject(ref TodayMainString);
+            //dayReallyObject = new DayReallyObject();
+            //GetOneQuestionObject(TodayMainString, ref dayReallyObject);
+            //GetArticlesObject(TodayMainString, ref dayReallyObject);
             //   GetOneThingObject(TodayMainString, ref dayReallyObject);
+
             dayReallyObject.OneMain = Main.DayObjectCollection;
             return dayReallyObject;
         }
+
+        static void GetArticle(JsonArray articleJson, ref DayReallyObject dayReallyObject)
+        {
+            JsonObject article = articleJson[0].GetObject();
+            string temp = article.GetNamedString("content_id");
+            using (httpClient = new HttpClient())
+            {
+                string response = "";
+
+                response = GetOneString("http://wufazhuce.com/article/" + temp);
+
+                GetArticlesObject(response, ref dayReallyObject);
+            }
+        }
+        private static string GetOneString(string uri)
+        {
+            if (httpClient != null) httpClient.Dispose();
+            httpClient = new HttpClient();
+            x = httpClient.GetStringAsync(new Uri(uri)).Result;
+            httpClient.Dispose();
+            return x;
+        }
+
+        static void GetQuestion(JsonArray questionJson, ref DayReallyObject dayReallyObject)
+        {
+            JsonObject question = questionJson[0].GetObject();
+            string temp = question.GetNamedString("question_id");
+            string response = GetOneString("http://wufazhuce.com/question/" + temp);
+            GetOneQuestionObject(response, ref dayReallyObject);
+        }
+        static void GetSerial(JsonArray aserialJson)
+        {
+            JsonObject serial = aserialJson[0].GetObject();
+            string temp = serial.GetNamedString("id");
+            Serial.html ="http://m.wufazhuce.com/serial/" + temp;
+        }
+
+
         /// <summary>
         /// 处理字符串便于构造对象
         /// </summary>
@@ -733,36 +810,36 @@ namespace Demo
         /// </summary>
         /// <param name="ResultString"></param>
         /// <param name="dayReallyObject"></param>
-        static void GetOneThingObject(string ResultString, ref DayReallyObject dayReallyObject)
-        {
-            //  OneThingObject oneThingObject = new OneThingObject();
+        //  static void GetOneThingObject(string ResultString, ref DayReallyObject dayReallyObject)
+        // {
+        //  OneThingObject oneThingObject = new OneThingObject();
 
-            ////得到header
-            ////regex = new Regex("cosas-titulo..([\\d\\D]+?)</h2>");
-            ////coll = regex.Matches(ResultString);
-            //string temp = GetAccurateString("cosas-titulo..([\\d\\D]+?)</h2>", ResultString);
-            //regex = new Regex("<.+?>(.+?)<");
-            //MatchCollection coll = regex.Matches(temp);
-            //if (coll.Count > 0)
-            //{
-            //    oneThingObject.Header = coll[0].Groups[1].ToString().Trim();
-            //}
-            //else
-            //{
-            //    oneThingObject.Header = temp;
-            //}
-            ////得到content
-            ////regex = new Regex("cosas-contenido..([\\d\\D]+?)</div>");
-            ////coll = regex.Matches(ResultString);
-            //StringBuilder sb = new StringBuilder(GetAccurateString("cosas-contenido..([\\d\\D]+?)</div>", ResultString));
-            //oneThingObject.Content = sb.Replace("<br />", "").ToString();
-            ////得到图片路径
-            ////regex = new Regex("<img.+src=\"(.+jpg)\".+/>");
-            ////coll = regex.Matches(ResultString);
-            //oneThingObject.ImagePath = GetAccurateString("<img.+src=\"(.+jpg)\".+/>", ResultString);
+        ////得到header
+        ////regex = new Regex("cosas-titulo..([\\d\\D]+?)</h2>");
+        ////coll = regex.Matches(ResultString);
+        //string temp = GetAccurateString("cosas-titulo..([\\d\\D]+?)</h2>", ResultString);
+        //regex = new Regex("<.+?>(.+?)<");
+        //MatchCollection coll = regex.Matches(temp);
+        //if (coll.Count > 0)
+        //{
+        //    oneThingObject.Header = coll[0].Groups[1].ToString().Trim();
+        //}
+        //else
+        //{
+        //    oneThingObject.Header = temp;
+        //}
+        ////得到content
+        ////regex = new Regex("cosas-contenido..([\\d\\D]+?)</div>");
+        ////coll = regex.Matches(ResultString);
+        //StringBuilder sb = new StringBuilder(GetAccurateString("cosas-contenido..([\\d\\D]+?)</div>", ResultString));
+        //oneThingObject.Content = sb.Replace("<br />", "").ToString();
+        ////得到图片路径
+        ////regex = new Regex("<img.+src=\"(.+jpg)\".+/>");
+        ////coll = regex.Matches(ResultString);
+        //oneThingObject.ImagePath = GetAccurateString("<img.+src=\"(.+jpg)\".+/>", ResultString);
 
-            //dayReallyObject.OneThing = oneThingObject;
-        }
+        //dayReallyObject.OneThing = oneThingObject;
+        // }
         /// <summary>
         /// 得到对象的ONE-QUESTION对象
         /// </summary>
@@ -779,13 +856,10 @@ namespace Demo
             oneThingObject.AnswerContent = sb.ToString();
             dayReallyObject.OneQuestion = oneThingObject;
         }
-        public static string GetOneQestionUri(string resultString)
+        public static string GetOneQestionUri()
         {
-            return GetAccurateString("(http://wufazhuce.com/question/.{4})", resultString);
-        }
-        public static string GetArticleUri(string resultString)
-        {
-            return GetAccurateString("(http://wufazhuce.com/article/.{4})", resultString);
+            return ServiceUri.article;
+            //return GetAccurateString("(http://wufazhuce.com/question/.{4})", resultString);
         }
         /// <summary>
         /// 得到对象的ONE-ARTICLES

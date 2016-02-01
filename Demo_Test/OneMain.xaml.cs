@@ -69,18 +69,22 @@ namespace Demo
             {
                 try
                 {
-                    Main.dayReallyObjectString = await Main.GetDayReallyObjectString(Main.DayObjectCollection[0].Vol.Split('.')[1]);
+                    Main.dayReallyObjectString = await Main.GetDayReallyObjectString();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    // Main.dayReallyObjectString = null;
+#if DEBUG
+                    System.Diagnostics.Debug.Write("|kkkkkkkkkkk|    " + ex.Message + "|assssssssssss");
+                    throw ex;
+#endif
                 }
             }
             if (Main.dayReallyObject == null)
             {
                 try
                 {
-                    Main.dayReallyObject = GetOne.GetTodayReallyObject(Main.dayReallyObjectString);
+                    await System.Threading.Tasks.Task.Factory.StartNew(() =>
+                     Main.dayReallyObject = GetOne.GetTodayReallyObject(Main.dayReallyObjectString));
                 }
                 catch (Exception ex)
                 {

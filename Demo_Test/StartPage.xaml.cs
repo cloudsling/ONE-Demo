@@ -18,7 +18,8 @@ namespace Demo
 
         public static List<DayObject> DayObjectCollection;
 
-        public static string uri = "http://wufazhuce.com/";
+        public static string uri = "http://139.129.116.86:8000/api/hp/more/0?";
+        public static string uriOld = "http://wufazhuce.com/";
 
         public static string uriOneObject = "http://wufazhuce.com/one/";
 
@@ -34,6 +35,7 @@ namespace Demo
             httpClient.Dispose();
             return x;
         }
+      
 
         //public async static Task<string> GetDayReallyObjectString(string vol)
         //{
