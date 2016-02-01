@@ -29,6 +29,7 @@ namespace Demo
             }
 #endif
 
+            AdDuplex.AdDuplexClient.Initialize("aaa53830-3488-4201-8d47-c9a9395dab99");
             Frame rootFrame = Window.Current.Content as Frame;
 
             // 不要在窗口已包含内容时重复应用程序初始化，
@@ -51,7 +52,6 @@ namespace Demo
 
             if (rootFrame.Content == null)
             {
-                AdDuplex.AdDuplexClient.Initialize("aaa53830-3488-4201-8d47-c9a9395dab99");
                 rootFrame.Navigate(typeof(StartPage), e.Arguments);
             }
             // 确保当前窗口处于活动状态
@@ -62,7 +62,7 @@ namespace Demo
         {
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = (Window.Current.Content as Frame).BackStack.Any() ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
         }
-        
+
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);

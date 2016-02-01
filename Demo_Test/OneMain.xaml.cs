@@ -82,9 +82,14 @@ namespace Demo
                 {
                     Main.dayReallyObject = GetOne.GetTodayReallyObject(Main.dayReallyObjectString);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    // Main.dayReallyObject = null;
+#if DEBUG
+                    System.Diagnostics.Debug.Write("|kkkkkkkkkkk|    " + ex.Message + "|assssssssssss");
+                    throw ex;
+#endif
+
+                    Main.dayReallyObject = new DayReallyObject();
                 }
             }
 

@@ -50,7 +50,7 @@
                             </Paragraph>
                         </RichTextBlock>
                     </Border>
-                    <adduplex:AdControl Margin="0 20" VerticalAlignment="Bottom" AdUnitId="183935" AppKey="aaa53830-3488-4201-8d47-c9a9395dab99" />
+                    <adduplex:AdControl Margin="0 20" VerticalAlignment="Bottom" AdUnitId="183935" AppKey="aaa53830-3488-4201-8d47-c9a9395dab99" IsTest="False" />
                 </Grid>
             </PivotItem>
         </Pivot>

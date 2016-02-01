@@ -160,7 +160,7 @@ namespace Demo
         private List<DayObject> _oneMain;
         private ArticlesObject _articles;
         private OneQuestionObject _oneQuestion;
-       // private OneThingObject _oneThing;
+        // private OneThingObject _oneThing;
 
         public ArticlesObject Articles
         {
@@ -472,7 +472,7 @@ namespace Demo
             GetObjectVOL(resultString, ref dayObjectCollection);
             GetObjectOneDay(resultString, ref dayObjectCollection);
             GetObjectOneMonthAndYear(resultString, ref dayObjectCollection);
-            GetObjectDayImagePath(resultString,ref dayObjectCollection);
+            GetObjectDayImagePath(resultString, ref dayObjectCollection);
             return dayObjectCollection;
         }
         /// <summary>
@@ -502,7 +502,7 @@ namespace Demo
         /// </summary>
         /// <param name="resultString"></param>
         /// <param name="list"></param>
-        static void GetObjectDayImagePath(string resultString,ref List<DayObject> list)
+        static void GetObjectDayImagePath(string resultString, ref List<DayObject> list)
         {
             string temp;
             coll = GetAccurateStringList("<img.+src=\"(.+?)\".+/>", resultString);
@@ -673,7 +673,7 @@ namespace Demo
         /// 保存到临时文件中
         /// </summary>
         /// <param name="uri"></param>
-        public static async Task SavePicHere(string uri, string fileName, DayObject obj)
+        public static async void SavePicHere(string uri, string fileName, DayObject obj)
         {
             // if (httpClient != null) httpClient.Dispose();
 
@@ -712,11 +712,11 @@ namespace Demo
         public static DayReallyObject GetTodayReallyObject(string TodayMainString)
         {
             //dayReallyObject = new DayReallyObject();
-           // FormatTodayReallyObject(ref TodayMainString);
+            // FormatTodayReallyObject(ref TodayMainString);
             dayReallyObject = new DayReallyObject();
             GetOneQuestionObject(TodayMainString, ref dayReallyObject);
             GetArticlesObject(TodayMainString, ref dayReallyObject);
-         //   GetOneThingObject(TodayMainString, ref dayReallyObject);
+            //   GetOneThingObject(TodayMainString, ref dayReallyObject);
             dayReallyObject.OneMain = Main.DayObjectCollection;
             return dayReallyObject;
         }
@@ -735,7 +735,7 @@ namespace Demo
         /// <param name="dayReallyObject"></param>
         static void GetOneThingObject(string ResultString, ref DayReallyObject dayReallyObject)
         {
-          //  OneThingObject oneThingObject = new OneThingObject();
+            //  OneThingObject oneThingObject = new OneThingObject();
 
             ////得到header
             ////regex = new Regex("cosas-titulo..([\\d\\D]+?)</h2>");
@@ -779,6 +779,14 @@ namespace Demo
             oneThingObject.AnswerContent = sb.ToString();
             dayReallyObject.OneQuestion = oneThingObject;
         }
+        public static string GetOneQestionUri(string resultString)
+        {
+            return GetAccurateString("(http://wufazhuce.com/question/.{4})", resultString);
+        }
+        public static string GetArticleUri(string resultString)
+        {
+            return GetAccurateString("(http://wufazhuce.com/article/.{4})", resultString);
+        }
         /// <summary>
         /// 得到对象的ONE-ARTICLES
         /// </summary>
@@ -799,7 +807,8 @@ namespace Demo
         private static string GetAccurateString(string regexString, string resultString, int index = 0)
         {
             regex = new Regex(regexString);
-            coll = regex.Matches(resultString); try
+            coll = regex.Matches(resultString);
+            try
             {
                 var res = coll[index].Groups[1];
                 return res != null ? res.ToString().Trim() : "发生了什么！(⊙ˍ⊙)？";

@@ -36,6 +36,7 @@ namespace Demo
                 ArticlesDataBinding.FullContentBinding.FullContent = Main.dayReallyObject.Articles.Content.Substring(0, length) + "......";
             }
         }
+
         /// <summary>
         /// 初始化文章对象
         /// </summary>

@@ -82,12 +82,18 @@ namespace Demo
         public async static Task<string> GetDayReallyObjectString(string vol)
         {
             StringBuilder sb = new StringBuilder();
+            //if (httpClient != null) httpClient.Dispose();
+            //string temp = "";
+            //string sd = uriOneQuestion + vol;
+            using (httpClient = new HttpClient())
+            {
+                sb.Append(await httpClient.GetStringAsync(new Uri(GetOne.GetOneQestionUri(x))));
+            }
             if (httpClient != null) httpClient.Dispose();
             using (httpClient = new HttpClient())
-                sb.Append(await httpClient.GetStringAsync(new Uri(uriOneArticle + vol)));
-            if (httpClient != null) httpClient.Dispose();
-            using (httpClient = new HttpClient())
-                sb.Append(await httpClient.GetStringAsync(new Uri(uriOneQuestion + vol)));
+            {
+                sb.Append(await httpClient.GetStringAsync(new Uri(GetOne.GetArticleUri(x))));
+            }
             return sb.ToString();
         }
 
