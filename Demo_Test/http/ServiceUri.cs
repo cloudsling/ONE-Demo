@@ -33,8 +33,9 @@
         //deviceid	00000000-0565-4187-0033-c5870033c587
         //devicetype  android
 
-        //音乐,目前没卵用(get)
-        //http://139.129.116.86:8000/api/music/idlist/0?
+        //音乐,得到音乐id(get)
+        public static readonly string musicId = "http://v3.wufazhuce.com:8000/api/music/idlist/0?";
+
 
         //电影
         //http://139.129.116.86:8000/api/movie/list/0?

@@ -99,6 +99,7 @@
     <Content Include="Assets\About\about.png" />
     <None Include="ClassDiagram1.cd" />
     <Content Include="Assets\About\StartImage.png" />
+    <Content Include="Assets\BadgeLogo.scale-200.png" />
     <Content Include="Assets\Square150x150Logo.scale-100.png" />
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <None Include="Demo_StoreKey.pfx" />
@@ -115,6 +116,7 @@
     <Compile Include="Articles.xaml.cs">
       <DependentUpon>Articles.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BindableBase.cs" />
     <Compile Include="BlankPage.xaml.cs">
       <DependentUpon>BlankPage.xaml</DependentUpon>
     </Compile>
@@ -122,9 +124,18 @@
     <Compile Include="GetOne.cs" />
     <Compile Include="http\HttpHelper.cs" />
     <Compile Include="http\ServiceUri.cs" />
-    <Compile Include="INotifyPropertyChanged_OnPropertyChanged.cs" />
+    <Compile Include="LastUpdate.cs" />
     <Compile Include="Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Movie.xaml.cs">
+      <DependentUpon>Movie.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MovieDetile.xaml.cs">
+      <DependentUpon>MovieDetile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Music.xaml.cs">
+      <DependentUpon>Music.xaml</DependentUpon>
     </Compile>
     <Compile Include="OneMain.xaml.cs">
       <DependentUpon>OneMain.xaml</DependentUpon>
@@ -148,6 +159,7 @@
     <Compile Include="StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TaskConfiguration.cs" />
     <Compile Include="ThemeColorModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +196,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Main.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Movie.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MovieDetile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Music.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -230,7 +254,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <SDKReference Include="AdDuplex.Windows10, Version=10.0.1.3">
       <Name>AdDuplex SDK for Windows 10 %28XAML%29</Name>
@@ -238,6 +261,12 @@
     <SDKReference Include="WindowsMobile, Version=10.0.10586.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Demo.BackGround\Demo.BackGround.csproj">
+      <Project>{3ce26a0c-8880-428b-aac5-7d54f6231241}</Project>
+      <Name>Demo.BackGround</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

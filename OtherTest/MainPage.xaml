@@ -8,7 +8,13 @@
     mc:Ignorable="d"
     DataContext="{Binding MainPageViewModel,RelativeSource={RelativeSource Mode=Self}}">
 
-    <Grid Background="{Binding ColorTestModel.BackGColor}">
-
-    </Grid>
+    <StackPanel Background="White">
+        <Grid x:Name="test" Height="40" Width="40" Background="Green">
+            <Grid.Transitions>
+                <NavigationThemeTransition>
+                </NavigationThemeTransition>
+            </Grid.Transitions>
+        </Grid>
+        
+    </StackPanel>
 </Page>

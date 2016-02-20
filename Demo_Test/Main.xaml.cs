@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Web.Http;
+using static Demo.LastUpdate;
 
 namespace Demo
 {
@@ -31,7 +32,7 @@ namespace Demo
         public static string itemPath;
         public static string x;
         public static string uri = "http://139.129.116.86:8000/api/hp/more/0?";
-       // public static string uriOld = "http://wufazhuce.com/";
+        // public static string uriOld = "http://wufazhuce.com/";
         public static string uriOneArticle = "http://wufazhuce.com/article/";
         public static string uriOneQuestion = "http://wufazhuce.com/question/";
         public static string dayReallyObjectString;
@@ -77,6 +78,7 @@ namespace Demo
             if (httpClient != null) httpClient.Dispose();
             using (httpClient = new HttpClient())
                 x = await httpClient.GetStringAsync(new Uri(uri));
+            await SaveX(x);
             return x;
         }
 
@@ -95,6 +97,7 @@ namespace Demo
             //{
             //    sb.Append(await httpClient.GetStringAsync(new Uri(GetOne.GetArticleUri(x))));
             //}
+            await SaveDayObj(sb.ToString());
             return sb.ToString();
         }
 
@@ -162,6 +165,11 @@ namespace Demo
         /// 
         public async static void Refreshen()
         {
+            if (!StartPage.IsFromInternet)
+            {
+                NotifyUserMethod("当前处于离线模式", 200);
+                return;
+            }
             GaoStatusBar.SetStatusBarProgressIndicator(null, "正在刷新");
             await Task.Delay(50);
             var currentFrame = MainCurrent.OneFrame.CurrentSourcePageType;
@@ -256,7 +264,7 @@ namespace Demo
                             if (isHide.Visibility == Visibility.Collapsed) isHide.Visibility = Visibility.Visible;
                             if (AppBar.Visibility == Visibility.Collapsed) AppBar.Visibility = Visibility.Visible;
                             OneFrame.Navigate(m.ClassType);
-                            if (OneFrame.CurrentSourcePageType == typeof(Articles) || OneFrame.CurrentSourcePageType == typeof(OneQuestion)|| OneFrame.CurrentSourcePageType == typeof(Serial))
+                            if (OneFrame.CurrentSourcePageType == typeof(Articles) || OneFrame.CurrentSourcePageType == typeof(OneQuestion) || OneFrame.CurrentSourcePageType == typeof(Serial))
                                 CreateFileButton.Visibility = Visibility.Collapsed;
                             else {
                                 CreateFileButton.Visibility = Visibility.Visible;
@@ -443,29 +451,42 @@ namespace Demo
                 MyItemName = "   首页",
                 ClassType = typeof(OneMain),
                 MyGlyph = "\uE80F",
-                BgColor = ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme).FontColor
-
+                BgColor = new SolidColorBrush(Color.FromArgb(0xFF, 54, 195, 241))
             });
             this.Add(new MyListViewItems
             {
                 MyItemName = "   文章",
                 ClassType = typeof(Articles),
                 MyGlyph = "\uE8C8",
-                BgColor = ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme).FontColor
+                BgColor = new SolidColorBrush(Color.FromArgb(0xFF, 54, 195, 241))
             });
             this.Add(new MyListViewItems
             {
                 MyItemName = "   问题",
                 ClassType = typeof(OneQuestion),
                 MyGlyph = "\uE7C5",
-                BgColor = ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme).FontColor
+                BgColor = new SolidColorBrush(Color.FromArgb(0xFF, 54, 195, 241))
             });
             this.Add(new MyListViewItems
             {
                 MyItemName = "   连载",
                 ClassType = typeof(Serial),
                 MyGlyph = "\uE8F7",
-                BgColor = new SolidColorBrush(Colors.Pink)
+                BgColor = new SolidColorBrush(Color.FromArgb(0xFF, 54, 195, 241))
+            });
+            this.Add(new MyListViewItems
+            {
+                MyItemName = "   音乐",
+                ClassType = typeof(Music),
+                MyGlyph = "\uE995",
+                BgColor = new SolidColorBrush(Color.FromArgb(0xFF, 54, 195, 241))
+            });
+            this.Add(new MyListViewItems
+            {
+                MyItemName = "   电影",
+                ClassType = typeof(Movie),
+                MyGlyph = "\uE714",
+                BgColor = new SolidColorBrush(Color.FromArgb(0xFF, 54, 195, 241))
             });
         }
     }

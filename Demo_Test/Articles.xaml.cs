@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Threading;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -60,9 +61,16 @@ namespace Demo
     {
         public AritcalBinding()
         {
-            DayArticlesObject = new ArticlesObject();
-            FullContentBinding = new SpeciallyString();
-            InitializationArticlesObject(Main.dayReallyObject.Articles);
+            try
+            {
+                DayArticlesObject = new ArticlesObject();
+                FullContentBinding = new SpeciallyString();
+                InitializationArticlesObject(Main.dayReallyObject.Articles);
+            }
+            catch (System.Exception e)
+            {
+                Debug.WriteLine(e.Message + "--------------");
+            }
         }
         public SpeciallyString FullContentBinding { get; set; }
 

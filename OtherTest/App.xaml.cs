@@ -1,18 +1,25 @@
-﻿using System;
+﻿using Demo.BackGround;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Notifications;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 namespace OtherTest
@@ -28,26 +35,53 @@ namespace OtherTest
             this.Suspending += OnSuspending;
         }
 
+        
+
+
+
+
+        async Task ReisterBackground()
+        {
+            var task = await TaskConfiguration.RegisterBackgroundTask(typeof(Demo.BackGround.LiveTileTask), "TestTaskName", new TimeTrigger(10000, false), null);
+           // await new MessageDialog("may complete").ShowAsync();
+            task.Completed += Task_Completed;
+        }
+
+        private void Task_Completed(BackgroundTaskRegistration sender, BackgroundTaskCompletedEventArgs args)
+        {
+            Debug.WriteLine("Complete..........");
+        }
+
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="args">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs args)
+        protected async override void OnLaunched(LaunchActivatedEventArgs args)
         {
 
 #if DEBUG
             this.DebugSettings.EnableFrameRateCounter |= System.Diagnostics.Debugger.IsAttached;
 #endif
+            //if (args.PreviousExecutionState != ApplicationExecutionState.Running)
+            //{
+            //    bool loadState = (args.PreviousExecutionState == ApplicationExecutionState.Terminated);
+            //    ExtendedSplash extendedSplash = new ExtendedSplash(args.SplashScreen, loadState);
+            //    Window.Current.Content = extendedSplash;
+            //}
+            //await ReisterBackground();
+            //Window.Current.Activate();
 
             var rootFrame = Window.Current.Content as Frame;
-
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
             if (rootFrame == null)
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
+                // rootFrame.ContentTransitions = new TransitionCollection() { new NavigationThemeTransition() };
+                if (rootFrame.ContentTransitions == null)
+                    rootFrame.ContentTransitions = new TransitionCollection() { new NavigationThemeTransition() };
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
@@ -58,6 +92,8 @@ namespace OtherTest
 
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
+                await ReisterBackground();
+
             }
 
             if (rootFrame.Content == null)
@@ -65,12 +101,12 @@ namespace OtherTest
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                rootFrame.Navigate(typeof(HttpTest), args.Arguments);
+                rootFrame.Navigate(typeof(LockScreenTest), args.Arguments);
             }
             // Ensure the current window is active
             Window.Current.Activate();
-        }
 
+        }
         /// <summary>
         /// Invoked when Navigation to a certain page fails
         /// </summary>
@@ -96,3 +132,4 @@ namespace OtherTest
         }
     }
 }
+

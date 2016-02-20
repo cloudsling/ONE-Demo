@@ -17,20 +17,51 @@
             </DoubleAnimation>
         </Storyboard>
     </Page.Resources>
-    <Grid Background="{Binding SettingsThemeColorModel.MainBodyBackgroundColor}">
+    <Grid Background="{Binding SettingsThemeColorModel.OneMainBodyBackgroundColor}">
         <Pivot>
             <PivotItem Header="常规">
                 <StackPanel>
                     <Border Grid.Row="0" Height="80" x:Name="border">
                     </Border>
-                    <ToggleSwitch  x:Name="DoubleClickExit" Margin="10" Header="是否双击退出程序" Toggled="ToggleSwitch_Toggled" OffContent="否" OnContent="是"/>
-                    <ToggleSwitch  x:Name="SkipStartMainPage" Margin="10" Header="跳过首页动画" Toggled="SkipStartMainPage_Toggled" OffContent="否" OnContent="是"/>
-                    <ToggleSwitch  x:Name="SunOrNightMode" Margin="10" Header="夜间模式" Toggled="SunOrNightMode_Toggled" OffContent="关" OnContent="开"/>
-
-                    <ComboBox x:Name="OneMainPageStyle" Margin="10" Header="选择首页主题" SelectionChanged="ComboBox_SelectionChanged">
+                    <ToggleSwitch Foreground="{Binding SettingsThemeColorModel.FontColor}" x:Name="DoubleClickExit" Margin="10" Toggled="ToggleSwitch_Toggled" OffContent="否" OnContent="是">
+                        <ToggleSwitch.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Foreground="{Binding SettingsThemeColorModel.FontColor}" Text="是否双击退出程序" />
+                            </DataTemplate>
+                        </ToggleSwitch.HeaderTemplate>
+                    </ToggleSwitch>
+                    <ToggleSwitch  Foreground="{Binding SettingsThemeColorModel.FontColor}" x:Name="SkipStartMainPage" Margin="10" Toggled="SkipStartMainPage_Toggled" OffContent="否" OnContent="是" >
+                        <ToggleSwitch.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Foreground="{Binding SettingsThemeColorModel.FontColor}" Text="跳过首页动画" />
+                            </DataTemplate>
+                        </ToggleSwitch.HeaderTemplate>
+                    </ToggleSwitch>
+                    <ToggleSwitch Foreground="{Binding SettingsThemeColorModel.FontColor}"  x:Name="SunOrNightMode" Margin="10" Toggled="SunOrNightMode_Toggled" OffContent="关" OnContent="开">
+                        <ToggleSwitch.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Foreground="{Binding SettingsThemeColorModel.FontColor}" Text="夜间模式" />
+                            </DataTemplate>
+                        </ToggleSwitch.HeaderTemplate>
+                    </ToggleSwitch>
+                    <ToggleSwitch Foreground="{Binding SettingsThemeColorModel.FontColor}"  x:Name="SetLockScreen" Margin="10" Toggled="SetLockScreen_Toggled" OffContent="关" OnContent="开">
+                        <ToggleSwitch.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Foreground="{Binding SettingsThemeColorModel.FontColor}" Text="将每天的One图片设为锁屏壁纸" />
+                            </DataTemplate>
+                        </ToggleSwitch.HeaderTemplate>
+                    </ToggleSwitch>
+                    <Button Width="80"  Height="80" Content="Test" Click="Button_Click"/>
+                    <ComboBox x:Name="OneMainPageStyle" Foreground="{Binding SettingsThemeColorModel.FontColor}" Margin="10" SelectionChanged="ComboBox_SelectionChanged">
                         <ComboBoxItem Content="真*霸气现代首页(ง •_•)ง" />
                         <ComboBoxItem Content="真*古典传统首页(ง •_•)ง" />
+                        <ComboBox.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Foreground="{Binding SettingsThemeColorModel.FontColor}" Text="选择首页主题" />
+                            </DataTemplate>
+                        </ComboBox.HeaderTemplate>
                     </ComboBox>
+                    <!--<Button Content="Test" Click="Button_Click" />-->
                 </StackPanel>
             </PivotItem>
             <PivotItem Header="Ad">

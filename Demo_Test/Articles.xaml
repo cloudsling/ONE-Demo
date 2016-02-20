@@ -111,7 +111,7 @@
                         </Grid>
 
                         <Border Margin="10 10 10 20" Padding="5">
-                            <adduplex:AdControl  AdUnitId="183943" AppKey="aaa53830-3488-4201-8d47-c9a9395dab99" />
+                         
                         </Border>
                     </StackPanel>
                 </Grid>

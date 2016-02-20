@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Windows.UI.Popups;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using static Demo.LastUpdate;
 
 namespace Demo
 {
@@ -27,7 +26,7 @@ namespace Demo
 
         public static string x;
 
-        private async static Task<string> GetOneString(string uri)
+        async static Task<string> GetOneString(string uri)
         {
             if (httpClient != null) httpClient.Dispose();
             httpClient = new HttpClient();
@@ -35,34 +34,29 @@ namespace Demo
             httpClient.Dispose();
             return x;
         }
-      
 
-        //public async static Task<string> GetDayReallyObjectString(string vol)
-        //{
-        //    if (httpClient != null) httpClient.Dispose();
-        //    httpClient = new HttpClient();
-        //    return await httpClient.GetStringAsync(new Uri(uriOneObject + vol));
-        //}
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             GaoStatusBar.HideStatusBar();
             StartAnimation.Begin();
+
             try
             {
-                Task task = await Task.Factory.StartNew(async () =>
-                {
-                    await GetOneString(uri);
-                    DayObjectCollection = GetOne.GetOneTodayObjectList(x);
-                }, TaskCreationOptions.DenyChildAttach);
-                Task.WaitAll(task);
+                await GetOneString(uri);
+                await SaveX(x);
+                DayObjectCollection = GetOne.GetOneTodayObjectList(x);
+
+
             }
             catch (Exception)
             {
-                await new MessageDialog("oops！程序出了一点异常，可能是网络连接的问题......").ShowAsync();
-                Frame.Navigate(typeof(Main), "404");
-                return;
+                IsFromInternet = false;
+                x = await LoadX();
+                DayObjectCollection = GetOne.GetOneTodayObjectList(x);
+                await Task.Delay(2500);
             }
+
             if (!new OneSettings().SkipStartMainPage)
                 Frame.Navigate(typeof(StartMainPage), new MyNavigationEventArgs(x, DayObjectCollection));
             else
@@ -70,6 +64,8 @@ namespace Demo
                 Frame.Navigate(typeof(Main), new MyNavigationEventArgs(x, DayObjectCollection));
             }
         }
+
+        public static bool IsFromInternet = true;
     }
 
     public class MyNavigationEventArgs

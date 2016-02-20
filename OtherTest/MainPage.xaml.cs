@@ -28,8 +28,16 @@ namespace OtherTest
         {
             MainPageViewModel = new MainPage_ViewModel { ColorTestModel = new ColorTest() };
             this.InitializeComponent();
-            MainPageViewModel.ColorTestModel.BackGColor = new SolidColorBrush(Color.FromArgb(0xff,249,38,114));
+            MainPageViewModel.ColorTestModel.BackGColor = new SolidColorBrush(Color.FromArgb(0xff, 249, 38, 114));
         }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            FlipView fv = new FlipView();
+
+        }
+
+
     }
 
     public class MainPage_ViewModel : INotifyPropertyChanged

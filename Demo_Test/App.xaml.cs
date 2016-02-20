@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Background;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -19,7 +22,23 @@ namespace Demo
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+
+        async Task ReisterBackground()
+        {
+            var task = await TaskConfiguration.RegisterBackgroundTask(typeof(BackGround.LiveTileTask), "LiveTileTask", new TimeTrigger(60 * 4, false), new SystemCondition(SystemConditionType.InternetAvailable));
+
+            // await new MessageDialog("may complete").ShowAsync();
+            task.Completed += Task_Completed;
+        }
+
+        private void Task_Completed(BackgroundTaskRegistration sender, BackgroundTaskCompletedEventArgs args)
+        {
+            Debug.WriteLine("Complete..........");
+        }
+
+
+
+        protected async override void OnLaunched(LaunchActivatedEventArgs e)
         {
 
 #if DEBUG
@@ -48,6 +67,7 @@ namespace Demo
 
                 // 将框架放在当前窗口中
                 Window.Current.Content = rootFrame;
+                await ReisterBackground();
             }
 
             if (rootFrame.Content == null)

@@ -6,7 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    DataContext="{Binding oneMainViewModel,RelativeSource={RelativeSource Mode=Self}}">
+    DataContext="{Binding oneMainViewModel,RelativeSource={RelativeSource Mode=Self}}"
+    >
     <Page.Resources>
         <Storyboard x:Name="StoryStart" Duration="0:0:1" BeginTime="0:0:0" SpeedRatio="1">
             <DoubleAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="Height" To="0" EnableDependentAnimation="True" >
@@ -101,6 +102,7 @@
                                             </Grid.ColumnDefinitions>
                                             <Border Grid.Column="0" Background="White" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5 0">
                                                 <TextBlock Margin="6 0 0 0" FontSize="21" FontStyle="Italic" FontFamily="Consolas" Foreground="{Binding ThemeColorModel.FontColor}" Text="{Binding Path=PageDataBinding.Vol}"/>
+
                                             </Border>
                                             <Button Padding="2" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Grid.Column="2" Margin="0 3 2 3" Template="{StaticResource MyButtonTemplate}">
                                                 <Button.Content>
@@ -162,7 +164,9 @@
                         <StackPanel x:Name="OneMainStyle2" Visibility="Collapsed">
                             <Grid>
                                 <Grid Margin="10 1">
-                                    <TextBlock Text="{Binding Path=PageDataBinding.Vol}" HorizontalAlignment="Left"  Foreground="{Binding ThemeColorModel.FontColor}" />
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Path=PageDataBinding.Vol}" HorizontalAlignment="Left"  Foreground="{Binding ThemeColorModel.FontColor}" />
+                                    </StackPanel>
                                     <StackPanel HorizontalAlignment="Right">
                                         <TextBlock FontFamily="CoNsolas" Margin="2 2" Foreground="#36C3F1" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="0" Text="{Binding PageDataBinding.HeaderString}" FontSize="15" TextWrapping="Wrap" />
                                         <TextBlock  Foreground="{Binding ThemeColorModel.FontColor}"  x:Name="txtByWho" FontFamily="CoNsolas" Margin="2 3" HorizontalAlignment="Right" Grid.Row="1" Text="{Binding PageDataBinding.ByWho}" TextWrapping="Wrap"  FontSize="12"/>
@@ -170,7 +174,22 @@
                                 </Grid>
                             </Grid>
                             <StackPanel>
-                                <TextBlock Margin="0" Foreground="Gray" FontSize="54" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Text="{Binding PageDataBinding.OneDay}" />
+                                <Grid>
+                                    <Button Margin="-2 2" x:Name="Love" Click="Love_Click">
+                                        <Button.Template>
+                                            <ControlTemplate>
+                                                <Border Background="{Binding ThemeColorModel.OneMainBodyBackgroundColor}" BorderBrush="SkyBlue" HorizontalAlignment="Left"  BorderThickness="1" CornerRadius="0 12 12 0" Margin="0 3">
+                                                    <StackPanel Margin="3" Orientation="Horizontal">
+
+                                                        <TextBlock Foreground="{Binding ThemeColorModel.FontColor}" Text="{Binding PageDataBinding.PraiseName}" />
+                                                        <FontIcon Margin="2" Glyph="&#xE00B;"  FontFamily="Segoe MDL2 Assets"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                    <TextBlock Margin="0" Foreground="Gray" FontSize="54" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Text="{Binding PageDataBinding.OneDay}" />
+                                </Grid>
                                 <TextBlock Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="CoNsolas" Text="{Binding PageDataBinding.OneMonthAndYear}"/>
                             </StackPanel>
                             <Border Height="{Binding ElementName=border,Path=Height}"/>

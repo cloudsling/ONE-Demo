@@ -1,7 +1,14 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.Background;
+using Windows.Data.Xml.Dom;
 using Windows.Storage;
+using Windows.System.UserProfile;
+using Windows.UI.Notifications;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -31,6 +38,7 @@ namespace Demo
             DoubleClickExit.IsOn = Main.MainCurrent.mainViewModel.oneSettings.IsDoubleClickExit;
             SunOrNightMode.IsOn = !Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme;
             SkipStartMainPage.IsOn = Main.MainCurrent.mainViewModel.oneSettings.SkipStartMainPage;
+            SetLockScreen.IsOn = Main.MainCurrent.mainViewModel.oneSettings.IsSetLockScreen;
         }
 
         void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
@@ -62,27 +70,110 @@ namespace Demo
                 Main.MainCurrent.mainViewModel.oneSettings.SkipStartMainPage = false;
             }
         }
-    }
 
-    public class SettingsViewModel
-    {
-        ThemeColorModel _settingsThemeColorModel;
-
-        public ThemeColorModel SettingsThemeColorModel
+        private async void SetLockScreen_Toggled(object sender, RoutedEventArgs e)
         {
-            get
+            var temp = sender as ToggleSwitch;
+            if (temp.IsOn)
             {
-                return _settingsThemeColorModel;
+                Main.MainCurrent.mainViewModel.oneSettings.IsSetLockScreen = true;
+              //  await SetLockScreenMethod();
+                await TaskConfiguration.RegisterBackgroundTask(typeof(BackGround.SetLockScreenTask), "SetLockScreenTask", new TimeTrigger(60 * 6, false), null);
             }
-
-            set
-            {
-                _settingsThemeColorModel = value;
+            else {
+                Main.MainCurrent.mainViewModel.oneSettings.IsSetLockScreen = false;
+                TaskConfiguration.UnregisterBackgroundTasks("SetLockScreenTask");
             }
         }
+        static async Task SetLockScreenMethod()
+        {
+            if (!UserProfilePersonalizationSettings.IsSupported())
+            {
+                Main.NotifyUserMethod("不受支持", 180);
+                return;
+            }
+            var settings = UserProfilePersonalizationSettings.Current;
+            IStorageItem ifile = await ApplicationData.Current.LocalFolder.TryGetItemAsync(Main.DayObjectCollection[0].Vol + ".jpg");
+            if (ifile != null)
+            {
+                var temp = await ApplicationData.Current.LocalFolder.GetFileAsync(Main.DayObjectCollection[0].Vol + ".jpg");
+                bool b = await settings.TrySetLockScreenImageAsync(temp); return;
+            }
+            IStorageItem icachefile = await ApplicationData.Current.LocalCacheFolder.TryGetItemAsync(Main.DayObjectCollection[0].Vol + ".jpg");
+            if (icachefile != null)
+            {
+                StorageFile file = await ApplicationData.Current.LocalCacheFolder.GetFileAsync(Main.DayObjectCollection[0].Vol + ".jpg");
+                var temp = await file.CopyAsync(ApplicationData.Current.LocalFolder);
+                bool b = await settings.TrySetLockScreenImageAsync(temp);
+            }
+
+
+
+            //private void Button_Click(object sender, RoutedEventArgs e)
+            //{
+            //    string tileXmlString = "<tile>"
+            //                         + "<visual version='2'>"
+            //                         + "<binding template='TileWide310x150SmallImageAndText03' fallback='TileWideSmallImageAndText03'>"
+            //                         + "<text id='1' hint-wrap='true'>^^ ^_^This tile notification has an image, but it won't be displayed on the lock screen</text>"
+            //                         + "</binding>"
+            //                         + "</visual>"
+            //                         + "</tile>";
+            //    XmlDocument doc = new XmlDocument();
+            //    //   string xml = string.Format(TileTempleXml);
+            //    doc.LoadXml(tileXmlString, new XmlLoadSettings
+            //    {
+            //        ProhibitDtd = false,
+            //        ValidateOnParse = false,
+            //        ElementContentWhiteSpace = false,
+            //        ResolveExternals = false
+            //    });
+
+            //    TileNotification notificate = new TileNotification(doc);
+            //    TileUpdateManager.CreateTileUpdaterForApplication().Update(notificate);
+            //}
+        }
+
+        public class SettingsViewModel
+        {
+            ThemeColorModel _settingsThemeColorModel;
+
+            public ThemeColorModel SettingsThemeColorModel
+            {
+                get
+                {
+                    return _settingsThemeColorModel;
+                }
+
+                set
+                {
+                    _settingsThemeColorModel = value;
+                }
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string tileXmlString = "<tile>"
+                                         + "<visual version='2'>"
+                                         + "<binding template='TileWide310x150SmallImageAndText03' >"
+                                         + "<text id='1'>qqqqqqqqqqqqqqqqqqqqq</text>"
+                                         + "</binding>"
+                                         + "</visual>"
+                                         + "</tile>";
+            XmlDocument doc = new XmlDocument();
+            //   string xml = string.Format(TileTempleXml);
+            doc.LoadXml(tileXmlString, new XmlLoadSettings
+            {
+                ProhibitDtd = false,
+                ValidateOnParse = false,
+                ElementContentWhiteSpace = false,
+                ResolveExternals = false
+            });
+
+            TileNotification notificate = new TileNotification(doc);
+            TileUpdateManager.CreateTileUpdaterForApplication().Update(notificate);
+        }
     }
-
-
 
     public class OneSettings : INotifyPropertyChanged
     {
@@ -132,6 +223,15 @@ namespace Demo
                 OnPropertyChanged();
             }
         }
+        public bool IsSetLockScreen
+        {
+            get { return ReadSettings(nameof(IsSetLockScreen), false); }
+            set
+            {
+                SaveSettings(nameof(IsSetLockScreen), value);
+                OnPropertyChanged();
+            }
+        }
 
         public int GiveMeGood
         {
@@ -171,6 +271,7 @@ namespace Demo
             if (temp != null) temp(this, new PropertyChangedEventArgs(propertyName));
         }
     }
+
 
 
 }

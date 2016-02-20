@@ -13,20 +13,19 @@ namespace Demo
         public Serial()
         {
             this.InitializeComponent();
+            NavigationCacheMode = NavigationCacheMode.Required;
         }
         public static string html;
 
-      
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Size size = Window.Current.Content.DesiredSize;
+            Do();
+        }
 
-            serial.Height = size.Height;
-            serial.Width = size.Width;
-            // string temp = await GetOneString(html);
+        private void Do()
+        {
             serial.Navigate(new Uri(html));
-            //  serial.NavigateToString(temp);
-            //serial.Navigate(new Uri(Main.dayReallyObject.SerialAddress));
         }
     }
 }

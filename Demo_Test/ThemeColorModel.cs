@@ -36,7 +36,7 @@ namespace Demo
                 AppBarBackGroundColor = new SolidColorBrush(Color.FromArgb(0xFF, 230, 230, 230));
                 SplitViewPanelBackGroundColor = new SolidColorBrush(Color.FromArgb(0xFF, 211, 211, 211));
                 ArticleFontBodyBackGroundColor = new SolidColorBrush(Color.FromArgb(0xFF, 54, 195, 241));
-                FontColor = new SolidColorBrush(Colors.Black);
+                FontColor = new SolidColorBrush(Color.FromArgb(0xFF, 64, 64, 64));
             }
             else//Night
             {

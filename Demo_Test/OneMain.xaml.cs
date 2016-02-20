@@ -1,12 +1,18 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.UI;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
+using Windows.Web.Http;
+using static Demo.LastUpdate;
 
 namespace Demo
 {
@@ -64,39 +70,51 @@ namespace Demo
                 this.fv.ItemsSource = bind;
             }
             ChangeAllEllipseColor(0);
-
-            if (Main.dayReallyObjectString == null)
+            if (StartPage.IsFromInternet)
             {
-                try
+                if (Main.dayReallyObjectString == null)
                 {
-                    Main.dayReallyObjectString = await Main.GetDayReallyObjectString();
-                }
-                catch (Exception ex)
-                {
+                    try
+                    {
+                        Main.dayReallyObjectString = await Main.GetDayReallyObjectString();
+                    }
+                    catch (Exception ex)
+                    {
 #if DEBUG
-                    System.Diagnostics.Debug.Write("|kkkkkkkkkkk|    " + ex.Message + "|assssssssssss");
-                    throw ex;
-#endif
-                }
-            }
-            if (Main.dayReallyObject == null)
-            {
-                try
-                {
-                    await System.Threading.Tasks.Task.Factory.StartNew(() =>
-                     Main.dayReallyObject = GetOne.GetTodayReallyObject(Main.dayReallyObjectString));
-                }
-                catch (Exception ex)
-                {
-#if DEBUG
-                    System.Diagnostics.Debug.Write("|kkkkkkkkkkk|    " + ex.Message + "|assssssssssss");
-                    throw ex;
+                        System.Diagnostics.Debug.Write("|kkkkkkkkkkk|    " + ex.Message + "|assssssssssss");
 #endif
 
+                    }
+                }
+                if (Main.dayReallyObject == null)
+                {
                     Main.dayReallyObject = new DayReallyObject();
+                    try
+                    {
+                        await System.Threading.Tasks.Task.Factory.StartNew(() =>
+                         Main.dayReallyObject = GetOne.GetTodayReallyObject(Main.dayReallyObjectString));
+                    }
+                    catch (Exception ex)
+                    {
+
+#if DEBUG
+                        System.Diagnostics.Debug.Write("|kkkkkkkkkkk|    " + ex.Message + "|assssssssssss");
+                        throw;
+#endif
+
+
+                    }
                 }
             }
-
+            else
+            {
+                Main.dayReallyObjectString = await LoadDayObj();
+                Main.dayReallyObject = new DayReallyObject();
+                Main.dayReallyObject.OneQuestion = JsonConvert.DeserializeObject<OneQuestionObject>(await LoadSth("question.txt"));
+                Main.dayReallyObject.Articles = JsonConvert.DeserializeObject<ArticlesObject>(await LoadSth("article.txt"));
+                await Task.Delay(2000);
+                Main.NotifyUserMethod("离线模式已启动", 200);
+            }
         }
 
         #region 圆点方法
@@ -157,6 +175,8 @@ namespace Demo
             oneMainViewModel.PageDataBinding.Vol = obj.Vol;
             oneMainViewModel.PageDataBinding.OneDay = obj.OneDay;
             oneMainViewModel.PageDataBinding.OneMonthAndYear = obj.OneMonthAndYear;
+            oneMainViewModel.PageDataBinding.PraiseName = obj.PraiseName;
+            oneMainViewModel.PageDataBinding.ItemId = obj.ItemId;
         }
 
         #region 没什么卵用的方法
@@ -202,6 +222,52 @@ namespace Demo
                 Main.NotifyUserMethod("保存失败！", 180);
             }
         }
+
+        Dictionary<string, bool> isClickDic = new Dictionary<string, bool>();
+        async void Love_Click(object sender, RoutedEventArgs e)
+        {
+            if (isClickDic.ContainsKey(oneMainViewModel.PageDataBinding.ItemId))
+            {
+                int result;
+                if (int.TryParse(oneMainViewModel.PageDataBinding.PraiseName, out result))
+                {
+                    oneMainViewModel.PageDataBinding.PraiseName = (result -= 1).ToString();
+                }
+                isClickDic.Remove(oneMainViewModel.PageDataBinding.ItemId);
+                return;
+            }
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("UserAgent", "android-async-http/2.0 (http://loopj.com/android-async-http)");
+                client.DefaultRequestHeaders.Add("ContentType", "application/x-www-form-urlencoded");
+                Dictionary<string, string> dic = new Dictionary<string, string>
+                {
+                    {"itemid", oneMainViewModel.PageDataBinding.ItemId},
+                    {"type","hpcontent" },
+                    {"deviceid","00000000-0565-4187-0033-c5870033c587" },
+                    {"devicetype","android"}
+                };
+                HttpFormUrlEncodedContent content = new HttpFormUrlEncodedContent(dic);
+
+                var response = await client.PostAsync(new Uri("http://v3.wufazhuce.com:8000/api/praise/add"), content);
+                response.EnsureSuccessStatusCode();
+                if (response.IsSuccessStatusCode)
+                {
+                    isClickDic.Add(oneMainViewModel.PageDataBinding.ItemId, true);
+                    Main.NotifyUserMethod("喜欢成功", 150);
+                    int result;
+                    if (int.TryParse(oneMainViewModel.PageDataBinding.PraiseName, out result))
+                    {
+                        oneMainViewModel.PageDataBinding.PraiseName = (result += 1).ToString();
+#if DEBUG
+                        await new MessageDialog("Success!").ShowAsync();
+#endif
+                    }
+                }
+                //  await response.Content.ReadAsStringAsync();
+            }
+        }
     }
 
     public class OneMainViewModel
@@ -210,6 +276,20 @@ namespace Demo
         public OneMainViewModel()
         {
             PageDataBinding = new DayObject();
+            //if (DesignMode.DesignModeEnabled)
+            //{
+            //    PageDataBinding = new DayObject
+            //    {
+            //        PraiseName = "12324",
+            //        ByWho = "qwe",
+            //        HeaderString = "qwew",
+            //        MainString = "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq",
+            //        OneMonthAndYear = "2016-2",
+            //        OneDay = "12",
+            //        Vol = "VOL.1225"
+            //    };
+
+            //}
         }
 
         DayObject _pageDataBinding;
