@@ -3,6 +3,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Demo.Styles">
 
+    <ControlTemplate x:Key="BlankButton">
+        <Border Padding="4">
+            <ContentPresenter x:Name="ContentContainer"/>
+        </Border>
+    </ControlTemplate>
     <ControlTemplate x:Key="MyButtonTemplate">
         <Border 
                              x:Name="ButtonBackground"

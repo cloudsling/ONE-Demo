@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using JYAnalyticsUniversal;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using Windows.UI.Xaml;
@@ -28,6 +29,12 @@ namespace Demo
             bbb.Text = " ”";
             InitializationSpeciallyString(600);
             ForBorder.Begin();
+            JYAnalytics.TrackPageStart("article_page");
+        }
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            JYAnalytics.TrackPageEnd("article_page");
         }
 
         void InitializationSpeciallyString(int length)

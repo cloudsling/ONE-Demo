@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JYAnalyticsUniversal;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -36,6 +37,12 @@ namespace Demo
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             await Do();
+            JYAnalytics.TrackPageStart("music_page");
+        }
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            JYAnalytics.TrackPageEnd("music_page");
         }
 
         private async Task Do()

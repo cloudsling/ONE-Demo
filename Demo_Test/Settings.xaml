@@ -1,6 +1,7 @@
 ﻿<Page
     x:Class="Demo.Settings"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:JiuYouAdUniversal="using:JiuYouAdUniversal"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Demo"
     xmlns:adduplex="using:AdDuplex"
@@ -51,7 +52,7 @@
                             </DataTemplate>
                         </ToggleSwitch.HeaderTemplate>
                     </ToggleSwitch>
-                    <Button Width="80"  Height="80" Content="Test" Click="Button_Click"/>
+                    <!--<Button Width="80"  Height="80" Content="Test" Click="Button_Click"/>-->
                     <ComboBox x:Name="OneMainPageStyle" Foreground="{Binding SettingsThemeColorModel.FontColor}" Margin="10" SelectionChanged="ComboBox_SelectionChanged">
                         <ComboBoxItem Content="真*霸气现代首页(ง •_•)ง" />
                         <ComboBoxItem Content="真*古典传统首页(ง •_•)ง" />
@@ -65,22 +66,15 @@
                 </StackPanel>
             </PivotItem>
             <PivotItem Header="Ad">
+
                 <Grid>
-                    <Border VerticalAlignment="Top">
-                        <RichTextBlock Foreground="{Binding SettingsThemeColorModel.FontColor}" Margin="30">
-                            <Paragraph>
-                                <InlineUIContainer>
-                                    <TextBlock TextWrapping="Wrap">
-                                        <TextBlock.Text>
-                                            <x:String>
-                                                如果愿意支持我请点击下面的广告(๑•̀ㅂ•́)و✧
-                                            </x:String>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </InlineUIContainer>
-                            </Paragraph>
-                        </RichTextBlock>
-                    </Border>
+                    <Grid>
+                        <JiuYouAdUniversal:AdControl ApplicationKey="e3c602f86e5e70b351479eddf2d1efc8"
+                                                     HorizontalAlignment="Left"
+                                                     Margin="10 150 0 0"
+                                                     VerticalAlignment="Top"
+                                                     AdType="Banner"/>
+                    </Grid>
                     <adduplex:AdControl Margin="0 20" VerticalAlignment="Bottom" AdUnitId="183935" AppKey="aaa53830-3488-4201-8d47-c9a9395dab99" IsTest="False" />
                 </Grid>
             </PivotItem>

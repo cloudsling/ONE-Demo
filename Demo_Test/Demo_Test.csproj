@@ -55,6 +55,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <EnableGatekeeperAnalysis>true</EnableGatekeeperAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
     <OutputPath>bin\ARM\Release\</OutputPath>
@@ -99,6 +100,22 @@
     <Content Include="Assets\About\about.png" />
     <None Include="ClassDiagram1.cd" />
     <Content Include="Assets\About\StartImage.png" />
+    <Content Include="Assets\Res\home.png" />
+    <Content Include="Assets\Res\home_active.png" />
+    <Content Include="Assets\Res\movie.png" />
+    <Content Include="Assets\Res\movie_active.png" />
+    <Content Include="Assets\Res\music.png" />
+    <Content Include="Assets\Res\music_active.png" />
+    <Content Include="Assets\Res\no_search_result.png" />
+    <Content Include="Assets\Res\reading.png" />
+    <Content Include="Assets\Res\reading_active.png" />
+    <Content Include="Assets\Res\search.png" />
+    <Content Include="Assets\Res\search_image.png" />
+    <Content Include="Assets\Res\search_image1.png" />
+    <Content Include="Assets\Res\search_movie.png" />
+    <Content Include="Assets\Res\search_pressed.png" />
+    <Content Include="Assets\Res\search_tv.png" />
+    <Content Include="Assets\BadgeLogo.scale-150.png" />
     <Content Include="Assets\BadgeLogo.scale-200.png" />
     <Content Include="Assets\Square150x150Logo.scale-100.png" />
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
@@ -116,10 +133,11 @@
     <Compile Include="Articles.xaml.cs">
       <DependentUpon>Articles.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BindableBase.cs" />
+    <Compile Include="Common\BindableBase.cs" />
     <Compile Include="BlankPage.xaml.cs">
       <DependentUpon>BlankPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\CommandBase.cs" />
     <Compile Include="GaoStatusBar.cs" />
     <Compile Include="GetOne.cs" />
     <Compile Include="http\HttpHelper.cs" />
@@ -143,10 +161,10 @@
     <Compile Include="OneQuestion.xaml.cs">
       <DependentUpon>OneQuestion.xaml</DependentUpon>
     </Compile>
-    <Compile Include="OneThing.xaml.cs">
-      <DependentUpon>OneThing.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchPage.xaml.cs">
+      <DependentUpon>SearchPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Serial.xaml.cs">
       <DependentUpon>Serial.xaml</DependentUpon>
     </Compile>
@@ -161,6 +179,7 @@
     </Compile>
     <Compile Include="TaskConfiguration.cs" />
     <Compile Include="ThemeColorModel.cs" />
+    <Compile Include="ViewModel\SearchPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -219,7 +238,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="OneThing.xaml">
+    <Page Include="SearchPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -238,11 +257,6 @@
     <Page Include="StartPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Styles\AutoTheme.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Styles\MyBtn.xaml">
       <SubType>Designer</SubType>
@@ -267,6 +281,12 @@
       <Project>{3ce26a0c-8880-428b-aac5-7d54f6231241}</Project>
       <Name>Demo.BackGround</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SearchPage\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

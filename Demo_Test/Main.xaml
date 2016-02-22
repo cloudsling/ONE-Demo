@@ -164,9 +164,10 @@
 
                             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="1">
                                 <Grid x:Name="txtSearch" Visibility="Collapsed">
-                                    <Border BorderBrush="Red"  VerticalAlignment="Center" HorizontalAlignment="Right" >
+                                    <Border BorderBrush="Red"  VerticalAlignment="Center" HorizontalAlignment="Right">
                                         <Viewbox>
-                                            <AutoSuggestBox Visibility="Visible" Margin="0 0 3 0" x:Name="txt_Search" Width="Auto" MinWidth="270" VerticalAlignment="Center" LostFocus="Button_Click" PlaceholderText="搜索Vol功能即将开放" >
+                                            <!-- seach here!!!!!!!!!!! -->
+                                            <AutoSuggestBox Visibility="Visible" Margin="0 0 3 0" x:Name="txt_Search" Width="Auto" MinWidth="270" VerticalAlignment="Center" LostFocus="txt_Search_LostFocus" PlaceholderText="随便搜点什么。。" GotFocus="txt_Search_GotFocus" QuerySubmitted="txt_Search_QuerySubmitted">
                                                 <AutoSuggestBox.QueryIcon>
                                                     <FontIcon Glyph="&#xE721;" />
                                                 </AutoSuggestBox.QueryIcon>
@@ -227,7 +228,7 @@
             <Border x:Name="starstar" Opacity="1" CornerRadius="10" BorderThickness="1.5" BorderBrush="Green" Background="Red" Width="300" Height="180">
                 <StackPanel>
                     <TextBlock Margin="10 10 0 0" Text="抱歉耽误您1分钟："/>
-                    <TextBlock Margin="20 2" Foreground="Green" TextWrapping="Wrap" Text="您已经用MANY-一个有一段时间了，您对Many-一个有什么评价或者看法呢？(ง •_•)ง非常希望听到您的声音^^" />
+                    <TextBlock Margin="20 2" Foreground="Green" TextWrapping="Wrap" Text="您已经用MANY-多个有一段时间了，您对Many-多个有什么评价或者看法呢？(ง •_•)ง非常希望听到您的声音^^" />
                     <StackPanel Margin="10 0" Orientation="Horizontal">
                         <TextBlock VerticalAlignment="Center" Text="不再提醒：" Foreground="Black" />
                         <CheckBox x:Name="cb" VerticalAlignment="Center" IsChecked="True" />

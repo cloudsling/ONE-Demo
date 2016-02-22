@@ -10,7 +10,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/Styles.xaml" />
                 <ResourceDictionary Source="/Styles/MyBtn.xaml"/>
-                <ResourceDictionary Source="/Styles/AutoTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -1,6 +1,7 @@
 ﻿<Page
     x:Class="Demo.Articles"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:JiuYouAdUniversal="using:JiuYouAdUniversal"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Demo"
     xmlns:adduplex="using:AdDuplex"
@@ -111,8 +112,13 @@
                         </Grid>
 
                         <Border Margin="10 10 10 20" Padding="5">
-                         
+                            <JiuYouAdUniversal:AdControl ApplicationKey="e3c602f86e5e70b351479eddf2d1efc8"
+                                                     HorizontalAlignment="Left"
+                                                     Margin="10 80 0 0"
+                                                     VerticalAlignment="Top"
+                                                     AdType="Banner"/>
                         </Border>
+                        <Border Height="10"></Border>
                     </StackPanel>
                 </Grid>
             </Grid>

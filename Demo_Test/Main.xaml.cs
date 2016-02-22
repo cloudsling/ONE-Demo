@@ -20,26 +20,162 @@ using static Demo.LastUpdate;
 
 namespace Demo
 {
+    /// <summary>
+    /// 事件
+    /// </summary>
     public sealed partial class Main : Page
     {
-        public MainViewModel mainViewModel { get; set; }
-        public static Main MainCurrent;
-        public static List<DayObject> DayObjectCollection;
-        public static DayReallyObject dayReallyObject;
-        public static StorageFolder oneFolder;
-        public static HttpClient httpClient;
-        public static List<string> imageSourceAsync;
-        public static string itemPath;
-        public static string x;
-        public static string uri = "http://139.129.116.86:8000/api/hp/more/0?";
-        // public static string uriOld = "http://wufazhuce.com/";
-        public static string uriOneArticle = "http://wufazhuce.com/article/";
-        public static string uriOneQuestion = "http://wufazhuce.com/question/";
-        public static string dayReallyObjectString;
-        public static Action CreateFileButtonClick;
-        public static Action OtherPageDoWhenThemeChanged;
+        void AppBarButton_Click(object sender, RoutedEventArgs e) => Refreshen();
+
+        void AppBar_LostFocus(object sender, RoutedEventArgs e) => AppBar.IsOpen = false;
+
+        void CreateFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (CreateFileButtonClick != null) CreateFileButtonClick();
+            AppBar.IsOpen = false;
+        }
+
+        void HamBtn_Click(object sender, RoutedEventArgs e) => SwitchSplitter();
+
+        /// <summary>
+        /// 算是导航了
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void HamListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListView oneListView = sender as ListView;
+            switch (oneListView.Name)
+            {
+                case "HamListBox":
+                    {
+                        MyListViewItems m = oneListView.SelectedItem as MyListViewItems;
+                        if (m != null)
+                        {
+                            HEADER111.Text = "ONE- " + m.MyItemName.Trim();
+                            if (isHide.Visibility == Visibility.Collapsed) isHide.Visibility = Visibility.Visible;
+                            if (AppBar.Visibility == Visibility.Collapsed) AppBar.Visibility = Visibility.Visible;
+                            OneFrame.Navigate(m.ClassType);
+                            if (OneFrame.CurrentSourcePageType == typeof(Articles) || OneFrame.CurrentSourcePageType == typeof(OneQuestion) || OneFrame.CurrentSourcePageType == typeof(Serial))
+                                CreateFileButton.Visibility = Visibility.Collapsed;
+                            else {
+                                CreateFileButton.Visibility = Visibility.Visible;
+                            }
+                            NotifyUserMethod("ONE-" + m.MyItemName, 180);
+                            if (oneListView.SelectedItem == null) return;
+                            oneListView.SelectedItem = null;
+                            Splitter.IsPaneOpen = false;
+                        }
+                    }
+                    break;
+                case "Settings":
+                    {
+                        if (oneListView.SelectedItem == null) return;
+                        oneListView.SelectedItem = null;
+                        SwitchSplitter();
+                        AppBar.Visibility = Visibility.Collapsed;
+                        HEADER111.Text = "设置";
+                        if (isHide.Visibility == Visibility.Visible) isHide.Visibility = Visibility.Collapsed;
+                        OneFrame.Navigate(typeof(Settings));
+                    }
+                    break;
+                case "Others":
+                    {
+                        if (oneListView.SelectedItem == null) return;
+                        SwitchSplitter();
+                        int id = Others.SelectedIndex;
+                        switch (id)
+                        {
+                            case 0:
+                                Love(); break;
+                            case 1:
+                                {
+                                    //balabala.Visibility = Visibility.Collapsed;
+                                    HEADER111.Text = "关于";
+                                    AppBar.Visibility = Visibility.Collapsed;
+                                    if (isHide.Visibility == Visibility.Visible) { isHide.Visibility = Visibility.Collapsed; }
+                                    OneFrame.Navigate(typeof(About));
+                                }
+                                break;
+                        }
+                        oneListView.SelectedItem = null;
+                    }
+                    break;
+            }
+        }
+
+        async void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            GiveMeStarOk.Begin();
+            await Task.Delay(650);
+            StarStar.Visibility = Visibility.Collapsed;
+            Love();
+            GaoStatusBar.ShowStatusBar();
+        }
+
+        void DemoDemo_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e) => SwitchSplitter();
+
+        void SunOrNightMode_Click(object sender, RoutedEventArgs e)
+        {
+            var vis = SunMode.Visibility;
+            SunMode.Visibility = NightMode.Visibility;
+            NightMode.Visibility = vis;
+            if (SunMode.Visibility == Visibility.Collapsed)
+            {
+                mainViewModel.oneSettings.RequireLightTheme = false;
+                ThemeColorModel.InitialByOtherObject(mainViewModel.themeColorModelSettings, new ThemeColorModel(false));
+                GaoStatusBar.SetStatusBar(Colors.White, ThemeColorModel.NightModeTheme.StatusBarBackGroundColor.Color);
+            }
+            else {
+                mainViewModel.oneSettings.RequireLightTheme = true;
+                ThemeColorModel.InitialByOtherObject(mainViewModel.themeColorModelSettings, new ThemeColorModel(true));
+                GaoStatusBar.SetStatusBar(Colors.White, ThemeColorModel.SunModeTheme.StatusBarBackGroundColor.Color);
+            }
+            OtherPageDoWhenThemeChanged();
+        }
+
+        void ToggleButton_Click(object sender, RoutedEventArgs e)
+        {
+            isHide.Visibility = Visibility.Collapsed;
+            txtSearch.Visibility = Visibility.Visible;
+            txt_Search.Focus(FocusState.Keyboard);
+        }
+
+        void txt_Search_GotFocus(object sender, RoutedEventArgs e)
+        {
+            txt_Search.Focus(FocusState.Keyboard);
+            OneFrame.Navigate(typeof(SearchPage));
+        }
+
+        void Button_Click(object sender, RoutedEventArgs e)
+        {
+            txtSearch.Visibility = Visibility.Collapsed;
+            isHide.Visibility = Visibility.Visible;
+        }
+
+        void txt_Search_LostFocus(object sender, RoutedEventArgs e)
+        {
+            txtSearch.Visibility = Visibility.Collapsed;
+            isHide.Visibility = Visibility.Visible;
+            var box = sender as AutoSuggestBox;
+            if (string.IsNullOrEmpty(box.Text))
+            {
+                do
+                {
+                    OneFrame.GoBack();
+                } while (OneFrame.CurrentSourcePageType == typeof(SearchPage));
+            }
+        }
+
+        void txt_Search_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            SearchPage.searchPageCurrent.SearchStart(sender.Text);
+        }
     }
 
+    /// <summary>
+    /// 入口和方法
+    /// </summary>
     public sealed partial class Main : Page
     {
         public Main()
@@ -66,7 +202,12 @@ namespace Demo
             else if (OneFrame.CurrentSourcePageType == typeof(OneMain)) return;
             if (OneFrame.CanGoBack)
             {
-                OneFrame.GoBack();
+                Type temp;//= OneFrame.CurrentSourcePageType;
+                do
+                {
+                    temp = OneFrame.CurrentSourcePageType;
+                    OneFrame.GoBack();
+                } while (Equals(temp, OneFrame.CurrentSourcePageType));
                 if (OneFrame.CurrentSourcePageType == typeof(BlankPage))
                     OneFrame.GoBack();
                 e.Handled = true;
@@ -205,30 +346,6 @@ namespace Demo
             MainCurrent.NotifyAnime.Begin();
         }
 
-        void AppBarButton_Click(object sender, RoutedEventArgs e) => Refreshen();
-
-        void Button_Click(object sender, RoutedEventArgs e)
-        {
-            txtSearch.Visibility = Visibility.Collapsed;
-            isHide.Visibility = Visibility.Visible;
-        }
-
-        private void ToggleButton_Click(object sender, RoutedEventArgs e)
-        {
-            isHide.Visibility = Visibility.Collapsed;
-            txtSearch.Visibility = Visibility.Visible;
-            txt_Search.Focus(FocusState.Keyboard);
-        }
-
-        private void AppBar_LostFocus(object sender, RoutedEventArgs e) => AppBar.IsOpen = false;
-
-        private void CreateFileButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (CreateFileButtonClick != null) CreateFileButtonClick();
-            this.AppBar.IsOpen = false;
-        }
-
-        private void HamBtn_Click(object sender, RoutedEventArgs e) => SwitchSplitter();
 
         /// <summary>
         /// 关闭或者呼出汉堡菜单
@@ -245,103 +362,6 @@ namespace Demo
 
         async void Love() => await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-windows-store://pdp/?ProductId=9NBLGGH58VLR"));
 
-        /// <summary>
-        /// 算是导航了
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void HamListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ListView oneListView = sender as ListView;
-            switch (oneListView.Name)
-            {
-                case "HamListBox":
-                    {
-                        MyListViewItems m = oneListView.SelectedItem as MyListViewItems;
-                        if (m != null)
-                        {
-                            HEADER111.Text = "ONE- " + m.MyItemName.Trim();
-                            if (isHide.Visibility == Visibility.Collapsed) isHide.Visibility = Visibility.Visible;
-                            if (AppBar.Visibility == Visibility.Collapsed) AppBar.Visibility = Visibility.Visible;
-                            OneFrame.Navigate(m.ClassType);
-                            if (OneFrame.CurrentSourcePageType == typeof(Articles) || OneFrame.CurrentSourcePageType == typeof(OneQuestion) || OneFrame.CurrentSourcePageType == typeof(Serial))
-                                CreateFileButton.Visibility = Visibility.Collapsed;
-                            else {
-                                CreateFileButton.Visibility = Visibility.Visible;
-                            }
-                            NotifyUserMethod("ONE-" + m.MyItemName, 180);
-                            if (oneListView.SelectedItem == null) return;
-                            oneListView.SelectedItem = null;
-                            Splitter.IsPaneOpen = false;
-                        }
-                    }
-                    break;
-                case "Settings":
-                    {
-                        if (oneListView.SelectedItem == null) return;
-                        oneListView.SelectedItem = null;
-                        SwitchSplitter();
-                        AppBar.Visibility = Visibility.Collapsed;
-                        HEADER111.Text = "设置";
-                        if (isHide.Visibility == Visibility.Visible) isHide.Visibility = Visibility.Collapsed;
-                        OneFrame.Navigate(typeof(Settings));
-                    }
-                    break;
-                case "Others":
-                    {
-                        if (oneListView.SelectedItem == null) return;
-                        SwitchSplitter();
-                        int id = Others.SelectedIndex;
-                        switch (id)
-                        {
-                            case 0:
-                                Love(); break;
-                            case 1:
-                                {
-                                    //balabala.Visibility = Visibility.Collapsed;
-                                    HEADER111.Text = "关于";
-                                    AppBar.Visibility = Visibility.Collapsed;
-                                    if (isHide.Visibility == Visibility.Visible) { isHide.Visibility = Visibility.Collapsed; }
-                                    OneFrame.Navigate(typeof(About));
-                                }
-                                break;
-                        }
-                        oneListView.SelectedItem = null;
-                    }
-                    break;
-            }
-        }
-
-        async void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            GiveMeStarOk.Begin();
-            await Task.Delay(650);
-            StarStar.Visibility = Visibility.Collapsed;
-            Love();
-            GaoStatusBar.ShowStatusBar();
-        }
-
-        void DemoDemo_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e) => SwitchSplitter();
-
-        void SunOrNightMode_Click(object sender, RoutedEventArgs e)
-        {
-            var vis = SunMode.Visibility;
-            SunMode.Visibility = NightMode.Visibility;
-            NightMode.Visibility = vis;
-            if (SunMode.Visibility == Visibility.Collapsed)
-            {
-                mainViewModel.oneSettings.RequireLightTheme = false;
-                ThemeColorModel.InitialByOtherObject(mainViewModel.themeColorModelSettings, new ThemeColorModel(false));
-                GaoStatusBar.SetStatusBar(Colors.White, ThemeColorModel.NightModeTheme.StatusBarBackGroundColor.Color);
-            }
-            else {
-                mainViewModel.oneSettings.RequireLightTheme = true;
-                ThemeColorModel.InitialByOtherObject(mainViewModel.themeColorModelSettings, new ThemeColorModel(true));
-                GaoStatusBar.SetStatusBar(Colors.White, ThemeColorModel.SunModeTheme.StatusBarBackGroundColor.Color);
-            }
-            OtherPageDoWhenThemeChanged();
-        }
-
         public void ThisPageDoWhenThemeChanged()
         {
             ChangeSunOrNightMode(mainViewModel.oneSettings.RequireLightTheme);
@@ -357,6 +377,28 @@ namespace Demo
                 GaoStatusBar.SetStatusBar(Colors.White, ThemeColorModel.SunModeTheme.StatusBarBackGroundColor.Color);
             }
         }
+    }
+
+    /// <summary>
+    /// 字段和属性
+    /// </summary>
+    public sealed partial class Main : Page
+    {
+        public MainViewModel mainViewModel { get; set; }
+        public static Main MainCurrent;
+        public static List<DayObject> DayObjectCollection;
+        public static DayReallyObject dayReallyObject;
+        public static StorageFolder oneFolder;
+        public static HttpClient httpClient;
+        public static List<string> imageSourceAsync;
+        public static string itemPath;
+        public static string x;
+        public static string uri = "http://139.129.116.86:8000/api/hp/more/0?";
+        public static string uriOneArticle = "http://wufazhuce.com/article/";
+        public static string uriOneQuestion = "http://wufazhuce.com/question/";
+        public static string dayReallyObjectString;
+        public static Action CreateFileButtonClick;
+        public static Action OtherPageDoWhenThemeChanged;
     }
 
     public class MainViewModel

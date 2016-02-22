@@ -1,4 +1,4 @@
-﻿namespace Demo
+﻿namespace Demo.Common
 {
     using System.ComponentModel;
     using System.Runtime.CompilerServices;

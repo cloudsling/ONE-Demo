@@ -19,6 +19,8 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Navigation;
 using Windows.Web.Http;
 using Windows.ApplicationModel;
+using JYAnalyticsUniversal;
+using Demo.Common;
 
 namespace Demo
 {
@@ -48,9 +50,16 @@ namespace Demo
                 this.Frame.Navigate(typeof(MovieDetile), $"http://m.wufazhuce.com/movie/{click.Id}");
             }
         }
+
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             await Do();
+            JYAnalytics.TrackPageStart("movie_page");
+        }
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            JYAnalytics.TrackPageEnd("movie_page");
         }
 
         private async Task Do()

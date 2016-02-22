@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JYAnalyticsUniversal;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,18 +37,22 @@ namespace Demo
             Debug.WriteLine("Complete..........");
         }
 
-
+        protected async override void OnActivated(IActivatedEventArgs args)
+        {
+            base.OnActivated(args);
+            await JYAnalytics.StartTrackAsync("e3c602f86e5e70b351479eddf2d1efc8");
+        }
 
         protected async override void OnLaunched(LaunchActivatedEventArgs e)
         {
 
+            await JYAnalytics.StartTrackAsync("e3c602f86e5e70b351479eddf2d1efc8");
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
                 this.DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
-
             AdDuplex.AdDuplexClient.Initialize("aaa53830-3488-4201-8d47-c9a9395dab99");
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -76,6 +81,7 @@ namespace Demo
             }
             // 确保当前窗口处于活动状态
             Window.Current.Activate();
+
         }
 
         private void RootFrame_Navigated(object sender, NavigationEventArgs e)
@@ -95,10 +101,11 @@ namespace Demo
         /// </summary>
         /// <param name="sender">挂起的请求的源。</param>
         /// <param name="e">有关挂起请求的详细信息。</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
+        private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: 保存应用程序状态并停止任何后台活动
+            //TODO: 保存应用程序状态并停止任何后台活动 
+            await JYAnalytics.EndTrackAsync();
             deferral.Complete();
         }
     }

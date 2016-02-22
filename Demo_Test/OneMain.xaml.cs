@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using JYAnalyticsUniversal;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -115,6 +116,12 @@ namespace Demo
                 await Task.Delay(2000);
                 Main.NotifyUserMethod("离线模式已启动", 200);
             }
+            JYAnalytics.TrackPageStart("main_page");
+        }
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            JYAnalytics.TrackPageEnd("main_page");
         }
 
         #region 圆点方法

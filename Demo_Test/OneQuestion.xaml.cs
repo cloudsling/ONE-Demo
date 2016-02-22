@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using JYAnalyticsUniversal;
+using System.Text;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -17,8 +18,15 @@ namespace Demo
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            base.OnNavigatedTo(e);
             OneQuestionObjectBinding.OneQuestionThemeColorModel = ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme);
             borderAnimeStoryBoard.Begin();
+            JYAnalytics.TrackPageStart("question_page");
+        }
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            JYAnalytics.TrackPageEnd("question_page");
         }
     }
 

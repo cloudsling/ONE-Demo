@@ -34,9 +34,9 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </Page.Resources>
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
         <Border x:Name="border" Opacity="0">
-            <Image Stretch="UniformToFill" Source="ms-Appx:///Assets/About/StartImage.png" />
+            <Image Stretch="UniformToFill" Source="ms-appx:///Assets/About/StartImage.png"/>
         </Border>
         <Canvas>
             <Ellipse Opacity="0" x:Name="Star1" Height="4" Width="4" Fill="White" Canvas.Top="200" Canvas.Left="30" />

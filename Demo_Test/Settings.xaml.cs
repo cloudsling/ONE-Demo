@@ -151,28 +151,28 @@ namespace Demo
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            string tileXmlString = "<tile>"
-                                         + "<visual version='2'>"
-                                         + "<binding template='TileWide310x150SmallImageAndText03' >"
-                                         + "<text id='1'>qqqqqqqqqqqqqqqqqqqqq</text>"
-                                         + "</binding>"
-                                         + "</visual>"
-                                         + "</tile>";
-            XmlDocument doc = new XmlDocument();
-            //   string xml = string.Format(TileTempleXml);
-            doc.LoadXml(tileXmlString, new XmlLoadSettings
-            {
-                ProhibitDtd = false,
-                ValidateOnParse = false,
-                ElementContentWhiteSpace = false,
-                ResolveExternals = false
-            });
+        //private void Button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    string tileXmlString = "<tile>"
+        //                                 + "<visual version='2'>"
+        //                                 + "<binding template='TileWide310x150SmallImageAndText03' >"
+        //                                 + "<text id='1'>qqqqqqqqqqqqqqqqqqqqq</text>"
+        //                                 + "</binding>"
+        //                                 + "</visual>"
+        //                                 + "</tile>";
+        //    XmlDocument doc = new XmlDocument();
+        //    //   string xml = string.Format(TileTempleXml);
+        //    doc.LoadXml(tileXmlString, new XmlLoadSettings
+        //    {
+        //        ProhibitDtd = false,
+        //        ValidateOnParse = false,
+        //        ElementContentWhiteSpace = false,
+        //        ResolveExternals = false
+        //    });
 
-            TileNotification notificate = new TileNotification(doc);
-            TileUpdateManager.CreateTileUpdaterForApplication().Update(notificate);
-        }
+        //    TileNotification notificate = new TileNotification(doc);
+        //    TileUpdateManager.CreateTileUpdaterForApplication().Update(notificate);
+        //}
     }
 
     public class OneSettings : INotifyPropertyChanged

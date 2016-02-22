@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JYAnalyticsUniversal;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -33,6 +34,12 @@ namespace Demo
             {
                 webview.Navigate(new Uri(temp));
             }
+            JYAnalytics.TrackPageStart("movieDetail_page");
+        }
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            JYAnalytics.TrackPageEnd("movieDetail_page");
         }
     }
 }

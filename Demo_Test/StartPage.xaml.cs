@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
@@ -12,7 +13,18 @@ namespace Demo
     {
         public StartPage()
         {
-            this.InitializeComponent();
+            try
+            {
+
+                this.InitializeComponent();
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                Debug.WriteLine(ex.Message + "||||error!!!!!!!!!!!|||||" + ex.ToString());
+#endif
+                throw;
+            }
         }
 
         public static List<DayObject> DayObjectCollection;
@@ -35,26 +47,26 @@ namespace Demo
             return x;
         }
 
-
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             GaoStatusBar.HideStatusBar();
             StartAnimation.Begin();
-
             try
             {
                 await GetOneString(uri);
                 await SaveX(x);
                 DayObjectCollection = GetOne.GetOneTodayObjectList(x);
-
-
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+#if DEBUG
+                Debug.WriteLine(ex.Message + "||||error!!!!!!!!!!!|||||" + ex.ToString());
+#endif
                 IsFromInternet = false;
                 x = await LoadX();
                 DayObjectCollection = GetOne.GetOneTodayObjectList(x);
                 await Task.Delay(2500);
+                throw;
             }
 
             if (!new OneSettings().SkipStartMainPage)
