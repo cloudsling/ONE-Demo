@@ -38,7 +38,8 @@
                     Template="{StaticResource BlankButton}"
                     HorizontalAlignment="Center"
                     FontFamily="Consolas"
-                    Foreground="#36C3F1" Content="插图"/>
+                    Foreground="#36C3F1" Content="插图"
+                    Command="{Binding}"/>
             <Button Grid.Column="1"
                     Template="{StaticResource BlankButton}"
                     HorizontalAlignment="Center"
