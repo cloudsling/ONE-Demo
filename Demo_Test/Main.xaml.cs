@@ -144,7 +144,14 @@ namespace Demo
         void txt_Search_GotFocus(object sender, RoutedEventArgs e)
         {
             txt_Search.Focus(FocusState.Keyboard);
-            OneFrame.Navigate(typeof(SearchPage));
+            if (string.IsNullOrEmpty(txt_Search.Text))
+            {
+                OneFrame.Navigate(typeof(SearchPage)); return;
+            }
+            if (OneFrame.CurrentSourcePageType != typeof(SearchPage))
+            {
+                OneFrame.Navigate(typeof(SearchPage));
+            }
         }
 
         void Button_Click(object sender, RoutedEventArgs e)
@@ -167,9 +174,9 @@ namespace Demo
             }
         }
 
-        void txt_Search_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        async void txt_Search_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            SearchPage.searchPageCurrent.SearchStart(sender.Text);
+            await SearchPage.searchPageCurrent.SearchStart(sender.Text);
         }
     }
 
@@ -283,7 +290,6 @@ namespace Demo
                     x = obj.XX;
                     DayObjectCollection = obj.dayObjectCollection;
                 }
-                bar.IsIndeterminate = false;
                 ring.IsActive = false;
                 OneFrame.Navigate(typeof(OneMain));
                 StorageFolder storageFolder = KnownFolders.PicturesLibrary;

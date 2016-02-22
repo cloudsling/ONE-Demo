@@ -51,6 +51,7 @@ namespace Demo
         /// <param name="e"></param>
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+
             if (Main.MainCurrent.mainViewModel.oneSettings.OneMainPageStyle == 0)
             {
                 OneMainStyle2.Visibility = Visibility.Visible;
@@ -92,7 +93,7 @@ namespace Demo
                     Main.dayReallyObject = new DayReallyObject();
                     try
                     {
-                        await System.Threading.Tasks.Task.Factory.StartNew(() =>
+                        await Task.Factory.StartNew(() =>
                          Main.dayReallyObject = GetOne.GetTodayReallyObject(Main.dayReallyObjectString));
                     }
                     catch (Exception ex)
@@ -102,8 +103,7 @@ namespace Demo
                         System.Diagnostics.Debug.Write("|kkkkkkkkkkk|    " + ex.Message + "|assssssssssss");
                         throw;
 #endif
-
-
+                        
                     }
                 }
             }
@@ -115,6 +115,20 @@ namespace Demo
                 Main.dayReallyObject.Articles = JsonConvert.DeserializeObject<ArticlesObject>(await LoadSth("article.txt"));
                 await Task.Delay(2000);
                 Main.NotifyUserMethod("离线模式已启动", 200);
+            }
+            if (e.Parameter != null)
+            {
+                var temp = e.Parameter as DayObject;
+                if (temp != null)
+                {
+                    var bind = fv.ItemsSource as ImageBinding;
+                    if (bind != null)
+                    {
+                        bind.AddImageBinding(temp.DayImagePath);
+                    }
+                    fv.SelectedIndex = 0; 
+                     ChangeMainCurrentMsg(temp);
+                }
             }
             JYAnalytics.TrackPageStart("main_page");
         }
@@ -363,6 +377,11 @@ namespace Demo
                     }
                     );
             }
+        }
+
+        public void AddImageBinding(string newone)
+        {
+            this.Insert(0, new ImageSource { Source0 = newone });
         }
     }
 

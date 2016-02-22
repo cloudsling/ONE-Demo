@@ -52,6 +52,13 @@
                             </DataTemplate>
                         </ToggleSwitch.HeaderTemplate>
                     </ToggleSwitch>
+                    <ToggleSwitch Foreground="{Binding SettingsThemeColorModel.FontColor}"  x:Name="SearchCache" Margin="10" Toggled="SearchCache_Toggled" OffContent="关" OnContent="开">
+                        <ToggleSwitch.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Foreground="{Binding SettingsThemeColorModel.FontColor}" Text="搜索界面开启缓存(可能会导致界面短暂卡住)" />
+                            </DataTemplate>
+                        </ToggleSwitch.HeaderTemplate>
+                    </ToggleSwitch>
                     <!--<Button Width="80"  Height="80" Content="Test" Click="Button_Click"/>-->
                     <ComboBox x:Name="OneMainPageStyle" Foreground="{Binding SettingsThemeColorModel.FontColor}" Margin="10" SelectionChanged="ComboBox_SelectionChanged">
                         <ComboBoxItem Content="真*霸气现代首页(ง •_•)ง" />

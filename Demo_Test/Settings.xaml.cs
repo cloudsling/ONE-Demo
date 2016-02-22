@@ -19,6 +19,7 @@ namespace Demo
     {
         public SettingsViewModel settingsViewModel { get; set; }
 
+        public static OneSettings settings;
         public Settings()
         {
             settingsViewModel = new SettingsViewModel();
@@ -34,11 +35,13 @@ namespace Demo
 
         void ReadSettingsToShow()
         {
-            OneMainPageStyle.SelectedIndex = Main.MainCurrent.mainViewModel.oneSettings.OneMainPageStyle;
-            DoubleClickExit.IsOn = Main.MainCurrent.mainViewModel.oneSettings.IsDoubleClickExit;
-            SunOrNightMode.IsOn = !Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme;
-            SkipStartMainPage.IsOn = Main.MainCurrent.mainViewModel.oneSettings.SkipStartMainPage;
-            SetLockScreen.IsOn = Main.MainCurrent.mainViewModel.oneSettings.IsSetLockScreen;
+            settings = Main.MainCurrent.mainViewModel.oneSettings;
+            OneMainPageStyle.SelectedIndex = settings.OneMainPageStyle;
+            DoubleClickExit.IsOn = settings.IsDoubleClickExit;
+            SunOrNightMode.IsOn = !settings.RequireLightTheme;
+            SkipStartMainPage.IsOn = settings.SkipStartMainPage;
+            SetLockScreen.IsOn = settings.IsSetLockScreen;
+            SearchCache.IsOn = settings.SearchCacheMode;
         }
 
         void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
@@ -77,7 +80,7 @@ namespace Demo
             if (temp.IsOn)
             {
                 Main.MainCurrent.mainViewModel.oneSettings.IsSetLockScreen = true;
-              //  await SetLockScreenMethod();
+                //  await SetLockScreenMethod();
                 await TaskConfiguration.RegisterBackgroundTask(typeof(BackGround.SetLockScreenTask), "SetLockScreenTask", new TimeTrigger(60 * 6, false), null);
             }
             else {
@@ -106,74 +109,41 @@ namespace Demo
                 var temp = await file.CopyAsync(ApplicationData.Current.LocalFolder);
                 bool b = await settings.TrySetLockScreenImageAsync(temp);
             }
-
-
-
-            //private void Button_Click(object sender, RoutedEventArgs e)
-            //{
-            //    string tileXmlString = "<tile>"
-            //                         + "<visual version='2'>"
-            //                         + "<binding template='TileWide310x150SmallImageAndText03' fallback='TileWideSmallImageAndText03'>"
-            //                         + "<text id='1' hint-wrap='true'>^^ ^_^This tile notification has an image, but it won't be displayed on the lock screen</text>"
-            //                         + "</binding>"
-            //                         + "</visual>"
-            //                         + "</tile>";
-            //    XmlDocument doc = new XmlDocument();
-            //    //   string xml = string.Format(TileTempleXml);
-            //    doc.LoadXml(tileXmlString, new XmlLoadSettings
-            //    {
-            //        ProhibitDtd = false,
-            //        ValidateOnParse = false,
-            //        ElementContentWhiteSpace = false,
-            //        ResolveExternals = false
-            //    });
-
-            //    TileNotification notificate = new TileNotification(doc);
-            //    TileUpdateManager.CreateTileUpdaterForApplication().Update(notificate);
-            //}
         }
 
-        public class SettingsViewModel
+        private void SearchCache_Toggled(object sender, RoutedEventArgs e)
         {
-            ThemeColorModel _settingsThemeColorModel;
-
-            public ThemeColorModel SettingsThemeColorModel
+            var temp = sender as ToggleSwitch;
+            if (temp.IsOn)
             {
-                get
-                {
-                    return _settingsThemeColorModel;
-                }
-
-                set
-                {
-                    _settingsThemeColorModel = value;
-                }
+                settings.SearchCacheMode = true;
+            }
+            else
+            {
+                settings.SearchCacheMode = false;
             }
         }
 
-        //private void Button_Click(object sender, RoutedEventArgs e)
-        //{
-        //    string tileXmlString = "<tile>"
-        //                                 + "<visual version='2'>"
-        //                                 + "<binding template='TileWide310x150SmallImageAndText03' >"
-        //                                 + "<text id='1'>qqqqqqqqqqqqqqqqqqqqq</text>"
-        //                                 + "</binding>"
-        //                                 + "</visual>"
-        //                                 + "</tile>";
-        //    XmlDocument doc = new XmlDocument();
-        //    //   string xml = string.Format(TileTempleXml);
-        //    doc.LoadXml(tileXmlString, new XmlLoadSettings
-        //    {
-        //        ProhibitDtd = false,
-        //        ValidateOnParse = false,
-        //        ElementContentWhiteSpace = false,
-        //        ResolveExternals = false
-        //    });
 
-        //    TileNotification notificate = new TileNotification(doc);
-        //    TileUpdateManager.CreateTileUpdaterForApplication().Update(notificate);
-        //}
     }
+    public class SettingsViewModel
+    {
+        ThemeColorModel _settingsThemeColorModel;
+
+        public ThemeColorModel SettingsThemeColorModel
+        {
+            get
+            {
+                return _settingsThemeColorModel;
+            }
+
+            set
+            {
+                _settingsThemeColorModel = value;
+            }
+        }
+    }
+
 
     public class OneSettings : INotifyPropertyChanged
     {
@@ -200,6 +170,17 @@ namespace Demo
                 return defaultValue;
             }
             return default(T);
+        }
+
+
+        public bool SearchCacheMode
+        {
+            get { return ReadSettings(nameof(SearchCacheMode), false); }
+            set
+            {
+                SaveSettings(nameof(SearchCacheMode), value);
+                OnPropertyChanged();
+            }
         }
 
         public bool IsDoubleClickExit

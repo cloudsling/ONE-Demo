@@ -16,22 +16,22 @@
                     <CircleEase EasingMode="EaseOut" />
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
-            <DoubleAnimation Storyboard.TargetName="BorderHorizomtal" Storyboard.TargetProperty="Width" To="0" Duration="0:0:1" BeginTime="0:0:0 " EnableDependentAnimation="True" >
+            <!--<DoubleAnimation Storyboard.TargetName="BorderHorizomtal" Storyboard.TargetProperty="Width" To="0" Duration="0:0:1" BeginTime="0:0:0 " EnableDependentAnimation="True" >
                 <DoubleAnimation.EasingFunction>
                     <CircleEase EasingMode="EaseOut" />
                 </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
+            </DoubleAnimation>-->
         </Storyboard>
     </Page.Resources>
     <Grid Padding="0" Background="{Binding ArticalThemeColorModel.MainBodyBackgroundColor}">
         <ScrollViewer Padding="0">
             <Grid>
-                <Grid.ColumnDefinitions>
+                <!--<Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Border x:Name="BorderHorizomtal" Width="20" />
-                <Grid Grid.Column="1" Background="{Binding ArticalThemeColorModel.MainBodyBackgroundColor}">
+                <Border x:Name="BorderHorizomtal" Width="20" />-->
+                <Grid Background="{Binding ArticalThemeColorModel.MainBodyBackgroundColor}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -39,7 +39,6 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Border Grid.Row="0" x:Name="border" Height="50">
-
                     </Border>
                     <Grid Grid.Row="1">
                         <!-- HERE!!!!!!!!!!!!!!!!!!!!!!!!!! -->
@@ -70,7 +69,6 @@
                         </Border>
                     </Grid>
                     <StackPanel Grid.Row="2" Height="Auto" >
-                        <Border  Height="{Binding ElementName=border,Path=Height}" />
                         <Border>
                             <TextBlock FontFamily="Consolas" FontSize="21" Text="{Binding DayArticlesObject.Header}" Foreground="#36C3F1" Margin="4 4 0 0"/>
                         </Border>

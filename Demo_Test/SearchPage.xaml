@@ -11,6 +11,8 @@
     d:DataContext="{d:DesignInstance Type=dvm:SearchPageViewModel,IsDesignTimeCreatable=True}">
 
     <Page.Resources>
+        <SolidColorBrush x:Key="FontColor" 
+                         Color="{Binding ThemeColor.FontColor.Color}"/>
         <Storyboard x:Name="searchStartAnimation">
             <DoubleAnimation Storyboard.TargetName="border"
                              Storyboard.TargetProperty="Height"
@@ -19,76 +21,111 @@
                              EnableDependentAnimation="True"/>
         </Storyboard>
     </Page.Resources>
-
-    <StackPanel Padding="2" Background="SkyBlue">
-        <Border x:Name="border" Height="100">
-            <Image VerticalAlignment="Top"
-                   Margin="0 8"
-                   Source="ms-appx:///Assets/Res/Search_image1.png"/>
-        </Border>
-        <Grid Padding="1.2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1.5*"/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="0"
+    <Grid>
+        <StackPanel>
+            <Grid Padding="1.2"
+                  Margin="0 3" Height="40"
+                  VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="def" Grid.Column="0"
                     Template="{StaticResource BlankButton}"
                     HorizontalAlignment="Center"
                     FontFamily="Consolas"
-                    Foreground="#36C3F1" Content="插图"
-                    Command="{Binding}"/>
-            <Button Grid.Column="1"
+                    Foreground="#FF1212" Content="插图"
+                    Command="{Binding SearchCommand}"
+                    CommandParameter="1" Tag="0"
+                    Click="Button_Click"/>
+                <Button Grid.Column="1"
                     Template="{StaticResource BlankButton}"
                     HorizontalAlignment="Center"
                     FontFamily="Consolas"
-                    Foreground="#36C3F1" Content="阅读"/>
-            <Button Grid.Column="2"
+                    Foreground="#36C3F1" Content="阅读"
+                    Command="{Binding SearchCommand}"
+                    CommandParameter="2" Tag="1"
+                    Click="Button_Click"/>
+                <Button Grid.Column="2"
                     Template="{StaticResource BlankButton}"
                     HorizontalAlignment="Center"
                     FontFamily="Consolas"
-                    Foreground="#36C3F1" Content="音乐"/>
-            <Button Grid.Column="3"
+                    Foreground="#36C3F1" Content="音乐"
+                    Command="{Binding SearchCommand}"
+                    CommandParameter="3" Tag="2"
+                    Click="Button_Click"/>
+                <Button Grid.Column="3"
                     Template="{StaticResource BlankButton}"
                     HorizontalAlignment="Center"
                     FontFamily="Consolas"
-                    Foreground="#36C3F1" Content="影视"/>
-            <Button Grid.Column="4"
+                    Foreground="#36C3F1" Content="影视"
+                    Command="{Binding SearchCommand}"
+                    CommandParameter="4" Tag="3"
+                    Click="Button_Click"/>
+                <Button Grid.Column="4"
                     Template="{StaticResource BlankButton}"
                     HorizontalAlignment="Center"
                     FontFamily="Consolas"
-                    Foreground="#36C3F1" Content="作者/音乐人"/>
-        </Grid>
-
-        <ListView ItemsSource="{Binding Path=DayObject}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Height="80" Width="80">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Border Grid.Column="0"
-                                Padding=".8">
-                            <Image Source="{Binding DayImagePath}"/>
-                        </Border>
-                        <Grid Grid.Column="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Margin=" 5 1"
-                                       VerticalAlignment="Center"
-                                       Text="{Binding Path=ByWho}"/>
-                            <TextBlock Grid.Row="1" Margin=" 5 1"
-                                       VerticalAlignment="Center"
-                                       Text="{Binding Path=MainString}"/>
-                        </Grid>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </StackPanel>
+                    Foreground="#36C3F1" Content="作者/音乐人"
+                    Command="{Binding SearchCommand}"
+                    CommandParameter="5" Tag="4"
+                    Click="Button_Click"/>
+                <ProgressBar Grid.Column="0" Grid.ColumnSpan="5"
+                             VerticalAlignment="Bottom"
+                             IsIndeterminate="{Binding IsActive}" 
+                             Visibility="{Binding Visable}"/>
+            </Grid>
+            <Border x:Name="border" Height="150">
+                <Image VerticalAlignment="Top"
+                       Margin="0 8"
+                       Source="ms-appx:///Assets/Res/Search_image1.png"/>
+            </Border>
+            <Grid>
+                <ListView Margin="0" Padding="0"
+                          ItemsSource="{Binding Path=DayObject}"
+                          IsItemClickEnabled="True" 
+                          ItemClick="ListView_ItemClick">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="0 2">
+                                <Grid Height="68">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Margin="0 0 2 0" Grid.Column="0">
+                                        <Image Source="{Binding DayImagePath}"/>
+                                    </Border>
+                                    <Grid Grid.Column="1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Margin=" 5 2"
+                                           VerticalAlignment="Center"
+                                           Text="{Binding ByWho}"
+                                           FontSize="14"
+                                           FontFamily="Consolas"
+                                           FontWeight="Bold"
+                                            Foreground="{ThemeResource FontColor}"/>
+                                        <TextBlock Grid.Row="1" Margin=" 5 1"
+                                           VerticalAlignment="Center"
+                                           Text="{Binding MainString}"
+                                           FontSize="10"
+                                            Foreground="{ThemeResource FontColor}"/>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </StackPanel>
+        <ProgressRing Height="50" Width="50"
+                      VerticalAlignment="Center"
+                      IsActive="{Binding IsActive}"/>
+    </Grid>
 </Page>

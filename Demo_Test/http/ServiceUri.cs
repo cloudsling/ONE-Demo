@@ -61,5 +61,10 @@
         //http://139.129.116.86:8000/api/search/reading/Q?
 
 
+        public static string onesearchmain = "http://v3.wufazhuce.com:8000/api/search/hp/{0}?";
+        public static string onesearchauthor = "http://v3.wufazhuce.com:8000/api/search/author/{0}?";
+        public static string onesearchmovie = "http://v3.wufazhuce.com:8000/api/search/movie/{0}?";
+        public static string onesearchmusic = "http://v3.wufazhuce.com:8000/api/search/music/{0}?";
+        public static string onesearcharticle = "http://v3.wufazhuce.com:8000/api/search/reading/{0}?";
     }
 }
