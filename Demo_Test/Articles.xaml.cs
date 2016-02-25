@@ -1,10 +1,15 @@
-﻿using JYAnalyticsUniversal;
+﻿using System;
+using Demo.http;
+using Demo.Models;
+using JYAnalyticsUniversal;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Windows.Web.Http;
+using System.Threading.Tasks;
 
 namespace Demo
 {
@@ -16,19 +21,42 @@ namespace Demo
             InitializeComponent();
             Main.OtherPageDoWhenThemeChanged = () => ThemeColorModel.InitialByOtherObject(ArticlesDataBinding.ArticalThemeColorModel, ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme));
         }
-        public ArticlesObject DayArticlesObject { get; set; }
+        // public ArticlesObject DayArticlesObject { get; set; }
 
         public AritcalBinding ArticlesDataBinding { get; set; }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             // Rect R = Window.Current.CoreWindow.Bounds;
             //ArticlesDataBinding.ScrollViewerHeight = Main.WindowHeight;
             ArticlesDataBinding.ArticalThemeColorModel = ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme);
             aaa.Text = "“ ";
             bbb.Text = " ”";
-            InitializationSpeciallyString(600);
             ForBorder.Begin();
+            if (e.Parameter != null)
+            {
+                var temp = e.Parameter as ReadingModel;
+                if (temp != null)
+                {
+                    using (var client = HttpHelper.CreateHttpClientWithUserAgent())
+                    {
+                        var response = await client.GetStringAsync(new Uri("http://wufazhuce.com/article/" + temp.ID.ToString()));
+                        InitializationArticlesObject(GetOne.GetArticlesObject(response));
+                        InitializationSpeciallyString(600, ArticlesDataBinding.DayArticlesObject.Content);
+                    }
+                }
+            }
+            else
+            {
+                //while (string.IsNullOrEmpty(ArticlesDataBinding.DayArticlesObject.HeadContent))
+                //{
+                //    Loading.IsIndeterminate = true;
+                //    await Task.Delay(10);
+                //}
+                Loading.IsIndeterminate = false;
+                InitializationArticlesObject(Main.dayReallyObject.Articles);
+                InitializationSpeciallyString(600, Main.dayReallyObject.Articles.Content);
+            }
             JYAnalytics.TrackPageStart("article_page");
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -37,11 +65,11 @@ namespace Demo
             JYAnalytics.TrackPageEnd("article_page");
         }
 
-        void InitializationSpeciallyString(int length)
+        void InitializationSpeciallyString(int length, string content)
         {
-            if (length == 0) ArticlesDataBinding.FullContentBinding.FullContent = Main.dayReallyObject.Articles.Content;
+            if (length == 0) ArticlesDataBinding.FullContentBinding.FullContent = content;
             else {
-                ArticlesDataBinding.FullContentBinding.FullContent = Main.dayReallyObject.Articles.Content.Substring(0, length) + "......";
+                ArticlesDataBinding.FullContentBinding.FullContent = content.Substring(0, length) + "......";
             }
         }
 
@@ -51,16 +79,16 @@ namespace Demo
         /// <param name="articlesObject"></param>
         void InitializationArticlesObject(ArticlesObject articlesObject)
         {
-            DayArticlesObject.HeadContent = articlesObject.HeadContent;
-            DayArticlesObject.Content = articlesObject.Content;
-            DayArticlesObject.Header = articlesObject.Header;
-            DayArticlesObject.Writer = articlesObject.Writer;
+            ArticlesDataBinding.DayArticlesObject.HeadContent = articlesObject.HeadContent;
+            ArticlesDataBinding.DayArticlesObject.Header = articlesObject.Header;
+            ArticlesDataBinding.DayArticlesObject.Writer = articlesObject.Writer;
+            ArticlesDataBinding.DayArticlesObject.Content = articlesObject.Content;
         }
 
         void LookMore_Click(object sender, RoutedEventArgs e)
         {
             LookMore.Visibility = Visibility.Collapsed;
-            InitializationSpeciallyString(0);
+            InitializationSpeciallyString(0, ArticlesDataBinding.DayArticlesObject.Content);
         }
     }
 
@@ -72,7 +100,6 @@ namespace Demo
             {
                 DayArticlesObject = new ArticlesObject();
                 FullContentBinding = new SpeciallyString();
-                InitializationArticlesObject(Main.dayReallyObject.Articles);
             }
             catch (System.Exception e)
             {
@@ -83,7 +110,7 @@ namespace Demo
 
         public ArticlesObject DayArticlesObject { get; set; }
 
-       // public ThemeColorModel articalThemeColorModel { get; set; }
+        // public ThemeColorModel articalThemeColorModel { get; set; }
 
         public ThemeColorModel ArticalThemeColorModel
         {
@@ -100,13 +127,13 @@ namespace Demo
 
         ThemeColorModel _articalThemeColorModel;
 
-        void InitializationArticlesObject(ArticlesObject articlesObject)
-        {
-            DayArticlesObject.HeadContent = articlesObject.HeadContent;
-            DayArticlesObject.Content = articlesObject.Content;
-            DayArticlesObject.Header = articlesObject.Header;
-            DayArticlesObject.Writer = articlesObject.Writer;
-        }
+        //void InitializationArticlesObject(ArticlesObject articlesObject)
+        //{
+        //    DayArticlesObject.HeadContent = articlesObject.HeadContent;
+        //    DayArticlesObject.Content = articlesObject.Content;
+        //    DayArticlesObject.Header = articlesObject.Header;
+        //    DayArticlesObject.Writer = articlesObject.Writer;
+        //}
     }
 
     public class SpeciallyString : INotifyPropertyChanged

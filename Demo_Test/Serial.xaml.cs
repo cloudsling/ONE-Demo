@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Demo.Models;
+using System;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Xaml;
@@ -20,7 +21,18 @@ namespace Demo
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Do();
+            if (e.Parameter != null)
+            {
+                var temp = e.Parameter as ReadingModel;
+                if (temp != null)
+                {
+                    serial.Navigate(new Uri("http://m.wufazhuce.com/serial/" + temp.ID.ToString()));
+                }
+            }
+            else
+            {
+                Do();
+            }
         }
 
         private void Do()

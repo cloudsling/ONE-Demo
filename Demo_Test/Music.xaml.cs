@@ -1,4 +1,5 @@
-﻿using JYAnalyticsUniversal;
+﻿using Demo.Models;
+using JYAnalyticsUniversal;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,15 +29,30 @@ namespace Demo
 
     public sealed partial class Music : Page
     {
+        static Music MusicCurrent;
+
         public Music()
         {
             this.InitializeComponent();
+            MusicCurrent = this;
             NavigationCacheMode = NavigationCacheMode.Required;
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            await Do();
+            if (e.Parameter == null)
+            {
+                if (MusicCurrent != null)
+                {
+                    await Do();
+                }
+            }
+            else
+            {
+                var music = e.Parameter as MusicModel;
+                musicWebView.Navigate(new Uri(musicUri + music.Id.ToString()));
+            }
+
             JYAnalytics.TrackPageStart("music_page");
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)

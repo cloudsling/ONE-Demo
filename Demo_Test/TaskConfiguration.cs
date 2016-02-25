@@ -8,7 +8,7 @@ using Windows.ApplicationModel.Background;
 
 namespace Demo
 {
-    public class TaskConfiguration
+    public static class TaskConfiguration
     {
         public static async Task<BackgroundTaskRegistration> RegisterBackgroundTask(Type taskEntryPoint, string taskName, IBackgroundTrigger trigger, IBackgroundCondition condition)
         {

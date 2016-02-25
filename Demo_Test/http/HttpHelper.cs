@@ -12,7 +12,8 @@ namespace Demo.http
         public static HttpClient DisguiseUserAgent(out HttpClient client)
         {
             client = new HttpClient();
-            client.DefaultRequestHeaders.Add("UserAgent", "Mozilla/5.0 (Linux; Android 4.1.1; Nexus 7 Build/JRO03D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166  Safari/535.19");
+            //client.DefaultRequestHeaders.Add("UserAgent", "Mozilla/5.0 (Linux; Android 4.1.1; Nexus 7 Build/JRO03D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166  Safari/535.19");
+            // client.DefaultRequestHeaders.Add("UserAgent", "android-async-http/2.0 (http://loopj.com/android-async-http)");
 
             return client;
         }
@@ -23,8 +24,10 @@ namespace Demo.http
         /// <returns></returns>
         public static HttpClient CreateHttpClientWithUserAgent()
         {
-            HttpClient client;
-            return DisguiseUserAgent(out client);
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("UserAgent", "Mozilla/5.0 (Linux; Android 4.1.1; Nexus 7 Build/JRO03D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166  Safari/535.19");
+            //client.DefaultRequestHeaders.Add("ContentType", "application/x-www-form-urlencoded");
+            return client;
         }
     }
 }

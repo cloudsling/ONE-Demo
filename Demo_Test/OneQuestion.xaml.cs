@@ -1,4 +1,7 @@
-﻿using JYAnalyticsUniversal;
+﻿using Demo.http;
+using Demo.Models;
+using JYAnalyticsUniversal;
+using System;
 using System.Text;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -16,10 +19,25 @@ namespace Demo
 
         public OneQuestionDataBinding OneQuestionObjectBinding { get; set; }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            base.OnNavigatedTo(e);
-            OneQuestionObjectBinding.OneQuestionThemeColorModel = ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme);
+            OneQuestionObjectBinding.OneQuestionThemeColorModel = Main.MainCurrent.mainViewModel.themeColorModelSettings;
+            if (e.Parameter != null)
+            {
+                var temp = e.Parameter as ReadingModel;
+                if (temp != null)
+                {
+                    using (var client = HttpHelper.CreateHttpClientWithUserAgent())
+                    {
+                        var response = await client.GetStringAsync(new Uri("http://wufazhuce.com/question/" + temp.ID.ToString()));
+                        InitializeOneQuestionObjectBinding(GetOne.GetOneQuestionObject(response));
+                    }
+                }
+            }
+            else
+            {
+                InitializeOneQuestionObjectBinding(Main.dayReallyObject.OneQuestion);
+            }
             borderAnimeStoryBoard.Begin();
             JYAnalytics.TrackPageStart("question_page");
         }
@@ -28,6 +46,16 @@ namespace Demo
             base.OnNavigatedFrom(e);
             JYAnalytics.TrackPageEnd("question_page");
         }
+        void InitializeOneQuestionObjectBinding(OneQuestionObject oneQuestionObject)
+        {
+            OneQuestionObjectBinding.OneQuestionObject.AskerName = oneQuestionObject.AskerName;
+            OneQuestionObjectBinding.OneQuestionObject.AskContent = oneQuestionObject.AskContent;
+            OneQuestionObjectBinding.OneQuestionObject.AnswerContent = oneQuestionObject.AnswerContent;
+            StringBuilder sb = new StringBuilder(oneQuestionObject.AnswerName);
+            for (int i = oneQuestionObject.AnswerName.Length - 1; i > 0; i--)
+                sb.Insert(i, "\r\n");
+            OneQuestionObjectBinding.OneQuestionObject.AnswerName = sb.ToString().Trim();
+        }
     }
 
     public class OneQuestionDataBinding
@@ -35,23 +63,13 @@ namespace Demo
         public OneQuestionDataBinding()
         {
             OneQuestionObject = new OneQuestionObject();
-            InitializeOneQuestionObjectBinding(Main.dayReallyObject.OneQuestion);
         }
 
         public OneQuestionObject OneQuestionObject { get; set; }
 
         public ThemeColorModel OneQuestionThemeColorModel { get; set; }
 
-        void InitializeOneQuestionObjectBinding(OneQuestionObject oneQuestionObject)
-        {
-            OneQuestionObject.AskerName = oneQuestionObject.AskerName;
-            OneQuestionObject.AskContent = oneQuestionObject.AskContent;
-            OneQuestionObject.AnswerContent = oneQuestionObject.AnswerContent;
-            StringBuilder sb = new StringBuilder(oneQuestionObject.AnswerName);
-            for (int i = oneQuestionObject.AnswerName.Length - 1; i > 0; i--)
-                sb.Insert(i, "\r\n");
-            OneQuestionObject.AnswerName = sb.ToString().Trim();
-        }
+
     }
 
 }

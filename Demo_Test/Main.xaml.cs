@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Web.Http;
 using static Demo.LastUpdate;
+using Demo;
 
 namespace Demo
 {
@@ -37,72 +38,72 @@ namespace Demo
 
         void HamBtn_Click(object sender, RoutedEventArgs e) => SwitchSplitter();
 
-        /// <summary>
-        /// 算是导航了
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void HamListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ListView oneListView = sender as ListView;
-            switch (oneListView.Name)
-            {
-                case "HamListBox":
-                    {
-                        MyListViewItems m = oneListView.SelectedItem as MyListViewItems;
-                        if (m != null)
-                        {
-                            HEADER111.Text = "ONE- " + m.MyItemName.Trim();
-                            if (isHide.Visibility == Visibility.Collapsed) isHide.Visibility = Visibility.Visible;
-                            if (AppBar.Visibility == Visibility.Collapsed) AppBar.Visibility = Visibility.Visible;
-                            OneFrame.Navigate(m.ClassType);
-                            if (OneFrame.CurrentSourcePageType == typeof(Articles) || OneFrame.CurrentSourcePageType == typeof(OneQuestion) || OneFrame.CurrentSourcePageType == typeof(Serial))
-                                CreateFileButton.Visibility = Visibility.Collapsed;
-                            else {
-                                CreateFileButton.Visibility = Visibility.Visible;
-                            }
-                            NotifyUserMethod("ONE-" + m.MyItemName, 180);
-                            if (oneListView.SelectedItem == null) return;
-                            oneListView.SelectedItem = null;
-                            Splitter.IsPaneOpen = false;
-                        }
-                    }
-                    break;
-                case "Settings":
-                    {
-                        if (oneListView.SelectedItem == null) return;
-                        oneListView.SelectedItem = null;
-                        SwitchSplitter();
-                        AppBar.Visibility = Visibility.Collapsed;
-                        HEADER111.Text = "设置";
-                        if (isHide.Visibility == Visibility.Visible) isHide.Visibility = Visibility.Collapsed;
-                        OneFrame.Navigate(typeof(Settings));
-                    }
-                    break;
-                case "Others":
-                    {
-                        if (oneListView.SelectedItem == null) return;
-                        SwitchSplitter();
-                        int id = Others.SelectedIndex;
-                        switch (id)
-                        {
-                            case 0:
-                                Love(); break;
-                            case 1:
-                                {
-                                    //balabala.Visibility = Visibility.Collapsed;
-                                    HEADER111.Text = "关于";
-                                    AppBar.Visibility = Visibility.Collapsed;
-                                    if (isHide.Visibility == Visibility.Visible) { isHide.Visibility = Visibility.Collapsed; }
-                                    OneFrame.Navigate(typeof(About));
-                                }
-                                break;
-                        }
-                        oneListView.SelectedItem = null;
-                    }
-                    break;
-            }
-        }
+        ///// <summary>
+        ///// 作废
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //void HamListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    ListView oneListView = sender as ListView;
+        //    switch (oneListView.Name)
+        //    {
+        //        case "HamListBox":
+        //            {
+        //                MyListViewItems m = oneListView.SelectedItem as MyListViewItems;
+        //                if (m != null)
+        //                {
+        //                    HEADER111.Text = "ONE- " + m.MyItemName.Trim();
+        //                    if (isHide.Visibility == Visibility.Collapsed) isHide.Visibility = Visibility.Visible;
+        //                    if (AppBar.Visibility == Visibility.Collapsed) AppBar.Visibility = Visibility.Visible;
+        //                    OneFrame.Navigate(m.ClassType);
+        //                    if (OneFrame.CurrentSourcePageType == typeof(Articles) || OneFrame.CurrentSourcePageType == typeof(OneQuestion) || OneFrame.CurrentSourcePageType == typeof(Serial))
+        //                        CreateFileButton.Visibility = Visibility.Collapsed;
+        //                    else {
+        //                        CreateFileButton.Visibility = Visibility.Visible;
+        //                    }
+        //                    NotifyUserMethod("ONE-" + m.MyItemName, 180);
+        //                    if (oneListView.SelectedItem == null) return;
+        //                    oneListView.SelectedItem = null;
+        //                    Splitter.IsPaneOpen = false;
+        //                }
+        //            }
+        //            break;
+        //        case "Settings":
+        //            {
+        //                if (oneListView.SelectedItem == null) return;
+        //                oneListView.SelectedItem = null;
+        //                SwitchSplitter();
+        //                AppBar.Visibility = Visibility.Collapsed;
+        //                HEADER111.Text = "设置";
+        //                if (isHide.Visibility == Visibility.Visible) isHide.Visibility = Visibility.Collapsed;
+        //                OneFrame.Navigate(typeof(Settings));
+        //            }
+        //            break;
+        //        case "Others":
+        //            {
+        //                if (oneListView.SelectedItem == null) return;
+        //                SwitchSplitter();
+        //                int id = Others.SelectedIndex;
+        //                switch (id)
+        //                {
+        //                    case 0:
+        //                        Love(); break;
+        //                    case 1:
+        //                        {
+        //                            //balabala.Visibility = Visibility.Collapsed;
+        //                            HEADER111.Text = "关于";
+        //                            AppBar.Visibility = Visibility.Collapsed;
+        //                            if (isHide.Visibility == Visibility.Visible) { isHide.Visibility = Visibility.Collapsed; }
+        //                            OneFrame.Navigate(typeof(About));
+        //                        }
+        //                        break;
+        //                }
+        //                oneListView.SelectedItem = null;
+        //            }
+        //            break;
+        //    }
+        //}
 
         async void Button_Click_1(object sender, RoutedEventArgs e)
         {
@@ -176,7 +177,87 @@ namespace Demo
 
         async void txt_Search_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
+            //txt_Search.Focus(FocusState.Unfocused);
             await SearchPage.searchPageCurrent.SearchStart(sender.Text);
+        }
+
+        void OneFrame_Navigated(object sender, NavigationEventArgs e)
+        {
+            Splitter.IsPaneOpen = false;
+            isHide.Visibility = Visibility.Visible;
+            HamListBox.SelectedItem = null;
+            switch (OneFrame.CurrentSourcePageType.Name)
+            {
+                case nameof(OneMain):
+                    CreateFileButton.Visibility = Visibility.Visible;
+                    HEADER111.Text = "ONE- 首页";
+                    break;
+                case nameof(Articles):
+                    CreateFileButton.Visibility = Visibility.Collapsed; //isHide.Visibility = Visibility.Visible;
+                    HEADER111.Text = "ONE- 文章";
+                    break;
+                case nameof(OneQuestion):
+                    CreateFileButton.Visibility = Visibility.Collapsed; //isHide.Visibility = Visibility.Visible;
+                    HEADER111.Text = "ONE- 问题";
+                    break;
+                case nameof(Serial):
+                    CreateFileButton.Visibility = Visibility.Collapsed;
+                    HEADER111.Text = "ONE- 连载";
+                    AppBar.Visibility = Visibility.Collapsed; //isHide.Visibility = Visibility.Visible;
+                    break;
+                case nameof(Music):
+                    CreateFileButton.Visibility = Visibility.Collapsed;
+                    HEADER111.Text = "ONE- 音乐";
+                    AppBar.Visibility = Visibility.Collapsed;// isHide.Visibility = Visibility.Visible;
+                    break;
+                case nameof(Movie):
+                    CreateFileButton.Visibility = Visibility.Collapsed;
+                    HEADER111.Text = "ONE- 电影";
+                    AppBar.Visibility = Visibility.Collapsed;// isHide.Visibility = Visibility.Visible;
+                    break;
+                case nameof(SearchPage):
+                    CreateFileButton.Visibility = Visibility.Collapsed;
+                    HEADER111.Text = "ONE- 搜索";
+                    AppBar.Visibility = Visibility.Collapsed; isHide.Visibility = Visibility.Collapsed;
+                    break;
+            }
+        }
+
+        private void HamListBox_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            MyListViewItems m = e.ClickedItem as MyListViewItems;
+            if (m != null)
+            {
+                //HEADER111.Text = "ONE- " + m.MyItemName.Trim();
+                //if (isHide.Visibility == Visibility.Collapsed) isHide.Visibility = Visibility.Visible;
+                OneFrame.Navigate(m.ClassType);
+                NotifyUserMethod("ONE-" + m.MyItemName, 180);
+            }
+            HamListBox.SelectedItem = null;
+        }
+
+        private void Settings_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            SwitchSplitter();
+            AppBar.Visibility = Visibility.Collapsed;
+            // HEADER111.Text = "设置";
+            if (isHide.Visibility == Visibility.Visible) isHide.Visibility = Visibility.Collapsed;
+            OneFrame.Navigate(typeof(Settings)); Settings.SelectedItem = null;
+        }
+
+        private void Others_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            SwitchSplitter();
+            HEADER111.Text = "关于";
+            AppBar.Visibility = Visibility.Collapsed;
+            if (isHide.Visibility == Visibility.Visible) { isHide.Visibility = Visibility.Collapsed; }
+            OneFrame.Navigate(typeof(About));
+            Others.SelectedItem = null;
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            Love();
         }
     }
 

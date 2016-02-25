@@ -923,47 +923,27 @@ namespace Demo
         {
             TodayMainString = GetAccurateString("(comilla-cerrar[\\d\\D]+)cosas-compartir", TodayMainString);
         }
-        /// <summary>
-        /// 得到对象的ONE-THING对象
-        /// </summary>
-        /// <param name="ResultString"></param>
-        /// <param name="dayReallyObject"></param>
-        //  static void GetOneThingObject(string ResultString, ref DayReallyObject dayReallyObject)
-        // {
-        //  OneThingObject oneThingObject = new OneThingObject();
 
-        ////得到header
-        ////regex = new Regex("cosas-titulo..([\\d\\D]+?)</h2>");
-        ////coll = regex.Matches(ResultString);
-        //string temp = GetAccurateString("cosas-titulo..([\\d\\D]+?)</h2>", ResultString);
-        //regex = new Regex("<.+?>(.+?)<");
-        //MatchCollection coll = regex.Matches(temp);
-        //if (coll.Count > 0)
-        //{
-        //    oneThingObject.Header = coll[0].Groups[1].ToString().Trim();
-        //}
-        //else
-        //{
-        //    oneThingObject.Header = temp;
-        //}
-        ////得到content
-        ////regex = new Regex("cosas-contenido..([\\d\\D]+?)</div>");
-        ////coll = regex.Matches(ResultString);
-        //StringBuilder sb = new StringBuilder(GetAccurateString("cosas-contenido..([\\d\\D]+?)</div>", ResultString));
-        //oneThingObject.Content = sb.Replace("<br />", "").ToString();
-        ////得到图片路径
-        ////regex = new Regex("<img.+src=\"(.+jpg)\".+/>");
-        ////coll = regex.Matches(ResultString);
-        //oneThingObject.ImagePath = GetAccurateString("<img.+src=\"(.+jpg)\".+/>", ResultString);
-
-        //dayReallyObject.OneThing = oneThingObject;
-        // }
         /// <summary>
         /// 得到对象的ONE-QUESTION对象
         /// </summary>
         /// <param name="ResultString"></param>
         /// <param name="dayReallyObject"></param>
-        private static void GetOneQuestionObject(string ResultString, ref DayReallyObject dayReallyObject)
+        public static void GetOneQuestionObject(string ResultString, ref DayReallyObject dayReallyObject)
+        {
+            OneQuestionObject oneThingObject = new OneQuestionObject();
+            Regex reg = new Regex("<!--([\\d\\D]+?)-->");
+            var col = reg.Matches(ResultString);
+            ResultString = reg.Replace(ResultString, "");
+            oneThingObject.AskerName = GetAccurateString("h4>([\\d\\D]+?)</h4>", ResultString);
+            oneThingObject.AnswerName = GetAccurateString("h4>([\\d\\D]+?)</h4>", ResultString, 1);
+            oneThingObject.AskContent = GetAccurateString("cuestion-contenido..([\\d\\D]+?)</div>", ResultString);
+            StringBuilder sb = new StringBuilder(GetAccurateString("cuestion-contenido..([\\d\\D]+?)</div>", ResultString, 1));
+            sb = sb.Replace("\r\n", "").Replace("</p>", "\r\n\r\n").Replace("<br />", "\r\n").Replace("<br>", "\r\n").Replace("&nbsp;", "").Replace("&mdash;", "—").Replace("&hellip;", "…").Replace("&ldquo;", "“").Replace("&rdquo;", "”").Replace("&rsquo;", "'").Replace("<p>", "     ").Replace("<strong>", "   ").Replace("</strong>", Environment.NewLine);
+            oneThingObject.AnswerContent = sb.ToString();
+            dayReallyObject.OneQuestion = oneThingObject;
+        }
+        public static OneQuestionObject GetOneQuestionObject(string ResultString)
         {
             OneQuestionObject oneThingObject = new OneQuestionObject();
             Regex reg = new Regex("<!--([\\d\\D]+?)-->");
@@ -975,7 +955,7 @@ namespace Demo
             StringBuilder sb = new StringBuilder(GetAccurateString("cuestion-contenido..([\\d\\D]+?)</div>", ResultString, 1));
             sb = sb.Replace("\r\n", "").Replace("</p>", "\r\n\r\n").Replace("<br />", "\r\n").Replace("<br>", "\r\n").Replace("&nbsp;", "").Replace("&mdash;", "—").Replace("&hellip;", "…").Replace("&ldquo;", "“").Replace("&rdquo;", "”").Replace("&rsquo;", "'").Replace("<p>", "     ");
             oneThingObject.AnswerContent = sb.ToString();
-            dayReallyObject.OneQuestion = oneThingObject;
+            return oneThingObject;
         }
         public static string GetOneQestionUri()
         {
@@ -987,7 +967,7 @@ namespace Demo
         /// </summary>
         /// <param name="ResultString"></param>
         /// <param name="dayReallyObject"></param>
-        private static void GetArticlesObject(string ResultString, ref DayReallyObject dayReallyObject)
+        public static void GetArticlesObject(string ResultString, ref DayReallyObject dayReallyObject)
         {
             ArticlesObject articles = new ArticlesObject();
             articles.HeadContent = GetAccurateString("comilla-cerrar..([\\d\\D]+?)</div>", ResultString);
@@ -997,6 +977,17 @@ namespace Demo
             sb = sb.Replace("\r\n", "").Replace("&nbsp;", " ").Replace("&hellip;", "…").Replace("&mdash;", "—").Replace("&ldquo;", "“").Replace("&rdquo;", "”").Replace("&rsquo;", "'").Replace("</p>", "\r\n\r\n").Replace("<strong>", "     ").Replace("<p>", "     ").Replace("<br />", "\r\n").Replace("<br>", "\r\n").Replace("<em>", "").Replace("</em>", "").Replace("</div>", "");
             articles.Content = sb.ToString();
             dayReallyObject.Articles = articles;
+        }
+        public static ArticlesObject GetArticlesObject(string ResultString)
+        {
+            ArticlesObject articles = new ArticlesObject();
+            articles.HeadContent = GetAccurateString("comilla-cerrar..([\\d\\D]+?)</div>", ResultString);
+            articles.Header = GetAccurateString("articulo-titulo..([\\d\\D]+?)</h2>", ResultString);
+            articles.Writer = GetAccurateString("articulo-autor..([\\d\\D]+?)</p>", ResultString);
+            StringBuilder sb = new StringBuilder(GetAccurateString("articulo-contenido..([\\d\\D]+?)<p class=\"articulo-editor", ResultString));
+            sb = sb.Replace("\r\n", "").Replace("&nbsp;", " ").Replace("&hellip;", "…").Replace("&mdash;", "—").Replace("&ldquo;", "“").Replace("&rdquo;", "”").Replace("&rsquo;", "'").Replace("</p>", "\r\n\r\n").Replace("<strong>", "     ").Replace("<p>", "     ").Replace("<br />", "\r\n").Replace("<br>", "\r\n").Replace("<em>", "").Replace("</em>", "").Replace("</div>", "");
+            articles.Content = sb.ToString();
+            return articles;
         }
 
         private static string GetAccurateString(string regexString, string resultString, int index = 0)

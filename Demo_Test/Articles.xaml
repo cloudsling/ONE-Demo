@@ -24,6 +24,7 @@
         </Storyboard>
     </Page.Resources>
     <Grid Padding="0" Background="{Binding ArticalThemeColorModel.MainBodyBackgroundColor}">
+        <ProgressBar x:Name="Loading" Width="50" Height="50" VerticalAlignment="Center" IsIndeterminate="False"/>
         <ScrollViewer Padding="0">
             <Grid>
                 <!--<Grid.ColumnDefinitions>

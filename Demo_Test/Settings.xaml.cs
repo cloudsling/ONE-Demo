@@ -175,7 +175,7 @@ namespace Demo
 
         public bool SearchCacheMode
         {
-            get { return ReadSettings(nameof(SearchCacheMode), false); }
+            get { return ReadSettings(nameof(SearchCacheMode), true); }
             set
             {
                 SaveSettings(nameof(SearchCacheMode), value);

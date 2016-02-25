@@ -44,91 +44,114 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <SplitView  Grid.Row="0" Grid.RowSpan="2" x:Name="Splitter" IsPaneOpen="False" DisplayMode="Overlay" OpenPaneLength="190">
-                    <SplitView.Pane>
+                <SplitView.Pane>
                     <Grid Background="{Binding themeColorModelSettings.SplitViewPanelBackGroundColor}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <StackPanel Grid.Row="0" Orientation="Horizontal">
-                                <Border>
-                                    <ToggleButton x:Name="HamBtn" HorizontalAlignment="Left"  Style="{StaticResource SymbolButton}" Click="HamBtn_Click" VerticalAlignment="Center" Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
-                                        <ToggleButton.Content>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Horizontal">
+                            <Border>
+                                <ToggleButton x:Name="HamBtn" HorizontalAlignment="Left"  Style="{StaticResource SymbolButton}" Click="HamBtn_Click" VerticalAlignment="Center" Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
+                                    <ToggleButton.Content>
                                         <FontIcon x:Name="Hamburger" Foreground="{Binding themeColorModelSettings.FontColor}" FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;" Margin="0,7"/>
-                                        </ToggleButton.Content>
-                                    </ToggleButton>
-                                </Border>
-                            </StackPanel>
-                            <StackPanel Grid.Row="1">
-                                <Border Padding="1">
-                                    <Rectangle HorizontalAlignment="Left" Opacity="1" Fill="Black" Width="60" Height="0.5" Margin="7 2 4 6"  />
-                                </Border>
-                                <Border>
-                                    <Button Padding="1.5" Margin="5 0 0 0" IsEnabled="False">
-                                        <Button.Template>
-                                            <ControlTemplate>
-                                                <Border Background="Gray" BorderBrush="LightBlue" BorderThickness="1.5" CornerRadius="5" Padding="6,3">
-                                                    <TextBlock FontFamily="Consolas" Foreground="SkyBlue" FontSize="12" FontWeight="Medium" Text="ONE-一个"/>
-                                                </Border>
-                                            </ControlTemplate>
-                                        </Button.Template>
-                                    </Button>
-                                </Border>
-                                <Border Padding="1">
-                                    <Rectangle HorizontalAlignment="Center" Opacity="1" Fill="Black" Width="164" Height="0.5" Margin="4 6 4 0"  />
-                                </Border>
-                            </StackPanel>
-                            <Border Grid.Row="2" Padding="0.5">
-                                <RelativePanel Margin="0 0 0 0" Grid.Row="0">
-                                <ListView Foreground="{Binding themeColorModelSettings.FontColor}" x:Name="HamListBox" SelectionChanged="HamListBox_SelectionChanged">
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate>
-                                                <Grid Padding="0">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="*"/>
-                                                        <RowDefinition Height="Auto"/>
-                                                    </Grid.RowDefinitions>
-                                                    <Grid Grid.Row="0">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="Auto" />
-                                                            <ColumnDefinition />
-                                                        </Grid.ColumnDefinitions>
+                                    </ToggleButton.Content>
+                                </ToggleButton>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1">
+                            <Border Padding="1">
+                                <Rectangle HorizontalAlignment="Left" Opacity="1" Fill="Black" Width="60" Height="0.5" Margin="7 2 4 6"  />
+                            </Border>
+                            <Border>
+                                <Button Padding="1.5" Margin="5 0 0 0" IsEnabled="False">
+                                    <Button.Template>
+                                        <ControlTemplate>
+                                            <Border Background="Gray" BorderBrush="LightBlue" BorderThickness="1.5" CornerRadius="5" Padding="6,3">
+                                                <TextBlock FontFamily="Consolas" Foreground="SkyBlue" FontSize="12" FontWeight="Medium" Text="ONE-一个"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </Border>
+                            <Border Padding="1">
+                                <Rectangle HorizontalAlignment="Center" Opacity="1" Fill="Black" Width="164" Height="0.5" Margin="4 6 4 0"  />
+                            </Border>
+                        </StackPanel>
+                        <Border Grid.Row="2" Padding="0.5">
+                            <RelativePanel Margin="0 0 0 0" Grid.Row="0">
+                                <ListView Foreground="{Binding themeColorModelSettings.FontColor}" x:Name="HamListBox"
+                                          SelectionMode="None"
+                                          IsItemClickEnabled="True"
+                                          ItemClick="HamListBox_ItemClick">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Padding="0">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
                                                     <FontIcon Grid.Column="0" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets"  Foreground="{Binding BgColor}" Glyph="{Binding MyGlyph}"/>
                                                     <TextBlock Width="190"  Foreground="{Binding BgColor}" Grid.Column="1" Text="{Binding MyItemName}" VerticalAlignment="Center" Margin="15,0,0,0"/>
-                                                    </Grid>
-                                                    <Grid Grid.Row="1" Margin="0 5 0 0">
-                                                        <Border VerticalAlignment="Bottom">
-                                                            <Rectangle HorizontalAlignment="Left" Opacity="1" Fill="Black" Width="80" Height="0.5"   />
-                                                        </Border>
-                                                    </Grid>
                                                 </Grid>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
-                                    <StackPanel RelativePanel.AlignBottomWithPanel="True">
-                                        <ListView x:Name="Settings" SelectionChanged="HamListBox_SelectionChanged"  CanDrag="False" >
-                                            <StackPanel Orientation="Horizontal">
+                                                <Grid Grid.Row="1" Margin="0 5 0 0">
+                                                    <Border VerticalAlignment="Bottom">
+                                                        <Rectangle HorizontalAlignment="Left" Opacity="1" Fill="Black" Width="80" Height="0.5"   />
+                                                    </Border>
+                                                </Grid>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                                <StackPanel RelativePanel.AlignBottomWithPanel="True">
+                                    <ListView x:Name="Settings"
+                                              SelectionMode="None"
+                                              IsItemClickEnabled="True"
+                                              ItemClick="Settings_ItemClick"
+                                              CanDrag="False" >
+                                        <StackPanel Orientation="Horizontal">
                                             <FontIcon  Foreground="{Binding themeColorModelSettings.FontColor}" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Glyph="&#xE713;"/>
                                             <TextBlock  Foreground="{Binding themeColorModelSettings.FontColor}" Width="130" Grid.Column="1" Text="  设置" VerticalAlignment="Center" Margin="15,0,0,0"/>
-                                            </StackPanel>
-                                        </ListView>
-                                        <Rectangle HorizontalAlignment="Center" Opacity="1" Fill="Black" Width="164" Height="0.5" Margin="4 0 4 0"  />
-                                        <ListView x:Name="Others"  SelectionChanged="HamListBox_SelectionChanged" CanDrag="False">
-                                            <StackPanel Orientation="Horizontal">
-                                            <FontIcon  Foreground="{Binding themeColorModelSettings.FontColor}" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Glyph="&#xE19F;"/>
-                                            <TextBlock  Foreground="{Binding themeColorModelSettings.FontColor}" Width="130" Grid.Column="1" Text="  好评我^^" VerticalAlignment="Center" Margin="15,0,0,0"/>
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal">
+                                        </StackPanel>
+                                    </ListView>
+                                    <Rectangle HorizontalAlignment="Center" Opacity="1" Fill="Black" Width="164" Height="0.5" Margin="4 0 4 0"  />
+                                    <ListView SelectionMode="None"
+                                              IsItemClickEnabled="True"
+                                              ItemClick="Others_ItemClick"
+                                              CanDrag="False">
+                                        <Button Click="Button_Click_2">
+                                            <Button.Template>
+                                                <ControlTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <FontIcon  Foreground="{Binding themeColorModelSettings.FontColor}" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Glyph="&#xE19F;"/>
+                                                        <TextBlock Foreground="{Binding themeColorModelSettings.FontColor}" Width="130" Grid.Column="1" Text="  好评我^^" VerticalAlignment="Center" Margin="15,0,0,0"/>
+                                                    </StackPanel>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </ListView>
+                                    <ListView x:Name="Others"
+                                              SelectionMode="None"
+                                              IsItemClickEnabled="True"
+                                              ItemClick="Others_ItemClick"
+                                              CanDrag="False">
+
+                                        <StackPanel Orientation="Horizontal">
                                             <FontIcon  Foreground="{Binding themeColorModelSettings.FontColor}" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Glyph="&#xE8A1;"/>
                                             <TextBlock Width="130"  Foreground="{Binding themeColorModelSettings.FontColor}" Grid.Column="1" Text="  关于" VerticalAlignment="Center" Margin="15,0,0,0"/>
-                                            </StackPanel>
-                                        </ListView>
-                                    </StackPanel>
-                                </RelativePanel>
-                            </Border>
-                        </Grid>
-                    </SplitView.Pane>
+                                        </StackPanel>
+                                    </ListView>
+                                </StackPanel>
+                            </RelativePanel>
+                        </Border>
+                    </Grid>
+                </SplitView.Pane>
                 <SplitView.Content>
                     <Grid>
                         <Grid.RowDefinitions>
@@ -143,7 +166,8 @@
                         </Grid>
                         <ScrollViewer Grid.Row="1">
                             <!--      FRAME IS HERE!!!!!!!!!!!      -->
-                            <Frame MaxWidth="1080" x:Name="OneFrame" Margin="0 0 0 0" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True"/>
+                            <Frame MaxWidth="1080" x:Name="OneFrame" Margin="0 0 0 0" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True"
+                                   Navigated="OneFrame_Navigated"/>
                         </ScrollViewer>
                         <Grid x:Name="balabala" Grid.Row="0" Width="Auto" Background="{Binding themeColorModelSettings.TitleBarBackgroundColor}">
                             <Grid.ColumnDefinitions>
@@ -152,8 +176,8 @@
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal">
                                 <!--<Border Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" >-->
-                                <Border > 
-                                        <ToggleButton HorizontalAlignment="Left"  Style="{StaticResource SymbolButton}" Click="HamBtn_Click" VerticalAlignment="Center" Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
+                                <Border >
+                                    <ToggleButton HorizontalAlignment="Left"  Style="{StaticResource SymbolButton}" Click="HamBtn_Click" VerticalAlignment="Center" Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
                                         <ToggleButton.Content>
                                             <FontIcon FontFamily="Segoe MDL2 Assets" Foreground="#36C3F1" Glyph="&#xE700;" Margin="0,7"/>
                                         </ToggleButton.Content>
@@ -173,7 +197,7 @@
                                                 </AutoSuggestBox.QueryIcon>
                                             </AutoSuggestBox>
                                         </Viewbox>
-                                    </Border>                  
+                                    </Border>
                                 </Grid>
                                 <StackPanel x:Name="isHide" HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="1">
                                     <Border HorizontalAlignment="Right">

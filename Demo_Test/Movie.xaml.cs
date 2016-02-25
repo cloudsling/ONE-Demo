@@ -29,7 +29,6 @@ namespace Demo
         public static Movie movieCurrent;
         public MovieViewModel movieViewModel { get; set; }
         public static readonly string movieListUri = "http://v3.wufazhuce.com:8000/api/movie/list/0?";
-        static HttpClient client;
     }
     public sealed partial class Movie : Page
     {
@@ -69,8 +68,10 @@ namespace Demo
 
         private static async Task<ObservableCollection<MovieListModel>> GetList()
         {
-            using (client = HttpHelper.DisguiseUserAgent(out client))
+            using (var client = HttpHelper.CreateHttpClientWithUserAgent())
             {
+                //client.DefaultRequestHeaders.Add("UserAgent", "android-async-http/2.0 (http://loopj.com/android-async-http)");
+                //client.DefaultRequestHeaders.Add("ContentType", "application/x-www-form-urlencoded");
                 string response = await client.GetStringAsync(new Uri(movieListUri));
                 JsonObject json;
                 var movieList = new ObservableCollection<MovieListModel>();
@@ -80,17 +81,49 @@ namespace Demo
                     foreach (var item in array)
                     {
                         var obj = item.GetObject();
+                        //TryGetStringFromJsonObject(obj, "score");
                         movieList.Add(new MovieListModel
                         {
-                            Cover = obj.GetNamedString("cover"),
-                            Id = obj.GetNamedString("id"),
-                            Title = obj.GetNamedString("title"),
-                            Score = obj.GetNamedString("score")
+                            Cover = TryGetStringFromJsonObject(obj, "cover"),// obj.GetNamedString("cover") ?? "无",
+                            Id = TryGetStringFromJsonObject(obj, "id"),// obj.GetNamedString("id") ?? "无",
+                            Title = TryGetStringFromJsonObject(obj, "title") ?? "无",
+                            Score = TryGetStringFromJsonObject(obj, "score")
                         });
                     }
                 }
                 return movieList;
             }
+        }
+
+        static string TryGetStringFromJsonObject(JsonObject obj, string valueName)
+        {
+            JsonValue value = JsonValue.CreateNullValue();
+            try
+            {
+                value = obj.GetNamedValue(valueName);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            var type = value.ValueType;
+            switch (type)
+            {
+                case JsonValueType.Null:
+                    break;
+                case JsonValueType.Boolean:
+                    break;
+                case JsonValueType.Number:
+                    break;
+                case JsonValueType.String:
+                    return value.GetString();
+                case JsonValueType.Array:
+                    break;
+                case JsonValueType.Object:
+                    break;
+            }
+            return string.Empty;
         }
     }
 
