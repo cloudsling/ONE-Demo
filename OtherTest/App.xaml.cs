@@ -35,7 +35,7 @@ namespace OtherTest
             this.Suspending += OnSuspending;
         }
 
-        
+
 
 
 
@@ -43,7 +43,7 @@ namespace OtherTest
         async Task ReisterBackground()
         {
             var task = await TaskConfiguration.RegisterBackgroundTask(typeof(Demo.BackGround.LiveTileTask), "TestTaskName", new TimeTrigger(10000, false), null);
-           // await new MessageDialog("may complete").ShowAsync();
+            // await new MessageDialog("may complete").ShowAsync();
             task.Completed += Task_Completed;
         }
 
@@ -72,14 +72,22 @@ namespace OtherTest
             //await ReisterBackground();
             //Window.Current.Activate();
 
+            //var page = Window.Current.Content as Page;
+            //if (page == null)
+            //{
+            //    SharePage sharepage = new SharePage();
+            //    if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
+            //    {
+            //        //TODO: Load state from previously suspended application
+            //    }
+            //    Window.Current.Content = sharepage;
+            //}
+            //Window.Current.Activate();
+
             var rootFrame = Window.Current.Content as Frame;
-            // Do not repeat app initialization when the Window already has content,
-            // just ensure that the window is active
             if (rootFrame == null)
             {
-                // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
-                // rootFrame.ContentTransitions = new TransitionCollection() { new NavigationThemeTransition() };
                 if (rootFrame.ContentTransitions == null)
                     rootFrame.ContentTransitions = new TransitionCollection() { new NavigationThemeTransition() };
 
@@ -89,19 +97,12 @@ namespace OtherTest
                 {
                     //TODO: Load state from previously suspended application
                 }
-
-                // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
                 await ReisterBackground();
-
             }
-
             if (rootFrame.Content == null)
             {
-                // When the navigation stack isn't restored navigate to the first page,
-                // configuring the new page by passing required information as a navigation
-                // parameter
-                rootFrame.Navigate(typeof(LockScreenTest), args.Arguments);
+                rootFrame.Navigate(typeof(RequestLogIn), args.Arguments);
             }
             // Ensure the current window is active
             Window.Current.Activate();
@@ -113,6 +114,8 @@ namespace OtherTest
         /// <param name="sender">The Frame which failed navigation</param>
         /// <param name="e">Details about the navigation failure</param>
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+
+
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }

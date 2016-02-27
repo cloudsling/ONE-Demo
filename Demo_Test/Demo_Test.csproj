@@ -98,6 +98,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\About\about.png" />
+    <Content Include="QuestionTemp.html" />
     <None Include="ClassDiagram1.cd" />
     <Content Include="Assets\About\StartImage.png" />
     <Content Include="Assets\Res\home.png" />

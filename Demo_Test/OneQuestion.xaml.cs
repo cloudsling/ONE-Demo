@@ -3,6 +3,7 @@ using Demo.Models;
 using JYAnalyticsUniversal;
 using System;
 using System.Text;
+using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -19,6 +20,8 @@ namespace Demo
 
         public OneQuestionDataBinding OneQuestionObjectBinding { get; set; }
 
+        static string html;
+
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             OneQuestionObjectBinding.OneQuestionThemeColorModel = Main.MainCurrent.mainViewModel.themeColorModelSettings;
@@ -29,16 +32,23 @@ namespace Demo
                 {
                     using (var client = HttpHelper.CreateHttpClientWithUserAgent())
                     {
-                        var response = await client.GetStringAsync(new Uri("http://wufazhuce.com/question/" + temp.ID.ToString()));
-                        InitializeOneQuestionObjectBinding(GetOne.GetOneQuestionObject(response));
+                        var response = await client.GetStringAsync(new Uri("http://m.wufazhuce.com/question/" + temp.ID.ToString()));
+                        html = GetOne.GetOneQuestionObject(response);
                     }
                 }
             }
             else
             {
-                InitializeOneQuestionObjectBinding(Main.dayReallyObject.OneQuestion);
+                html = Main.dayReallyObject.OneQuestion.AskerName;
+                //InitializeOneQuestionObjectBinding(Main.dayReallyObject.OneQuestion);
             }
-            borderAnimeStoryBoard.Begin();
+            //borderAnimeStoryBoard.Begin();
+            StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///QuestionTemp.html"));
+            string template = await FileIO.ReadTextAsync(file);
+            StringBuilder sb = new StringBuilder(template);
+            var settings = Main.MainCurrent.mainViewModel.oneSettings;
+            sb.Replace("{replace}", html).Replace("{fontsizetitle}", settings.FontSizeTitle.ToString()).Replace("{fontsizecontent}", settings.FontSizeContent.ToString()).Replace("{lineheight}", settings.LineHeight.ToString());
+            wv.NavigateToString(sb.ToString());
             JYAnalytics.TrackPageStart("question_page");
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)

@@ -217,7 +217,7 @@ namespace Demo
                     break;
                 case nameof(SearchPage):
                     CreateFileButton.Visibility = Visibility.Collapsed;
-                    HEADER111.Text = "ONE- 搜索";
+                    HEADER111.Text = "搜索";
                     AppBar.Visibility = Visibility.Collapsed; isHide.Visibility = Visibility.Collapsed;
                     break;
             }

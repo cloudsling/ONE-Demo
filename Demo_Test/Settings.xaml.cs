@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Demo.Common;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -42,6 +43,9 @@ namespace Demo
             SkipStartMainPage.IsOn = settings.SkipStartMainPage;
             SetLockScreen.IsOn = settings.IsSetLockScreen;
             SearchCache.IsOn = settings.SearchCacheMode;
+            titleSize.Value = settings.FontSizeTitle;
+            fontSize.Value = settings.FontSizeContent;
+            lineHeight.Value = settings.LineHeight;
         }
 
         void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
@@ -124,10 +128,24 @@ namespace Demo
             }
         }
 
+        private void Slider_ValueChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
+        {
+            var slider = sender as Slider;
+            switch (slider.Name)
+            {
+                case "titleSize": settings.FontSizeTitle = slider.Value; break;
 
+                case "fontSize": settings.FontSizeContent = slider.Value; break;
+                case "lineHeight": settings.LineHeight = slider.Value; break;
+            }
+        }
     }
-    public class SettingsViewModel
+    public class SettingsViewModel : BindableBase
     {
+        public SettingsViewModel()
+        {
+            AppSettings = new OneSettings();
+        }
         ThemeColorModel _settingsThemeColorModel;
 
         public ThemeColorModel SettingsThemeColorModel
@@ -142,6 +160,38 @@ namespace Demo
                 _settingsThemeColorModel = value;
             }
         }
+
+        public OneSettings AppSettings { get; set; }
+
+        //double _titleSize;
+        //public double TitleSize
+        //{
+        //    get { return _titleSize; }
+        //    set
+        //    {
+        //        SetProperty(ref _titleSize, value);
+        //    }
+        //}
+
+        //double _contentSize;
+        //public double ContentSize
+        //{
+        //    get { return _contentSize; }
+        //    set
+        //    {
+        //        SetProperty(ref _contentSize, value);
+        //    }
+        //}
+
+        //double _lineHeight;
+        //public double LineHeight
+        //{
+        //    get { return _lineHeight; }
+        //    set
+        //    {
+        //        SetProperty(ref _lineHeight, value);
+        //    }
+        //}
     }
 
 
@@ -240,6 +290,35 @@ namespace Demo
             set
             {
                 SaveSettings(nameof(SkipStartMainPage), value);
+                OnPropertyChanged();
+            }
+        }
+
+        public double FontSizeTitle
+        {
+            get { return ReadSettings(nameof(FontSizeTitle), 36.0); }
+            set
+            {
+                SaveSettings(nameof(FontSizeTitle), value);
+                OnPropertyChanged();
+            }
+        }
+
+        public double FontSizeContent
+        {
+            get { return ReadSettings(nameof(FontSizeContent), 28.0); }
+            set
+            {
+                SaveSettings(nameof(FontSizeContent), value);
+                OnPropertyChanged();
+            }
+        }
+        public double LineHeight
+        {
+            get { return ReadSettings(nameof(LineHeight), 42.0); }
+            set
+            {
+                SaveSettings(nameof(LineHeight), value);
                 OnPropertyChanged();
             }
         }

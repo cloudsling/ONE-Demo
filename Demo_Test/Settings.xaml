@@ -69,7 +69,13 @@
                             </DataTemplate>
                         </ComboBox.HeaderTemplate>
                     </ComboBox>
-                    <!--<Button Content="Test" Click="Button_Click" />-->
+                    <Slider x:Name="titleSize"
+                            Header="问题栏目标题大小" 
+                            ValueChanged="Slider_ValueChanged" />
+                    <Slider x:Name="fontSize" Header="问题栏目文章字体大小"
+                            ValueChanged="Slider_ValueChanged" />
+                    <Slider x:Name="lineHeight" Header="问题栏目行高"
+                            ValueChanged="Slider_ValueChanged" />
                 </StackPanel>
             </PivotItem>
             <PivotItem Header="Ad">

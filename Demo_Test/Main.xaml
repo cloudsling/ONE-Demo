@@ -172,21 +172,25 @@
                         <Grid x:Name="balabala" Grid.Row="0" Width="Auto" Background="{Binding themeColorModelSettings.TitleBarBackgroundColor}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal">
                                 <!--<Border Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" >-->
-                                <Border >
+                                <Border>
                                     <ToggleButton HorizontalAlignment="Left"  Style="{StaticResource SymbolButton}" Click="HamBtn_Click" VerticalAlignment="Center" Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
                                         <ToggleButton.Content>
                                             <FontIcon FontFamily="Segoe MDL2 Assets" Foreground="#36C3F1" Glyph="&#xE700;" Margin="0,7"/>
                                         </ToggleButton.Content>
                                     </ToggleButton>
                                 </Border>
-                                <TextBlock x:Name="HEADER111" Foreground="#36C3F1" FontFamily="Consolas" VerticalAlignment="Center" Text="ONE- 首页" />
-                            </StackPanel>
 
-                            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="1">
+                            </StackPanel>
+                            <Grid Grid.Column="1">
+                                <TextBlock x:Name="HEADER111" Foreground="#36C3F1" FontFamily="Consolas" VerticalAlignment="Center" Text="ONE- 首页" HorizontalAlignment="Left"/>
+                            </Grid>
+                            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="2">
+
                                 <Grid x:Name="txtSearch" Visibility="Collapsed">
                                     <Border BorderBrush="Red"  VerticalAlignment="Center" HorizontalAlignment="Right">
                                         <Viewbox>

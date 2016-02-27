@@ -904,7 +904,7 @@ namespace Demo
         {
             JsonObject question = questionJson[0].GetObject();
             string temp = question.GetNamedString("question_id");
-            string response = GetOneString("http://wufazhuce.com/question/" + temp);
+            string response = GetOneString("http://m.wufazhuce.com/question/" + temp);
             GetOneQuestionObject(response, ref dayReallyObject);
         }
         static void GetSerial(JsonArray aserialJson)
@@ -932,30 +932,33 @@ namespace Demo
         public static void GetOneQuestionObject(string ResultString, ref DayReallyObject dayReallyObject)
         {
             OneQuestionObject oneThingObject = new OneQuestionObject();
-            Regex reg = new Regex("<!--([\\d\\D]+?)-->");
-            var col = reg.Matches(ResultString);
-            ResultString = reg.Replace(ResultString, "");
-            oneThingObject.AskerName = GetAccurateString("h4>([\\d\\D]+?)</h4>", ResultString);
-            oneThingObject.AnswerName = GetAccurateString("h4>([\\d\\D]+?)</h4>", ResultString, 1);
-            oneThingObject.AskContent = GetAccurateString("cuestion-contenido..([\\d\\D]+?)</div>", ResultString);
-            StringBuilder sb = new StringBuilder(GetAccurateString("cuestion-contenido..([\\d\\D]+?)</div>", ResultString, 1));
-            sb = sb.Replace("\r\n", "").Replace("</p>", "\r\n\r\n").Replace("<br />", "\r\n").Replace("<br>", "\r\n").Replace("&nbsp;", "").Replace("&mdash;", "—").Replace("&hellip;", "…").Replace("&ldquo;", "“").Replace("&rdquo;", "”").Replace("&rsquo;", "'").Replace("<p>", "     ").Replace("<strong>", "   ").Replace("</strong>", Environment.NewLine);
-            oneThingObject.AnswerContent = sb.ToString();
+            //Regex reg = new Regex("<!--([\\d\\D]+?)-->");
+            //var col = reg.Matches(ResultString);
+            //ResultString = reg.Replace(ResultString, "");
+            oneThingObject.AskerName = GetAccurateString("(<div class=\"text-detail[\\d\\D]+)<div class=\"download", ResultString);
+            //oneThingObject.AnswerName = GetAccurateString("h4>([\\d\\D]+?)</h4>", ResultString, 1);
+            //oneThingObject.AskContent = GetAccurateString("cuestion-contenido..([\\d\\D]+?)</div>", ResultString);
+            //StringBuilder sb = new StringBuilder(GetAccurateString("cuestion-contenido..([\\d\\D]+?)</div>", ResultString, 1));
+            ////sb = sb.Replace("\r\n", "").Replace("</p>", "\r\n\r\n").Replace("<br />", "\r\n").Replace("<br>", "\r\n").Replace("&nbsp;", "").Replace("&mdash;", "—").Replace("&hellip;", "…").Replace("&ldquo;", "“").Replace("&rdquo;", "”").Replace("&rsquo;", "'").Replace("<p>", "     ").Replace("<strong>", "   ").Replace("</strong>", Environment.NewLine);
+            //oneThingObject.AnswerContent = sb.ToString();
             dayReallyObject.OneQuestion = oneThingObject;
         }
-        public static OneQuestionObject GetOneQuestionObject(string ResultString)
+
+        public static string GetOneQuestionObject(string ResultString)
         {
-            OneQuestionObject oneThingObject = new OneQuestionObject();
-            Regex reg = new Regex("<!--([\\d\\D]+?)-->");
-            var col = reg.Matches(ResultString);
-            ResultString = reg.Replace(ResultString, "");
-            oneThingObject.AskerName = GetAccurateString("h4>([\\d\\D]+?)</h4>", ResultString);
-            oneThingObject.AnswerName = GetAccurateString("h4>([\\d\\D]+?)</h4>", ResultString, 1);
-            oneThingObject.AskContent = GetAccurateString("cuestion-contenido..([\\d\\D]+?)</div>", ResultString);
-            StringBuilder sb = new StringBuilder(GetAccurateString("cuestion-contenido..([\\d\\D]+?)</div>", ResultString, 1));
-            sb = sb.Replace("\r\n", "").Replace("</p>", "\r\n\r\n").Replace("<br />", "\r\n").Replace("<br>", "\r\n").Replace("&nbsp;", "").Replace("&mdash;", "—").Replace("&hellip;", "…").Replace("&ldquo;", "“").Replace("&rdquo;", "”").Replace("&rsquo;", "'").Replace("<p>", "     ");
-            oneThingObject.AnswerContent = sb.ToString();
-            return oneThingObject;
+            //OneQuestionObject oneThingObject = new OneQuestionObject();
+            //Regex reg = new Regex("<!--([\\d\\D]+?)-->");
+            //var col = reg.Matches(ResultString);
+            //ResultString = reg.Replace(ResultString, "");
+            //oneThingObject.AskerName = GetAccurateString("h4>([\\d\\D]+?)</h4>", ResultString);
+            //oneThingObject.AnswerName = GetAccurateString("h4>([\\d\\D]+?)</h4>", ResultString, 1);
+            //oneThingObject.AskContent = GetAccurateString("cuestion-contenido..([\\d\\D]+?)</div>", ResultString);
+            //StringBuilder sb = new StringBuilder(GetAccurateString("cuestion-contenido..([\\d\\D]+?)</div>", ResultString, 1));
+            ////sb = sb.Replace("\r\n", "").Replace("</p>", "\r\n\r\n").Replace("<br />", "\r\n").Replace("<br>", "\r\n").Replace("&nbsp;", "").Replace("&mdash;", "—").Replace("&hellip;", "…").Replace("&ldquo;", "“").Replace("&rdquo;", "”").Replace("&rsquo;", "'").Replace("<p>", "     ");
+            //oneThingObject.AnswerContent = sb.ToString();
+            return GetAccurateString("(<div class=\"text-detail[\\d\\D]+?)<div class=\"down", ResultString);
+
+             
         }
         public static string GetOneQestionUri()
         {

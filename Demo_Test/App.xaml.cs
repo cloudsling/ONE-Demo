@@ -45,15 +45,14 @@ namespace Demo
 
         protected async override void OnLaunched(LaunchActivatedEventArgs e)
         {
-
             await JYAnalytics.StartTrackAsync("e3c602f86e5e70b351479eddf2d1efc8");
+            AdDuplex.AdDuplexClient.Initialize("aaa53830-3488-4201-8d47-c9a9395dab99");
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
                 this.DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
-            AdDuplex.AdDuplexClient.Initialize("aaa53830-3488-4201-8d47-c9a9395dab99");
             Frame rootFrame = Window.Current.Content as Frame;
 
             // 不要在窗口已包含内容时重复应用程序初始化，
