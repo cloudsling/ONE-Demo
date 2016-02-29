@@ -52,7 +52,6 @@ namespace Demo
                 var music = e.Parameter as MusicModel;
                 musicWebView.Navigate(new Uri(musicUri + music.Id.ToString()));
             }
-
             JYAnalytics.TrackPageStart("music_page");
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)

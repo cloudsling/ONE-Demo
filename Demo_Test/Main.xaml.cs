@@ -177,7 +177,6 @@ namespace Demo
 
         async void txt_Search_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            //txt_Search.Focus(FocusState.Unfocused);
             await SearchPage.searchPageCurrent.SearchStart(sender.Text);
         }
 
@@ -190,14 +189,17 @@ namespace Demo
             {
                 case nameof(OneMain):
                     CreateFileButton.Visibility = Visibility.Visible;
+                    AppBar.Visibility = Visibility.Visible;
                     HEADER111.Text = "ONE- 首页";
                     break;
                 case nameof(Articles):
                     CreateFileButton.Visibility = Visibility.Collapsed; //isHide.Visibility = Visibility.Visible;
+                    AppBar.Visibility = Visibility.Visible;
                     HEADER111.Text = "ONE- 文章";
                     break;
                 case nameof(OneQuestion):
                     CreateFileButton.Visibility = Visibility.Collapsed; //isHide.Visibility = Visibility.Visible;
+                    AppBar.Visibility = Visibility.Visible;
                     HEADER111.Text = "ONE- 问题";
                     break;
                 case nameof(Serial):
@@ -241,8 +243,9 @@ namespace Demo
             SwitchSplitter();
             AppBar.Visibility = Visibility.Collapsed;
             // HEADER111.Text = "设置";
-            if (isHide.Visibility == Visibility.Visible) isHide.Visibility = Visibility.Collapsed;
-            OneFrame.Navigate(typeof(Settings)); Settings.SelectedItem = null;
+            OneFrame.Navigate(typeof(Settings));
+            isHide.Visibility = Visibility.Collapsed;
+            Settings.SelectedItem = null;
         }
 
         private void Others_ItemClick(object sender, ItemClickEventArgs e)

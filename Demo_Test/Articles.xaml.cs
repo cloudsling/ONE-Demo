@@ -127,13 +127,7 @@ namespace Demo
 
         ThemeColorModel _articalThemeColorModel;
 
-        //void InitializationArticlesObject(ArticlesObject articlesObject)
-        //{
-        //    DayArticlesObject.HeadContent = articlesObject.HeadContent;
-        //    DayArticlesObject.Content = articlesObject.Content;
-        //    DayArticlesObject.Header = articlesObject.Header;
-        //    DayArticlesObject.Writer = articlesObject.Writer;
-        //}
+
     }
 
     public class SpeciallyString : INotifyPropertyChanged

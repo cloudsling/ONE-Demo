@@ -8,10 +8,15 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ProgressBar x:Name="bar" Foreground="#36C3F1" IsIndeterminate="True" VerticalAlignment="Top" />
+        <ProgressBar x:Name="bar" 
+                     Foreground="#36C3F1"
+                     IsIndeterminate="True" 
+                     VerticalAlignment="Top" />
         <WebView x:Name="musicWebView"/>
         <Viewbox Height="40" Width="80">
-            <ProgressRing x:Name="ring" Foreground="#36C3F1" IsActive="True" />
+            <ProgressRing x:Name="ring" 
+                          Foreground="#36C3F1"
+                          IsActive="True" />
         </Viewbox>
     </Grid>
 </Page>

@@ -141,6 +141,12 @@ namespace Demo
                     Id = "34",
                     Title = "卧虎藏龙2：青冥宝剑",
                     Score = "39"
+                }); MovieList.Add(new MovieListModel
+                {
+                    Cover = "ms-appx:///Assets/About/about.png",
+                    Id = "34",
+                    Title = "卧虎藏龙2：青冥宝剑",
+                    Score = "39"
                 });
             }
 #endif

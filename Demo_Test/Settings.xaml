@@ -55,7 +55,7 @@
                     <ToggleSwitch Foreground="{Binding SettingsThemeColorModel.FontColor}"  x:Name="SearchCache" Margin="10" Toggled="SearchCache_Toggled" OffContent="关" OnContent="开">
                         <ToggleSwitch.HeaderTemplate>
                             <DataTemplate>
-                                <TextBlock Foreground="{Binding SettingsThemeColorModel.FontColor}" Text="搜索界面开启缓存(可能会导致界面短暂卡住)" />
+                                <TextBlock Foreground="{Binding SettingsThemeColorModel.FontColor}" Text="搜索界面开启缓存" />
                             </DataTemplate>
                         </ToggleSwitch.HeaderTemplate>
                     </ToggleSwitch>
@@ -79,7 +79,6 @@
                 </StackPanel>
             </PivotItem>
             <PivotItem Header="Ad">
-
                 <Grid>
                     <Grid>
                         <JiuYouAdUniversal:AdControl ApplicationKey="e3c602f86e5e70b351479eddf2d1efc8"

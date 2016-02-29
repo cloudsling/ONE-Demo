@@ -50,7 +50,7 @@ namespace Demo
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             GaoStatusBar.HideStatusBar();
-            StartAnimation.Begin();
+            //StartAnimation.Begin();
             try
             {
                 await GetOneString(uri);
@@ -65,7 +65,7 @@ namespace Demo
                 IsFromInternet = false;
                 x = await LoadX();
                 DayObjectCollection = GetOne.GetOneTodayObjectList(x);
-                await Task.Delay(2500);
+                //await Task.Delay(1000);
                 throw;
             }
 

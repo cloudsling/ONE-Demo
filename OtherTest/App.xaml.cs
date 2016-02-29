@@ -35,11 +35,6 @@ namespace OtherTest
             this.Suspending += OnSuspending;
         }
 
-
-
-
-
-
         async Task ReisterBackground()
         {
             var task = await TaskConfiguration.RegisterBackgroundTask(typeof(Demo.BackGround.LiveTileTask), "TestTaskName", new TimeTrigger(10000, false), null);

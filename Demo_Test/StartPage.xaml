@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Page.Resources>
-        <Storyboard x:Name="StartAnimation">
+        <!--<Storyboard x:Name="StartAnimation">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="border" Storyboard.TargetProperty="Opacity" Duration="0:0:1.5" BeginTime="0:0:0" EnableDependentAnimation="True">
                 <EasingDoubleKeyFrame KeyTime="0:0:.4" Value="1" >
                 </EasingDoubleKeyFrame>
@@ -32,10 +32,11 @@
                     </EasingDoubleKeyFrame.EasingFunction>
                 </EasingDoubleKeyFrame>
             </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
+        </Storyboard>-->
     </Page.Resources>
     <Grid>
-        <Border x:Name="border" Opacity="0">
+        <ProgressRing Height="60" Width="60" Margin="0 0 0 -300" IsActive="True" Foreground="#36C3F1"/>
+        <Border x:Name="border" Opacity="1">
             <Image Stretch="UniformToFill" Source="ms-appx:///Assets/About/StartImage.png"/>
         </Border>
         <Canvas>

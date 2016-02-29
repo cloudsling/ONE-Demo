@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0C66B288-791D-4B7B-B8BB-9C6C44ADF384}</ProjectGuid>
+    <ProjectGuid>{6C06B365-24F3-49DD-B8F3-7D47F5FEC0CF}</ProjectGuid>
     <OutputType>winmdobj</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Demo.BackGround</RootNamespace>

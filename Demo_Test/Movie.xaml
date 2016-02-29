@@ -19,7 +19,9 @@
                 <DataTemplate>
                     <Border Tag="{Binding Id}" Margin="-8 2" CornerRadius="5" BorderThickness="1.5" Height="210">
                         <Grid>
-                            <Image Stretch="UniformToFill" Source="{Binding Cover}"/>
+                            <Grid>
+                                <Image Stretch="Fill" Source="{Binding Cover}"/>
+                            </Grid>
                             <Grid VerticalAlignment="Bottom" 
                               HorizontalAlignment="Right">
                                 <TextBlock Foreground="#FFEE4141" Text="{Binding Score}" Margin="40" RenderTransformOrigin="0.5,0.5">

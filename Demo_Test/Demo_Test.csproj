@@ -98,6 +98,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\About\about.png" />
+    <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="QuestionTemp.html" />
     <None Include="ClassDiagram1.cd" />
     <Content Include="Assets\About\StartImage.png" />
@@ -287,11 +288,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Demo.BackGround\Demo.BackGround.csproj">
-      <Project>{3ce26a0c-8880-428b-aac5-7d54f6231241}</Project>
+      <Project>{6c06b365-24f3-49dd-b8f3-7d47f5fec0cf}</Project>
       <Name>Demo.BackGround</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
