@@ -250,6 +250,31 @@
                     </Grid>
                 </SplitView.Content>
             </SplitView>
+            <Canvas VerticalAlignment="Bottom"
+                    HorizontalAlignment="Left"
+                    Width="50"
+                    Height="50"
+                    Margin="25 25">
+                <Grid x:Name="ShareGrid"
+                      Background="LightBlue"
+                      Height="50"
+                      Width="50"
+                      ManipulationMode="All"
+                      ManipulationDelta="Grid_ManipulationDelta"
+                      ManipulationCompleted="Grid_ManipulationCompleted"
+                      >
+                    <Grid.Transitions>
+                        <TransitionCollection>
+                            <NavigationThemeTransition/>
+                        </TransitionCollection>
+                    </Grid.Transitions>
+                    <Button Content="分享" 
+                            Click="Button_Click_3"
+                            Foreground="Gray" 
+                            Height="50"
+                             Width="50"/>
+                </Grid>
+            </Canvas>
         </Grid>
         <Grid x:Name="StarStar" Visibility="Collapsed">
             <Grid Opacity=".8" Background="Black"></Grid>
@@ -264,12 +289,12 @@
                     <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                         <Button Click="Button_Click_1" Content="现在评价" Template="{StaticResource MyButtonTemplate}" />
                         <Button Click="Button_Click_1" Content="可以啊0_0" FontFamily="Consolas" Template="{StaticResource MyButtonTemplate}" />
-                        <Button Click="Button_Click_1" Content="我要好评" Template="{StaticResource MyButtonTemplate}" />
+                        <Button Click="Button_Click_1" Tag="DontDo" Content="想得美，，给老子滚。。" Template="{StaticResource MyButtonTemplate}" />
                     </StackPanel>
                 </StackPanel>
             </Border>
         </Grid>
-        <Rectangle x:Name="DemoDemo" Width="28" Margin="-20 0" Opacity="0" Fill="Yellow" HorizontalAlignment="Left" ManipulationMode="TranslateX"  ManipulationCompleted="DemoDemo_ManipulationCompleted">
+        <Rectangle x:Name="DemoDemo" Width="30" Margin="-20 0" Opacity="0" Fill="Yellow" HorizontalAlignment="Left" ManipulationMode="TranslateX"  ManipulationCompleted="DemoDemo_ManipulationCompleted">
             <Rectangle.RenderTransform>
                 <TranslateTransform x:Name="Demo" />
             </Rectangle.RenderTransform>

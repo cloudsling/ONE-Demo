@@ -37,80 +37,15 @@ namespace Demo
         }
 
         void HamBtn_Click(object sender, RoutedEventArgs e) => SwitchSplitter();
-
-        ///// <summary>
-        ///// 作废
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        //void HamListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    ListView oneListView = sender as ListView;
-        //    switch (oneListView.Name)
-        //    {
-        //        case "HamListBox":
-        //            {
-        //                MyListViewItems m = oneListView.SelectedItem as MyListViewItems;
-        //                if (m != null)
-        //                {
-        //                    HEADER111.Text = "ONE- " + m.MyItemName.Trim();
-        //                    if (isHide.Visibility == Visibility.Collapsed) isHide.Visibility = Visibility.Visible;
-        //                    if (AppBar.Visibility == Visibility.Collapsed) AppBar.Visibility = Visibility.Visible;
-        //                    OneFrame.Navigate(m.ClassType);
-        //                    if (OneFrame.CurrentSourcePageType == typeof(Articles) || OneFrame.CurrentSourcePageType == typeof(OneQuestion) || OneFrame.CurrentSourcePageType == typeof(Serial))
-        //                        CreateFileButton.Visibility = Visibility.Collapsed;
-        //                    else {
-        //                        CreateFileButton.Visibility = Visibility.Visible;
-        //                    }
-        //                    NotifyUserMethod("ONE-" + m.MyItemName, 180);
-        //                    if (oneListView.SelectedItem == null) return;
-        //                    oneListView.SelectedItem = null;
-        //                    Splitter.IsPaneOpen = false;
-        //                }
-        //            }
-        //            break;
-        //        case "Settings":
-        //            {
-        //                if (oneListView.SelectedItem == null) return;
-        //                oneListView.SelectedItem = null;
-        //                SwitchSplitter();
-        //                AppBar.Visibility = Visibility.Collapsed;
-        //                HEADER111.Text = "设置";
-        //                if (isHide.Visibility == Visibility.Visible) isHide.Visibility = Visibility.Collapsed;
-        //                OneFrame.Navigate(typeof(Settings));
-        //            }
-        //            break;
-        //        case "Others":
-        //            {
-        //                if (oneListView.SelectedItem == null) return;
-        //                SwitchSplitter();
-        //                int id = Others.SelectedIndex;
-        //                switch (id)
-        //                {
-        //                    case 0:
-        //                        Love(); break;
-        //                    case 1:
-        //                        {
-        //                            //balabala.Visibility = Visibility.Collapsed;
-        //                            HEADER111.Text = "关于";
-        //                            AppBar.Visibility = Visibility.Collapsed;
-        //                            if (isHide.Visibility == Visibility.Visible) { isHide.Visibility = Visibility.Collapsed; }
-        //                            OneFrame.Navigate(typeof(About));
-        //                        }
-        //                        break;
-        //                }
-        //                oneListView.SelectedItem = null;
-        //            }
-        //            break;
-        //    }
-        //}
-
+        
         async void Button_Click_1(object sender, RoutedEventArgs e)
         {
             GiveMeStarOk.Begin();
+            if ((string)(sender as Button).Tag == "DontDo") goto id;
             await Task.Delay(650);
-            StarStar.Visibility = Visibility.Collapsed;
             Love();
+            id:
+            StarStar.Visibility = Visibility.Collapsed;
             GaoStatusBar.ShowStatusBar();
         }
 
@@ -222,6 +157,11 @@ namespace Demo
                     HEADER111.Text = "搜索";
                     AppBar.Visibility = Visibility.Collapsed; isHide.Visibility = Visibility.Collapsed;
                     break;
+                case nameof(SharePage):
+                    CreateFileButton.Visibility = Visibility.Collapsed;
+                    HEADER111.Text = "搜索";
+                    AppBar.Visibility = Visibility.Collapsed; isHide.Visibility = Visibility.Collapsed;
+                    break;
             }
         }
 
@@ -261,6 +201,26 @@ namespace Demo
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             Love();
+        }
+
+        double cumulateX = 0;
+        double cumulateY = 0;
+
+        private void Grid_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
+        {
+            ShareGrid.SetValue(Canvas.TopProperty, e.Cumulative.Translation.Y + cumulateY);
+            ShareGrid.SetValue(Canvas.LeftProperty, e.Cumulative.Translation.X + cumulateX);
+        }
+
+        private void Grid_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
+        {
+            cumulateX = cumulateX + e.Cumulative.Translation.X;
+            cumulateY = cumulateY + e.Cumulative.Translation.Y;
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            OneFrame.Navigate(typeof(SharePage),Main.DayObjectCollection[OneMain.OneMainCurrent.flipview.SelectedIndex]);
         }
     }
 

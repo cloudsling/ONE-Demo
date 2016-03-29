@@ -26,7 +26,7 @@ namespace Demo
 
         async Task ReisterBackground()
         {
-            var task = await TaskConfiguration.RegisterBackgroundTask(typeof(BackGround.LiveTileTask), "LiveTileTask", new TimeTrigger(60 * 4, false), new SystemCondition(SystemConditionType.InternetAvailable));
+            var task = await TaskConfiguration.RegisterBackgroundTask(typeof(BackGround.LiveTileTask), "LiveTileTask", new TimeTrigger(60 * 12, false), new SystemCondition(SystemConditionType.InternetAvailable));
 
             // await new MessageDialog("may complete").ShowAsync();
             task.Completed += Task_Completed;

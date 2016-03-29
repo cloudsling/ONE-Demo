@@ -16,8 +16,8 @@
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>Demo_StoreKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>EB9B2C0D231D6CEE649D2F929CAE121EEB92032A</PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>Demo_Test_StoreKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>FB448269A07AE94E50D80E973FFB15DA0814DDB5</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
@@ -98,6 +98,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\About\about.png" />
+    <Content Include="Assets\Res\sinaweibo.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="QuestionTemp.html" />
     <None Include="ClassDiagram1.cd" />
@@ -124,7 +125,8 @@
     <Content Include="Assets\Res\s_artcile.png" />
     <Content Include="Assets\Square150x150Logo.scale-100.png" />
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
-    <None Include="Demo_StoreKey.pfx" />
+    <None Include="Demo_Test_StoreKey.pfx" />
+    <None Include="Demo_Test_TemporaryKey.pfx" />
     <None Include="Package.StoreAssociation.xml" />
     <None Include="project.json" />
   </ItemGroup>
@@ -181,6 +183,9 @@
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SharePage.xaml.cs">
+      <DependentUpon>SharePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StartMainPage.xaml.cs">
       <DependentUpon>StartMainPage.xaml</DependentUpon>
     </Compile>
@@ -189,6 +194,7 @@
     </Compile>
     <Compile Include="TaskConfiguration.cs" />
     <Compile Include="ThemeColorModel.cs" />
+    <Compile Include="Unix2DateTime.cs" />
     <Compile Include="ViewModel\SearchPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -260,6 +266,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SharePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="StartMainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -279,7 +289,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="AdDuplex.Windows10, Version=10.0.1.3">
+    <SDKReference Include="AdDuplex.Windows10, Version=10.0.1.4">
       <Name>AdDuplex SDK for Windows 10 %28XAML%29</Name>
     </SDKReference>
     <SDKReference Include="WindowsMobile, Version=10.0.10586.0">

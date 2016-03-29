@@ -893,7 +893,6 @@ namespace Demo
 
         private static string GetOneString(string uri)
         {
-            if (httpClient != null) httpClient.Dispose();
             httpClient = new HttpClient();
             x = httpClient.GetStringAsync(new Uri(uri)).Result;
             httpClient.Dispose();

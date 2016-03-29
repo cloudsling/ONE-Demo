@@ -26,8 +26,11 @@ namespace Demo
             oneMainViewModel = new OneMainViewModel();
             InitializeComponent();
             OneMainCurrent = this;
+
             Main.OtherPageDoWhenThemeChanged = () => ThemeColorModel.InitialByOtherObject(oneMainViewModel.ThemeColorModel, ThemeColorModel.GetTheme(Main.MainCurrent.mainViewModel.oneSettings.RequireLightTheme));
         }
+
+        public FlipView flipview { get { return fv; } }
 
         public static List<string> FlipViewImageSourceList;
 
@@ -103,7 +106,7 @@ namespace Demo
                         System.Diagnostics.Debug.Write("|kkkkkkkkkkk|    " + ex.Message + "|assssssssssss");
                         throw;
 #endif
-                        
+
                     }
                 }
             }
@@ -126,8 +129,8 @@ namespace Demo
                     {
                         bind.AddImageBinding(temp.DayImagePath);
                     }
-                    fv.SelectedIndex = 0; 
-                     ChangeMainCurrentMsg(temp);
+                    fv.SelectedIndex = 0;
+                    ChangeMainCurrentMsg(temp);
                 }
             }
             JYAnalytics.TrackPageStart("main_page");

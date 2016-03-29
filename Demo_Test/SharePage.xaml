@@ -1,0 +1,33 @@
+﻿<Page
+    x:Class="Demo.SharePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Demo"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="LightGray">
+        <Grid>
+            <TextBlock Text="分享首页内容到："
+                       FontSize="17"
+                       Foreground="Red"
+                       FontFamily="Consolas"
+                       HorizontalAlignment="Center"
+                       Margin="30"/>
+        </Grid>
+        <Grid x:Name="grid" VerticalAlignment="Bottom"
+              HorizontalAlignment="Center"
+              Height="50" Width="Auto">
+            <Button Width="{Binding ElementName=grid}"
+                    HorizontalAlignment="Center" 
+                    Height="50" Click="Button_Click">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Image Source="Assets/Res/sinaweibo.png"/>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+    </Grid>
+</Page>
