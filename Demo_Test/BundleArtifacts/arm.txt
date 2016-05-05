@@ -1,0 +1,4 @@
+MainPackage=C:\Users\Hao Ling\Source\Repos\ONE-Demo\Demo_Test\bin\ARM\Release\Demo_Test_1.999.99.0_ARM.appx
+SymbolPackage=C:\Users\Hao Ling\Source\Repos\ONE-Demo\Demo_Test\AppPackages\Demo_Test_1.999.99.0_Test\Demo_Test_1.999.99.0_ARM.appxsym
+ResourcePack=C:\Users\Hao Ling\Source\Repos\ONE-Demo\Demo_Test\bin\ARM\Release\Demo_Test_1.999.99.0_scale-100.appx
+ResourcePack=C:\Users\Hao Ling\Source\Repos\ONE-Demo\Demo_Test\bin\ARM\Release\Demo_Test_1.999.99.0_scale-150.appx

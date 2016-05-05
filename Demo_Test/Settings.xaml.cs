@@ -273,6 +273,15 @@ namespace Demo
                 OnPropertyChanged();
             }
         }
+        public int RemindDownloadNewVersion
+        {
+            get { return ReadSettings(nameof(RemindDownloadNewVersion), 1); }
+            set
+            {
+                SaveSettings(nameof(RemindDownloadNewVersion), value);
+                OnPropertyChanged();
+            }
+        }
 
         public bool RequireLightTheme
         {

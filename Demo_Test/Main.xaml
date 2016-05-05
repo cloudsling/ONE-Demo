@@ -31,13 +31,23 @@
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
         </Storyboard>
+        <Storyboard x:Name="DownloadStory">
+            <DoubleAnimation SpeedRatio="1.2" Duration="0:0:1.2" Storyboard.TargetName="downloadGrid" Storyboard.TargetProperty="Height" From="0" To="180" BeginTime="0:0:0" EnableDependentAnimation="True">
+                <DoubleAnimation.EasingFunction>
+                    <BackEase Amplitude=".4" EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
         <Storyboard x:Name="GiveMeStarOk">
             <DoubleAnimation SpeedRatio="1.5" Duration="0:0:.6" Storyboard.TargetName="starstar" Storyboard.TargetProperty="Height" From="180" To="0" BeginTime="0:0:0" EnableDependentAnimation="True">
             </DoubleAnimation>
         </Storyboard>
+        <Storyboard x:Name="DownloadStoryOk">
+            <DoubleAnimation SpeedRatio="1.5" Duration="0:0:.6" Storyboard.TargetName="downloadGrid" Storyboard.TargetProperty="Height" From="180" To="0" BeginTime="0:0:0" EnableDependentAnimation="True">
+            </DoubleAnimation>
+        </Storyboard>
     </Page.Resources>
     <Grid>
-        <!--<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">-->
         <Grid Background="{Binding themeColorModelSettings.MainBodyBackgroundColor}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -290,6 +300,19 @@
                         <Button Click="Button_Click_1" Content="现在评价" Template="{StaticResource MyButtonTemplate}" />
                         <Button Click="Button_Click_1" Content="可以啊0_0" FontFamily="Consolas" Template="{StaticResource MyButtonTemplate}" />
                         <Button Click="Button_Click_1" Tag="DontDo" Content="想得美，，给老子滚。。" Template="{StaticResource MyButtonTemplate}" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+        <Grid x:Name="downloadGrid" Visibility="Collapsed">
+            <Grid Opacity=".8" Background="Black"></Grid>
+            <Border Opacity="1" CornerRadius="10" BorderThickness="1.5" BorderBrush="Green" Background="Red" Width="300" Height="180">
+                <StackPanel>
+                    <TextBlock Margin="10 10 0 0" Text="↓↓↓↓↓↓↓屠龙宝刀点击就送↓↓↓↓↓↓↓"/>
+                    <TextBlock Margin="20 2" Foreground="Green" TextWrapping="Wrap" Text="全新的一个UWP测试版已经上线，同时many多个也会长期支\r\n_(:马」∠)_\r\n下载地址：" />
+                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                        <Button x:Name="downloadBtn" Click="downloadBtn_Click" Content="现在下载" Template="{StaticResource MyButtonTemplate}" />
+                        <Button x:Name="Gun" Click="Gun_Click" Content="滚，老子不想用_(:马」∠)_" Template="{StaticResource MyButtonTemplate}" />
                     </StackPanel>
                 </StackPanel>
             </Border>

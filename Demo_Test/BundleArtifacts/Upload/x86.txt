@@ -1,0 +1,1 @@
+MainPackage=C:\Users\Hao Ling\Source\Repos\ONE-Demo\Demo_Test\bin\x86\Release\Upload\Demo_Test_1.999.99.0_x86.appx

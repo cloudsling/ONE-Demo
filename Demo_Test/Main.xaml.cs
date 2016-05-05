@@ -222,6 +222,20 @@ namespace Demo
         {
             OneFrame.Navigate(typeof(SharePage),Main.DayObjectCollection[OneMain.OneMainCurrent.flipview.SelectedIndex]);
         }
+
+        private async void downloadBtn_Click(object sender, RoutedEventArgs e)
+        {
+            await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-windows-store://pdp/?ProductId=9NBLGGH4P3BT"));
+
+            mainViewModel.oneSettings.RemindDownloadNewVersion += 1;
+            DownloadStoryOk.Begin();
+        }
+
+        private void Gun_Click(object sender, RoutedEventArgs e)
+        {
+            mainViewModel.oneSettings.RemindDownloadNewVersion += 1;
+            DownloadStoryOk.Begin();
+        }
     }
 
     /// <summary>
@@ -347,6 +361,20 @@ namespace Demo
                 GaoStatusBar.HideStatusBar();
                 StarStar.Visibility = Visibility.Visible;
                 GiveMeStar.Begin();
+            }
+
+            if (mainViewModel.oneSettings.GiveMeGood == 10)
+            {
+                if (cb.IsChecked == false) mainViewModel.oneSettings.GiveMeGood = 0;
+                GaoStatusBar.HideStatusBar();
+                StarStar.Visibility = Visibility.Visible;
+                GiveMeStar.Begin();
+            }
+            if (mainViewModel.oneSettings.RemindDownloadNewVersion == 1)
+            { 
+                GaoStatusBar.HideStatusBar();
+                downloadGrid.Visibility = Visibility.Visible;
+                DownloadStory.Begin();
             }
         }
 

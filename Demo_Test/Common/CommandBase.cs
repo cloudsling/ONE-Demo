@@ -20,11 +20,7 @@ namespace Demo.Common
         
         public void OnCanExecuteChange()
         {
-            var temp = Volatile.Read(ref CanExecuteChanged);
-            if (temp != null)
-            {
-                temp(this, EventArgs.Empty);
-            }
+            Volatile.Read(ref CanExecuteChanged)?.Invoke(this, EventArgs.Empty);
         }
 
         public bool CanExecute(object parameter)
